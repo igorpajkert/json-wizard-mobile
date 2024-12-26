@@ -10,11 +10,11 @@ import Foundation
 /// Model class that defines properties for an answer.
 @Observable
 final class Answer: Codable, Identifiable, Equatable {
-    var id: UUID
+    var id: Int
     var answerText: String
     var isCorrect: Bool
     
-    init(id: UUID = UUID(), answerText: String = "", isCorrect: Bool = false) {
+    init(id: Int, answerText: String = "", isCorrect: Bool = false) {
         self.id = id
         self.answerText = answerText
         self.isCorrect = isCorrect

@@ -10,7 +10,7 @@ import Foundation
 /// Model class that defines properties for a question.
 @Observable
 final class Question: Codable, Identifiable, Equatable {
-    var id: UUID
+    var id: Int
     var questionText: String
     var answers: [Answer]
     var categories: [Category]?
@@ -19,7 +19,7 @@ final class Question: Codable, Identifiable, Equatable {
     var answersCount: Int { answers.count }
     var correctAnswersCount: Int { answers.filter(\.isCorrect).count }
     
-    init(id: UUID = UUID(), questionText: String = "", answers: [Answer] = [], categories: [Category]? = nil, dateCreated: Date = .now) {
+    init(id: Int, questionText: String = "", answers: [Answer] = [], categories: [Category]? = nil, dateCreated: Date = .now) {
         self.id = id
         self.questionText = questionText
         self.answers = answers
