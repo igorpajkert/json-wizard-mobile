@@ -1,0 +1,38 @@
+//
+//  Question.swift
+//  JsonWizardMobile
+//
+//  Created by Igor Pajkert on 24/12/2024.
+//
+
+import Foundation
+
+/// Model class that defines properties for a question.
+@Observable
+final class Question: Codable, Identifiable, Equatable {
+    var id: UUID
+    var questionText: String
+    var answers: [Answer]
+    var categories: [Category]?
+    var dateCreated: Date
+    
+    var answersCount: Int { answers.count }
+    var correctAnswersCount: Int { answers.filter(\.isCorrect).count }
+    
+    init(id: UUID = UUID(), questionText: String = "", answers: [Answer] = [], categories: [Category]? = nil, dateCreated: Date = .now) {
+        self.id = id
+        self.questionText = questionText
+        self.answers = answers
+        self.categories = categories
+        self.dateCreated = dateCreated
+    }
+    
+    // MARK: - Equatable conformance
+    static func == (lhs: Question, rhs: Question) -> Bool {
+        if lhs.questionText == rhs.questionText {
+            return true
+        } else {
+            return false
+        }
+    }
+}

@@ -1,0 +1,31 @@
+//
+//  Answer.swift
+//  JsonWizardMobile
+//
+//  Created by Igor Pajkert on 24/12/2024.
+//
+
+import Foundation
+
+/// Model class that defines properties for an answer.
+@Observable
+final class Answer: Codable, Identifiable, Equatable {
+    var id: UUID
+    var answerText: String
+    var isCorrect: Bool
+    
+    init(id: UUID = UUID(), answerText: String = "", isCorrect: Bool = false) {
+        self.id = id
+        self.answerText = answerText
+        self.isCorrect = isCorrect
+    }
+    
+    // MARK: - Equatable conformance
+    static func == (lhs: Answer, rhs: Answer) -> Bool {
+        if lhs.answerText == rhs.answerText {
+            return true
+        } else {
+            return false
+        }
+    }
+}
