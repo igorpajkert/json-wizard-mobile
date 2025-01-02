@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct JsonWizardMobileApp: App {
+    
+    @State private var store = DataStore()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                Tab("Categories", systemImage: "square.stack.3d.up") {
+                    CategoriesView()
+                }
+                Tab("All Questions", systemImage: "rectangle.stack") {
+                    QuestionsView(questions: store.questions)
+                }
+            }
+            .dataStore(store)
         }
     }
 }

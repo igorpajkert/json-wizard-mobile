@@ -17,14 +17,19 @@ extension Question {
                 .init(id: 1, answerText: "Kidneys"),
                 .init(id: 2, answerText: "Lungs"),
                 .init(id: 3, answerText: "Stomach")
+              ],
+              categories: [
+                .init(title: "General Knowledge", color: .pink),
+                .init(title: "Body", color: .mint)
               ]
              ),
         .init(id: 1,
               questionText: "What is the main function of red blood cells?",
               answers: [
-                .init(id: 0, answerText: "Transport oxygen", isCorrect: true),
+                .init(id: 0, answerText: "Transport oxygen"),
                 .init(id: 1, answerText: "Fight infections")
-              ]
+              ],
+              categories: [.init(title: "Infections")]
              ),
         .init(id: 2,
               questionText: "What is the largest organ in the human body?")

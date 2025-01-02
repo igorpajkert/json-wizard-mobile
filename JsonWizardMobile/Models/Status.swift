@@ -5,7 +5,7 @@
 //  Created by Igor Pajkert on 24/12/2024.
 //
 
-import Foundation
+import SwiftUI
 
 enum Status: String, CaseIterable, Identifiable, Hashable, Codable {
     case done = "Done"
@@ -19,5 +19,16 @@ enum Status: String, CaseIterable, Identifiable, Hashable, Codable {
     
     var id: String {
         name
+    }
+    
+    var mainColor: Color {
+        Color(rawValue)
+    }
+    
+    var accentColor: Color {
+        switch self {
+        case .draft: return .black
+        default: return .white
+        }
     }
 }
