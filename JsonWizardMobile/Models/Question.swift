@@ -29,10 +29,14 @@ final class Question: Codable, Identifiable, Equatable {
     
     // MARK: - Equatable conformance
     static func == (lhs: Question, rhs: Question) -> Bool {
-        if lhs.questionText == rhs.questionText {
+        if lhs.id == rhs.id {
             return true
         } else {
             return false
         }
     }
+}
+
+extension Question {
+    var unwrappedCategories: [Category] { categories ?? [] }
 }

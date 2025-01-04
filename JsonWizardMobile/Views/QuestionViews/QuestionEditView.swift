@@ -8,56 +8,84 @@
 import SwiftUI
 
 struct QuestionEditView: View {
-    
-    var categories: [Category] {
-        guard let categories = question.categories else { return [] }
-        return categories
-    }
-    
     @State private var newAnswerText = ""
     @Environment(\.store) private var store
     @Bindable var question: Question
     
     var body: some View {
         List {
-            Section("Question") {
-                TextField("Question Text", text: $question.questionText, axis: .vertical)
-                HStack {
-                    HStack {
-                        ForEach(categories) { category in
-                            CategoryBadge(category: category)
-                        }
-                    }
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: "plus.circle")
-                    }
-                }
-                Text("Created \(question.dateCreated.formatted(date: .long, time: .shortened))")
-                    .frame(maxWidth: .infinity)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .listRowBackground(Color.clear)
-            }
-            Section("Answers") {
-                ForEach(question.answers) { answer in
-                    AnswerCardView(answer: answer)
-                }
-                HStack {
-                    TextField("Add Answer...", text: $newAnswerText, axis: .vertical)
-                    Button(action: {}) {
-                        Image(systemName: "plus.circle.fill")
-                    }
-                    .disabled(newAnswerText.isEmpty)
-                }
-                Text("\(question.answersCount) answers, \(question.correctAnswersCount) correct")
-                    .frame(maxWidth: .infinity)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .listRowBackground(Color.clear)
-            }
+            questionContent
+            answersContent
         }
         .listRowSpacing(10)
+    }
+    
+    // MARK: Question
+    private var questionContent: some View {
+        Section("Question") {
+            TextField("Question Text", text: $question.questionText, axis: .vertical)
+            HStack {
+                HStack {
+                    ForEach(question.unwrappedCategories) { category in
+                        CategoryBadge(category: category)
+                    }
+                }
+                Spacer()
+                // TODO: Categories adding
+                Button(action: {}) {
+                    Image(systemName: "plus.circle")
+                }
+            }
+            creationDate
+        }
+    }
+    
+    private var creationDate: some View {
+        Text("Created \(question.dateCreated.formatted(date: .long, time: .shortened))")
+            .frame(maxWidth: .infinity)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .listRowBackground(Color.clear)
+    }
+    
+    // MARK: Answers
+    private var answersContent: some View {
+        Section("Answers") {
+            ForEach(question.answers) { answer in
+                AnswerCardView(answer: answer)
+            }
+            .onDelete(perform: deleteAnswers)
+            HStack {
+                TextField("Add Answer...", text: $newAnswerText, axis: .vertical)
+                Button(action: addAnswer) {
+                    Image(systemName: "plus.circle.fill")
+                }
+                .disabled(newAnswerText.isEmpty)
+            }
+            answersCount
+        }
+    }
+    
+    private var answersCount: some View {
+        Text("\(question.answersCount) answers, \(question.correctAnswersCount) correct")
+            .frame(maxWidth: .infinity)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .listRowBackground(Color.clear)
+    }
+    
+    // MARK: - Intents
+    private func addAnswer() {
+        withAnimation {
+            store.addAnswer(to: question, with: newAnswerText)
+            newAnswerText.clear()
+        }
+    }
+    
+    private func deleteAnswers(at offsets: IndexSet) {
+        withAnimation {
+            store.deleteAnswers(for: question, at: offsets)
+        }
     }
 }
 

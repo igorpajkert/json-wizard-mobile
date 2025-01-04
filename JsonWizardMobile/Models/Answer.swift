@@ -22,7 +22,7 @@ final class Answer: Codable, Identifiable, Equatable {
     
     // MARK: - Equatable conformance
     static func == (lhs: Answer, rhs: Answer) -> Bool {
-        if lhs.answerText == rhs.answerText {
+        if lhs.id == rhs.id {
             return true
         } else {
             return false

@@ -5,7 +5,7 @@
 //  Created by Igor Pajkert on 26/12/2024.
 //
 
-import Foundation
+import SwiftUI
 
 @Observable
 class DataStore {
@@ -13,8 +13,20 @@ class DataStore {
     var categories = [Category]()
     var questions = [Question]()
     
-    init(categories: [Category] = [Category](), questions: [Question] = Question.sampleData) {
+    // FIXME: Debug init
+    init(categories: [Category] = Category.sampleData, questions: [Question] = Question.sampleData) {
         self.categories = categories
         self.questions = questions
+    }
+    
+    // MARK: - Intents
+    
+    // MARK: Answers
+    func addAnswer(to question: Question, with text: String) {
+        question.answers.append(Answer(id: question.answers.endIndex, answerText: text))
+    }
+    
+    func deleteAnswers(for question: Question, at offsets: IndexSet) {
+        question.answers.remove(atOffsets: offsets)
     }
 }
