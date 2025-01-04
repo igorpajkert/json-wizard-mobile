@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct QuestionsView: View {
-    
     var questions: [Question]
+    @State private var isPresentingNewQuestionSheet = false
+    @Environment(\.store) private var store
     
     var body: some View {
         NavigationStack {
@@ -19,10 +20,29 @@ struct QuestionsView: View {
                         QuestionCardView(question: question)
                     }
                 }
+                .onDelete(perform: store.deleteQuestions)
             }
             .listRowSpacing(10)
         }
-        .navigationTitle("All Questions")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: presentNewQuestionSheet) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
+            NewQuestionSheet(question: store.createEmptyQuestion())
+        }
+    }
+    
+    // MARK: - Intents
+    private func presentNewQuestionSheet() {
+        isPresentingNewQuestionSheet = true
+    }
+    
+    private func dismissNewQuestionSheet() {
+        isPresentingNewQuestionSheet = false
     }
 }
 
@@ -31,4 +51,8 @@ struct QuestionsView: View {
         QuestionsView(questions: Question.sampleData)
             .navigationTitle("All Questions")
     }
+}
+
+#Preview("Without Toolbar") {
+    QuestionsView(questions: Question.sampleData)
 }

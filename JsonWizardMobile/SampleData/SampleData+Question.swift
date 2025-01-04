@@ -19,8 +19,8 @@ extension Question {
                 .init(id: 3, answerText: "Stomach")
               ],
               categories: [
-                .init(title: "General Knowledge", color: .pink),
-                .init(title: "Body", color: .mint)
+                .init(id: 0, title: "General Knowledge", color: .pink),
+                .init(id: 1, title: "Body", color: .mint)
               ]
              ),
         .init(id: 1,
@@ -29,7 +29,7 @@ extension Question {
                 .init(id: 0, answerText: "Transport oxygen"),
                 .init(id: 1, answerText: "Fight infections")
               ],
-              categories: [.init(title: "Infections")]
+              categories: [.init(id: 0, title: "Infections")]
              ),
         .init(id: 2,
               questionText: "What is the largest organ in the human body?")

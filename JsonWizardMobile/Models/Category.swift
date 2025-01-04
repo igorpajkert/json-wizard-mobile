@@ -11,7 +11,7 @@ import SwiftUI
 /// Model class that defines properties for a question category.
 @Observable
 final class Category: Codable, Identifiable {
-    var id: UUID
+    var id: Int
     var title: String
     var subtitle: String?
     var questions: [Question]
@@ -21,7 +21,7 @@ final class Category: Codable, Identifiable {
     
     var questionsCount: Int { questions.count }
     
-    init(id: UUID = UUID(), title: String = "", subtitle: String? = nil, questions: [Question] = [], status: Status = .draft, color: Color? = nil, dateCreated: Date = .now) {
+    init(id: Int, title: String = "", subtitle: String? = nil, questions: [Question] = [], status: Status = .draft, color: Color? = nil, dateCreated: Date = .now) {
         self.id = id
         self.title = title
         self.subtitle = subtitle

@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    /// Clears the string's content to an empty string.
     mutating func clear() {
         self = ""
     }

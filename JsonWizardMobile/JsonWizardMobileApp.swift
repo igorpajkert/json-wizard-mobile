@@ -16,10 +16,16 @@ struct JsonWizardMobileApp: App {
         WindowGroup {
             TabView {
                 Tab("Categories", systemImage: "square.stack.3d.up") {
-                    CategoriesView()
+                    NavigationStack {
+                        CategoriesView()
+                            .navigationTitle("Categories")
+                    }
                 }
                 Tab("All Questions", systemImage: "rectangle.stack") {
-                    QuestionsView(questions: store.questions)
+                    NavigationStack {
+                        QuestionsView(questions: store.questions)
+                            .navigationTitle("All Questions")
+                    }
                 }
             }
             .dataStore(store)

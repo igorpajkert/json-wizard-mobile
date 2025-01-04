@@ -83,9 +83,7 @@ struct QuestionEditView: View {
     }
     
     private func deleteAnswers(at offsets: IndexSet) {
-        withAnimation {
-            store.deleteAnswers(for: question, at: offsets)
-        }
+        store.deleteAnswers(for: question, at: offsets)
     }
 }
 
