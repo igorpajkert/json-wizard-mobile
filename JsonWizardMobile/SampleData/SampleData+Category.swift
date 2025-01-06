@@ -14,7 +14,8 @@ extension Category {
               title: "General Knowledge",
               subtitle: "Everything you need to know!",
               questions: Question.sampleData,
-              status: .done
+              status: .done,
+              color: .green
              ),
         .init(id: 1,
               title: "First Aid",
@@ -29,6 +30,7 @@ extension Category {
              ),
         .init(id: 3,
               title: "Pharmacology Basics",
-              subtitle: "Understand medicines and their effects.")
+              subtitle: "Understand medicines and their effects.",
+              color: .mint)
     ]
 }

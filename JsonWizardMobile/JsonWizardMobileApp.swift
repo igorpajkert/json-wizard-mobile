@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct JsonWizardMobileApp: App {
     
-    @State private var store = DataStore()
+    @State private var store = DataStore(categories: Category.sampleData, questions: Question.sampleData)
     
     var body: some Scene {
         WindowGroup {

@@ -15,6 +15,7 @@ struct NewQuestionSheet: View {
     var body: some View {
         NavigationStack {
             QuestionEditView(question: question)
+                .navigationTitle("Add Question").navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel", role: .cancel) {
@@ -33,6 +34,8 @@ struct NewQuestionSheet: View {
                 }
         }
     }
+    
+    // TODO: Toolbar Intents
 }
 
 #Preview {

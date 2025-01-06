@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct CategoriesView: View {
+    @State private var isPresentingNewCategorySheet = false
+    @Environment(\.store) private var store
+    
     var body: some View {
-        Text("CategoriesView")
+        List {
+            ForEach(store.categories) { category in
+                NavigationLink(destination: CategoryDetailView(category: category)) {
+                    CategoryCardView(category: category)                        
+                }
+            }
+        }
+        .listRowSpacing(10)
     }
 }
 
 #Preview {
-    CategoriesView()
+    NavigationStack {
+        CategoriesView()
+            .environment(\.store, DataStore(categories: Category.sampleData))
+    }
 }

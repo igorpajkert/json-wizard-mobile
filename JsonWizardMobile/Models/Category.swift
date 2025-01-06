@@ -11,13 +11,13 @@ import SwiftUI
 /// Model class that defines properties for a question category.
 @Observable
 final class Category: Codable, Identifiable {
-    var id: Int
+    let id: Int
     var title: String
     var subtitle: String?
     var questions: [Question]
     var status: Status
     var color: Color?
-    var dateCreated: Date
+    let dateCreated: Date
     
     var questionsCount: Int { questions.count }
     

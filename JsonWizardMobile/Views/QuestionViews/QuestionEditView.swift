@@ -88,5 +88,7 @@ struct QuestionEditView: View {
 }
 
 #Preview {
-    QuestionEditView(question: Question.sampleData[0])
+    NavigationStack {
+        QuestionEditView(question: Question.sampleData[0])
+    }
 }

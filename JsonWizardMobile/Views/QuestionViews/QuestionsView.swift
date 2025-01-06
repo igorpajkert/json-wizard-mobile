@@ -13,17 +13,15 @@ struct QuestionsView: View {
     @Environment(\.store) private var store
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(questions) { question in
-                    NavigationLink(destination: QuestionEditView(question: question)) {
-                        QuestionCardView(question: question)
-                    }
+        List {
+            ForEach(questions) { question in
+                NavigationLink(destination: QuestionEditView(question: question)) {
+                    QuestionCardView(question: question)
                 }
-                .onDelete(perform: store.deleteQuestions)
             }
-            .listRowSpacing(10)
+            .onDelete(perform: store.deleteQuestions)
         }
+        .listRowSpacing(10)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: presentNewQuestionSheet) {
