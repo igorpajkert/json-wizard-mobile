@@ -7,25 +7,37 @@
 
 import Foundation
 
-/// Model class that defines properties for an answer.
+/// A model that represents a single answer option in a question.
 @Observable
-final class Answer: Codable, Identifiable, Equatable {
+final class Answer: Codable, Identifiable {
+    
+    /// A unique identifier for the answer.
     let id: Int
+    /// The text content of this answer option.
     var answerText: String
+    /// Indicates whether this answer is correct.
     var isCorrect: Bool
     
-    init(id: Int, answerText: String = "", isCorrect: Bool = false) {
+    /// Creates a new `Answer` instance.
+    ///
+    /// - Parameters:
+    ///   - id: A unique numeric identifier.
+    ///   - answerText: The text for this answer. Defaults to an empty string.
+    ///   - isCorrect: Whether this answer is correct. Defaults to `false`.
+    init(id: Int,
+         answerText: String = "",
+         isCorrect: Bool = false) {
         self.id = id
         self.answerText = answerText
         self.isCorrect = isCorrect
     }
-    
-    // MARK: - Equatable conformance
+}
+
+// MARK: Equatable Conformance
+extension Answer: Equatable {
     static func == (lhs: Answer, rhs: Answer) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        } else {
-            return false
-        }
+        lhs.id == rhs.id &&
+        lhs.answerText == rhs.answerText &&
+        lhs.isCorrect == rhs.isCorrect
     }
 }
