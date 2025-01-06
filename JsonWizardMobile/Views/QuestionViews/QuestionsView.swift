@@ -23,7 +23,8 @@ struct QuestionsView: View {
         .toolbar {
             toolbarAddButton
         }
-        .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
+        .sheet(isPresented: $isPresentingNewQuestionSheet,
+               onDismiss: dismissNewQuestionSheet) {
             NewQuestionSheet(question: store.createEmptyQuestion())
         }
     }

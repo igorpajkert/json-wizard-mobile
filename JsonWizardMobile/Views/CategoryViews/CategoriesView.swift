@@ -21,8 +21,10 @@ struct CategoriesView: View {
         .toolbar {
             toolbarAddButton
         }
-        .sheet(isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet) {
-            CategoryEditSheet(category: store.createEmptyCategory(), editorTitle: "Add Category")
+        .sheet(isPresented: $isPresentingNewCategorySheet,
+               onDismiss: dismissNewCategorySheet) {
+            CategoryEditSheet(category: store.createEmptyCategory(),
+                              editorTitle: "Add Category")
         }
     }
     

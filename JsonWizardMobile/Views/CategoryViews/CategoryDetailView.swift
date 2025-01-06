@@ -23,8 +23,10 @@ struct CategoryDetailView: View {
         .toolbar {
             toolbarEditButton
         }
-        .sheet(isPresented: $isPresentingEditCategorySheet, onDismiss: dismissEditViewSheet) {
-            CategoryEditSheet(category: category, editorTitle: "Edit Category")
+        .sheet(isPresented: $isPresentingEditCategorySheet,
+               onDismiss: dismissEditViewSheet) {
+            CategoryEditSheet(category: category,
+                              editorTitle: "Edit Category")
         }
     }
     
