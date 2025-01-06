@@ -8,29 +8,41 @@
 import SwiftUI
 
 struct QuestionsView: View {
-    var questions: [Question]
+    
     @State private var isPresentingNewQuestionSheet = false
+    
     @Environment(\.store) private var store
+    
+    var questions: [Question]
     
     var body: some View {
         List {
-            ForEach(questions) { question in
-                NavigationLink(destination: QuestionEditView(question: question)) {
-                    QuestionCardView(question: question)
-                }
-            }
-            .onDelete(perform: store.deleteQuestions)
+            questionsList
         }
         .listRowSpacing(10)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: presentNewQuestionSheet) {
-                    Image(systemName: "plus")
-                }
-            }
+            toolbarAddButton
         }
         .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
             NewQuestionSheet(question: store.createEmptyQuestion())
+        }
+    }
+    
+    private var questionsList: some View {
+        ForEach(questions) { question in
+            NavigationLink(destination: QuestionEditView(question: question)) {
+                QuestionCardView(question: question)
+            }
+        }
+        .onDelete(perform: store.deleteQuestions)
+    }
+    
+    // MARK: Toolbar
+    private var toolbarAddButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: presentNewQuestionSheet) {
+                Image(systemName: "plus")
+            }
         }
     }
     

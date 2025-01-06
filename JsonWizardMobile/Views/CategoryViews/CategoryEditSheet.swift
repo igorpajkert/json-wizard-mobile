@@ -45,10 +45,19 @@ struct CategoryEditSheet: View {
                 }
                 ColorPicker("Color", selection: $category.color.unwrapped())
             }
+            creationDate
         }
     }
     
-    // MARK: Toolbar Intents
+    private var creationDate: some View {
+        Text("Created \(category.dateCreated.formatted(date: .long, time: .shortened))")
+            .frame(maxWidth: .infinity)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .listRowBackground(Color.clear)
+    }
+    
+    // MARK: Toolbar
     private var toolbarSaveButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button("Save") {
@@ -71,12 +80,9 @@ struct CategoryEditSheet: View {
 }
 
 #Preview("Add Category") {
-    NavigationStack {
-        CategoryEditSheet(category: DataStore().createEmptyCategory(), editorTitle: "Add Category")
-    }
+    CategoryEditSheet(category: DataStore().createEmptyCategory(), editorTitle: "Add Category")
+    
 }
 #Preview("Edit Category") {
-    NavigationStack {
-        CategoryEditSheet(category: Category.sampleData[0])
-    }
+    CategoryEditSheet(category: Category.sampleData[0])
 }
