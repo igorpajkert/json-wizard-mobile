@@ -12,9 +12,9 @@ import SwiftUI
 class DataStore {
     
     /// Holds a list of `Category` objects (read-only externally).
-    private(set) var categories = [Category]()
+    private(set) var categories: [Category]
     /// Holds a list of `Question` objects (read-only externally).
-    private(set) var questions = [Question]()
+    private(set) var questions: [Question]
     
     /// Calculates and returns the next category's unique ID.
     var nextCategoryId : Int { categories.maxId + 1 }
@@ -47,14 +47,14 @@ class DataStore {
     func createEmptyQuestion() -> Question {
         Question(id: nextQuestionId)
     }
- 
+    
     // MARK: - Intents
     // NOTE: Categories
     func addCategory(_ category: Category) {
         categories.append(category)
     }
     
-    func deleteCategories(at offsets: IndexSet) {
+    func deleteCategories(with offsets: IndexSet) {
         categories.remove(atOffsets: offsets)
     }
     
@@ -63,16 +63,16 @@ class DataStore {
         questions.append(question)
     }
     
-    func deleteQuestions(at offsets: IndexSet) {
+    func deleteQuestions(with offsets: IndexSet) {
         questions.remove(atOffsets: offsets)
     }
     
     // NOTE: Answers
-    func addAnswer(to question: Question, with text: String) {
+    func addAnswer(at question: Question, with text: String) {
         question.answers.append(Answer(id: question.answers.endIndex, answerText: text))
     }
     
-    func deleteAnswers(for question: Question, at offsets: IndexSet) {
+    func deleteAnswers(at question: Question, with offsets: IndexSet) {
         question.answers.remove(atOffsets: offsets)
     }
 }

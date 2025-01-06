@@ -80,13 +80,13 @@ struct QuestionEditView: View {
     // MARK: - Intents
     private func addAnswer() {
         withAnimation {
-            store.addAnswer(to: question, with: newAnswerText)
+            store.addAnswer(at: question, with: newAnswerText)
             newAnswerText.clear()
         }
     }
     
     private func deleteAnswers(at offsets: IndexSet) {
-        store.deleteAnswers(for: question, at: offsets)
+        store.deleteAnswers(at: question, with: offsets)
     }
 }
 
