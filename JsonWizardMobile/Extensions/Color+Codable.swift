@@ -9,6 +9,14 @@ import SwiftUI
 import UIKit
 
 extension Color: Codable {
+    /// Encodes this SwiftUI `Color` into the given encoder.
+    ///
+    /// The color is converted to a `UIColor` in order to extract
+    /// its `red`, `green`, `blue`, and `alpha` components. Those
+    /// values are then stored under corresponding coding keys.
+    ///
+    /// - Parameter encoder: The encoder to write data to.
+    /// - Throws: An error if any value fails to encode.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -27,6 +35,14 @@ extension Color: Codable {
         try container.encode(alpha, forKey: .opacity)
     }
     
+    /// Initializes a SwiftUI `Color` from the given decoder.
+    ///
+    /// Reads `red`, `green`, `blue`, and `opacity` values from the
+    /// decoder and constructs a new `Color` instance with those
+    /// component values.
+    ///
+    /// - Parameter decoder: The decoder to read data from.
+    /// - Throws: An error if any value fails to decode.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -38,6 +54,7 @@ extension Color: Codable {
         self = Color(red: red, green: green, blue: blue, opacity: opacity)
     }
     
+    /// The coding keys used for storing and retrieving the color components.
     private enum CodingKeys: String, CodingKey {
         case red, green, blue, opacity
     }
