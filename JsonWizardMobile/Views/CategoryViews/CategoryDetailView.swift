@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct CategoryDetailView: View {
-    var category: Category
+    
     @State private var isPresentingEditCategorySheet = false
+    
+    var category: Category
     
     var body: some View {
         List {
@@ -19,16 +21,14 @@ struct CategoryDetailView: View {
         }
         .navigationTitle(category.title)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Edit", action: presentEditViewSheet)
-            }
+            toolbarEditButton
         }
         .sheet(isPresented: $isPresentingEditCategorySheet, onDismiss: dismissEditViewSheet) {
             CategoryEditSheet(category: category, editorTitle: "Edit Category")
         }
     }
     
-    var categoryInfo: some View {
+    private var categoryInfo: some View {
         Section(header: Text("Category Info")) {
             HStack {
                 Text("Title")
@@ -52,7 +52,7 @@ struct CategoryDetailView: View {
         .multilineTextAlignment(.trailing)
     }
     
-    var questions: some View {
+    private var questions: some View {
         Section(header: Text("Questions")) {
             NavigationLink(destination: { QuestionsView(questions: category.questions) }) {
                 Label("Add Questions", systemImage: "rectangle.stack.badge.plus")
@@ -68,11 +68,18 @@ struct CategoryDetailView: View {
         }
     }
     
-    var questionsPreview: some View {
+    private var questionsPreview: some View {
         Section {
             ForEach(category.questions) { question in
                 Text(question.questionText)
             }
+        }
+    }
+    
+    // MARK: Toolbar
+    private var toolbarEditButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button("Edit", action: presentEditViewSheet)
         }
     }
     

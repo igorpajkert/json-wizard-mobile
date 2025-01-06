@@ -11,17 +11,12 @@ struct CategoryBadge: View {
     
     var category: Category
     
-    var color: Color {
-        guard let color = category.color else { return Color.accentColor }
-        return color
-    }
-    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(color)
+                .foregroundStyle(category.unwrappedColor)
             Text(category.title)
-                .foregroundStyle(color.adaptedTextColor())
+                .foregroundStyle(category.unwrappedColor.adaptedTextColor())
                 .padding(.horizontal, 10)
                 .padding(.vertical, 2)
         }

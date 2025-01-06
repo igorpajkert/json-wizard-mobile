@@ -31,3 +31,7 @@ final class Category: Codable, Identifiable {
         self.dateCreated = dateCreated
     }
 }
+
+extension Category {
+    var unwrappedColor: Color { color ?? .accent}
+}

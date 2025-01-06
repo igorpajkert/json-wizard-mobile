@@ -11,29 +11,34 @@ struct QuestionCardView: View {
     
     var question: Question
     
-    var categories: [Category] {
-        guard let categories = question.categories else { return [] }
-        return categories
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
+            textAndCategories
+            Spacer()
+            answersCountAndErrorBadge
+        }
+        .padding(.vertical)
+    }
+    
+    private var textAndCategories: some View {
+        Group {
             Text(question.questionText)
                 .font(.headline)
             HStack {
-                ForEach(categories) { category in
+                ForEach(question.unwrappedCategories) { category in
                     CategoryBadge(category: category)
                 }
             }
-            Spacer()
-            HStack {
-                Label("\(question.answersCount) Answers", systemImage: "mail.stack")
-                Spacer()
-                AnswersErrorBadge(answers: question.answers)
-            }
-            .font(.callout)
         }
-        .padding(.vertical)
+    }
+    
+    private var answersCountAndErrorBadge: some View {
+        HStack {
+            Label("\(question.answersCount) Answers", systemImage: "mail.stack")
+            Spacer()
+            AnswersErrorBadge(answers: question.answers)
+        }
+        .font(.callout)
     }
 }
 

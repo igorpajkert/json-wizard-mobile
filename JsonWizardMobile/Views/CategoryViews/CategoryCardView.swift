@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoryCardView: View {
+    
     var category: Category
     
     var body: some View {
@@ -17,14 +18,18 @@ struct CategoryCardView: View {
             Text(category.subtitle ?? "Subtitle")
                 .font(.subheadline)
             Spacer()
-            HStack {
-                Label("\(category.questionsCount) questions", systemImage: "rectangle.stack")
-                    .font(.callout)
-                Spacer()
-                CategoryStatusBadge(category: category)
-            }
+            countAndBadge
         }
         .padding(.vertical)
+    }
+    
+    private var countAndBadge: some View {
+        HStack {
+            Label("\(category.questionsCount) questions", systemImage: "rectangle.stack")
+                .font(.callout)
+            Spacer()
+            CategoryStatusBadge(category: category)
+        }
     }
 }
 

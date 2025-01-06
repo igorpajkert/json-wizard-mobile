@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoryStatusBadge: View {
+    
     var category: Category
     
     var body: some View {

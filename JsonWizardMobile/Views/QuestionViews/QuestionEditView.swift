@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct QuestionEditView: View {
+    
     @State private var newAnswerText = ""
+    
     @Environment(\.store) private var store
+    
     @Bindable var question: Question
     
     var body: some View {

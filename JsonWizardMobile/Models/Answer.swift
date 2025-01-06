@@ -10,7 +10,7 @@ import Foundation
 /// Model class that defines properties for an answer.
 @Observable
 final class Answer: Codable, Identifiable, Equatable {
-    var id: Int
+    let id: Int
     var answerText: String
     var isCorrect: Bool
     

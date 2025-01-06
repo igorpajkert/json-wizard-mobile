@@ -10,11 +10,11 @@ import Foundation
 /// Model class that defines properties for a question.
 @Observable
 final class Question: Codable, Identifiable, Equatable {
-    var id: Int
+    let id: Int
     var questionText: String
     var answers: [Answer]
     var categories: [Category]?
-    var dateCreated: Date
+    let dateCreated: Date
     
     var answersCount: Int { answers.count }
     var correctAnswersCount: Int { answers.filter(\.isCorrect).count }

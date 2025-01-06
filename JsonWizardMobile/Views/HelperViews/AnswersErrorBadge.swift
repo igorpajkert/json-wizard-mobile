@@ -17,7 +17,7 @@ struct AnswersErrorBadge: View {
         answers.isEmpty || corectAnswers.isEmpty ? "exclamationmark.circle" : "checkmark.circle"
     }
     
-    private var title: String {        
+    private var title: String {
         if answers.isEmpty {
             return "No Answers"
         } else if corectAnswers.isEmpty {
@@ -27,7 +27,7 @@ struct AnswersErrorBadge: View {
         }
     }
     
-    private var color: Color {        
+    private var color: Color {
         if answers.isEmpty {
             return .red
         } else if corectAnswers.isEmpty {
