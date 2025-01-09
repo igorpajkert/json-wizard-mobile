@@ -31,6 +31,32 @@ final class Answer: Codable, Identifiable {
         self.answerText = answerText
         self.isCorrect = isCorrect
     }
+    
+    // MARK: - Codable Conformance | Custom encoding & decoding
+    /// Initializes the model by decoding from a `Decoder`.
+    /// - Parameter decoder: The decoder containing the data to decode.
+    /// - Throws: An error if decoding fails for any of the properties.
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.answerText = try container.decode(String.self, forKey: .answerText)
+        self.isCorrect = try container.decode(Bool.self, forKey: .isCorrect)
+    }
+    
+    /// Encodes the model into an `Encoder`.
+    /// - Parameter encoder: The encoder to write the data into.
+    /// - Throws: An error if encoding fails for any of the properties.
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(answerText, forKey: .answerText)
+        try container.encode(isCorrect, forKey: .isCorrect)
+    }
+    
+    /// Keys for encoding and decoding properties.
+    private enum CodingKeys: String, CodingKey {
+        case id, answerText, isCorrect
+    }
 }
 
 // MARK: Equatable Conformance
@@ -40,4 +66,9 @@ extension Answer: Equatable {
         lhs.answerText == rhs.answerText &&
         lhs.isCorrect == rhs.isCorrect
     }
+}
+
+// MARK: - Nameable Conformance
+extension Answer: Nameable {
+    var name: String { answerText }
 }

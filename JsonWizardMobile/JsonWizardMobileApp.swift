@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct JsonWizardMobileApp: App {
     
-    // FIXME: Test initialization
-    @State private var store = DataStore(categories: Category.sampleData, questions: Question.sampleData)
+    @State private var store = DataStore()
+    @State private var database = DatabaseController()
+    
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -24,12 +27,28 @@ struct JsonWizardMobileApp: App {
                 }
                 Tab("All Questions", systemImage: "rectangle.stack") {
                     NavigationStack {
-                        QuestionsView(questions: store.questions)
+                        QuestionsView(questions: store.questionsObject.questions)
                             .navigationTitle("All Questions")
                     }
                 }
             }
             .dataStore(store)
+            .onChange(of: scenePhase) { oldState, newState in
+                if newState == .inactive {
+                    do {
+                        try store.save(using: database)
+                    } catch {
+                        print("Error saving data: \(error.localizedDescription)")
+                    }
+                }
+            }
+            .task {
+                do {
+                    try await store.load(using: database)
+                } catch {
+                    print("Error loading data: \(error.localizedDescription)")
+                }
+            }
         }
     }
 }

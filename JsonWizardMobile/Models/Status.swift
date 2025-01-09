@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// A status type representing the various states of an item.
-enum Status: String, CaseIterable, Identifiable, Hashable, Codable {
+enum Status: String, CaseIterable, Identifiable, Hashable, Codable, Nameable {
     
     /// Final or completed state.
     case done = "Done"

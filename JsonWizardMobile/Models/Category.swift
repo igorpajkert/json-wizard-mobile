@@ -10,7 +10,7 @@ import SwiftUI
 
 /// A model that represents a question category.
 @Observable
-final class Category: Codable, Identifiable {
+final class Category: Identifiable, Codable {
     
     /// A unique identifier for the category.
     let id: Int
@@ -56,6 +56,40 @@ final class Category: Codable, Identifiable {
         self.color = color
         self.dateCreated = dateCreated
     }
+    
+    // MARK: - Codable Conformance | Custom encoding & decoding
+    /// Initializes the model by decoding from a `Decoder`.
+    /// - Parameter decoder: The decoder containing the data to decode.
+    /// - Throws: An error if decoding fails for any of the properties.
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
+        self.questions = try container.decode([Question].self, forKey: .questions)
+        self.status = try container.decode(Status.self, forKey: .status)
+        self.color = try container.decodeIfPresent(Color.self, forKey: .color)
+        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+    }
+    
+    /// Encodes the model into an `Encoder`.
+    /// - Parameter encoder: The encoder to write the data into.
+    /// - Throws: An error if encoding fails for any of the properties.
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encodeIfPresent(subtitle, forKey: .subtitle)
+        try container.encode(questions, forKey: .questions)
+        try container.encode(status, forKey: .status)
+        try container.encodeIfPresent(color, forKey: .color)
+        try container.encode(dateCreated, forKey: .dateCreated)
+    }
+    
+    /// Keys for encoding and decoding properties.
+    private enum CodingKeys: String, CodingKey {
+        case id, title, subtitle, questions, status, color, dateCreated
+    }
 }
 
 // MARK: - Extension for Convenience
@@ -73,4 +107,9 @@ extension Category: Equatable {
     static func == (lhs: Category, rhs: Category) -> Bool {
         lhs.id == rhs.id && lhs.title == rhs.title
     }
+}
+
+// MARK: - Nameable Conformance
+extension Category: Nameable {
+    var name: String { title }
 }

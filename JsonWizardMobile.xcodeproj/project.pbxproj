@@ -6,13 +6,31 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F0E2B7882D2C9A5400FFF098 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F0E2B7872D2C9A5400FFF098 /* FirebaseCore */; };
+		F0E2B78F2D2D6E7600FFF098 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F0E2B78E2D2D6E7600FFF098 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F0A206322D1A5AA5001E1310 /* JsonWizardMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsonWizardMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F0E2B78A2D2D516E00FFF098 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F0A206312D1A5AA5001E1310 /* JsonWizardMobile */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F0A206342D1A5AA5001E1310 /* JsonWizardMobile */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F0E2B78A2D2D516E00FFF098 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */,
+			);
 			path = JsonWizardMobile;
 			sourceTree = "<group>";
 		};
@@ -23,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0E2B7882D2C9A5400FFF098 /* FirebaseCore in Frameworks */,
+				F0E2B78F2D2D6E7600FFF098 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				F0A206342D1A5AA5001E1310 /* JsonWizardMobile */,
+				F0E2B78D2D2D6E7600FFF098 /* Frameworks */,
 				F0A206332D1A5AA5001E1310 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +64,13 @@
 				F0A206322D1A5AA5001E1310 /* JsonWizardMobile.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F0E2B78D2D2D6E7600FFF098 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +93,8 @@
 			);
 			name = JsonWizardMobile;
 			packageProductDependencies = (
+				F0E2B7872D2C9A5400FFF098 /* FirebaseCore */,
+				F0E2B78E2D2D6E7600FFF098 /* FirebaseFirestore */,
 			);
 			productName = JsonWizardMobile;
 			productReference = F0A206322D1A5AA5001E1310 /* JsonWizardMobile.app */;
@@ -94,6 +124,9 @@
 			);
 			mainGroup = F0A206292D1A5AA5001E1310;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F0A206332D1A5AA5001E1310 /* Products */;
 			projectDirPath = "";
@@ -257,6 +290,7 @@
 				DEVELOPMENT_TEAM = E2BE72DZC6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JsonWizardMobile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -267,7 +301,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ipsoftware.JsonWizardMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ipsoftware.jsonwizardmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -286,6 +320,7 @@
 				DEVELOPMENT_TEAM = E2BE72DZC6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JsonWizardMobile/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -296,7 +331,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ipsoftware.JsonWizardMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ipsoftware.jsonwizardmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -326,6 +361,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F0E2B7872D2C9A5400FFF098 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		F0E2B78E2D2D6E7600FFF098 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F0A2062A2D1A5AA5001E1310 /* Project object */;
 }

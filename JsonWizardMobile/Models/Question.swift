@@ -9,7 +9,7 @@ import Foundation
 
 /// A model class that defines properties and behaviors for a question.
 @Observable
-final class Question: Codable, Identifiable {
+final class Question: Identifiable, Codable {
     
     /// A unique identifier for this question.
     let id: Int
@@ -52,6 +52,36 @@ final class Question: Codable, Identifiable {
         self.categories = categories
         self.dateCreated = dateCreated
     }
+    
+    // MARK: - Codable Conformance | Custom encoding & decoding
+    /// Initializes the model by decoding from a `Decoder`.
+    /// - Parameter decoder: The decoder containing the data to decode.
+    /// - Throws: An error if decoding fails for any of the properties.
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.questionText = try container.decode(String.self, forKey: .questionText)
+        self.answers = try container.decode([Answer].self, forKey: .answers)
+        self.categories = try container.decodeIfPresent([Category].self, forKey: .categories)
+        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+    }
+    
+    /// Encodes the model into an `Encoder`.
+    /// - Parameter encoder: The encoder to write the data into.
+    /// - Throws: An error if encoding fails for any of the properties.
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(questionText, forKey: .questionText)
+        try container.encode(answers, forKey: .answers)
+        try container.encodeIfPresent(categories, forKey: .categories)
+        try container.encode(dateCreated, forKey: .dateCreated)
+    }
+    
+    /// Keys for encoding and decoding properties.
+    private enum CodingKeys: String, CodingKey {
+        case id, questionText, answers, categories, dateCreated
+    }
 }
 
 // MARK: - Extension for Convenience
@@ -69,4 +99,9 @@ extension Question: Equatable {
     static func == (lhs: Question, rhs: Question) -> Bool {
         lhs.id == rhs.id && lhs.questionText == rhs.questionText
     }
+}
+
+// MARK: - Nameable Conformance
+extension Question: Nameable {
+    var name: String { questionText }
 }

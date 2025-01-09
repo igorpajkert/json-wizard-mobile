@@ -12,18 +12,19 @@ import SwiftUI
 class DataStore {
     
     /// Holds a list of `Category` objects (read-only externally).
-    private(set) var categories: [Category]
+    private(set) var categoriesObject: Categories
     /// Holds a list of `Question` objects (read-only externally).
-    private(set) var questions: [Question]
+    private(set) var questionsObject: Questions
     
     /// Calculates and returns the next category's unique ID.
-    var nextCategoryId : Int { categories.maxId + 1 }
+    var nextCategoryId : Int { categoriesObject.categories.maxId + 1 }
     /// Calculates and returns the next question's unique ID.
-    var nextQuestionId : Int { questions.maxId + 1 }
+    var nextQuestionId : Int { questionsObject.questions.maxId + 1 }
     
-    init(categories: [Category] = [Category](), questions: [Question] = [Question]()) {
-        self.categories = categories
-        self.questions = questions
+    init(categoriesObject: Categories = Categories(),
+         questionsObject: Questions = Questions()) {
+        self.categoriesObject = categoriesObject
+        self.questionsObject = questionsObject
     }
     
     /// Creates and returns a new category with a unique identifier.
@@ -48,23 +49,36 @@ class DataStore {
         Question(id: nextQuestionId)
     }
     
+    // MARK: - Save & Load
+    func save(using database: DatabaseController) throws {
+        try database.saveData(categoriesObject, into: Constants.categories, within: Constants.collection)
+        try database.saveData(questionsObject, into: Constants.questions, within: Constants.collection)
+    }
+    
+    func load(using database: DatabaseController) async throws {
+        async let categoriesObject: Categories = try database.loadData(from: Constants.categories, within: Constants.collection)
+        async let questionsObject: Questions = try database.loadData(from: Constants.questions, within: Constants.collection)
+        self.categoriesObject = try await categoriesObject
+        self.questionsObject = try await questionsObject
+    }
+    
     // MARK: - Intents
     // NOTE: Categories
     func addCategory(_ category: Category) {
-        categories.append(category)
+        categoriesObject.categories.append(category)
     }
     
     func deleteCategories(with offsets: IndexSet) {
-        categories.remove(atOffsets: offsets)
+        categoriesObject.categories.remove(atOffsets: offsets)
     }
     
     // NOTE: Questions
     func addQuestion(_ question: Question) {
-        questions.append(question)
+        questionsObject.questions.append(question)
     }
     
     func deleteQuestions(with offsets: IndexSet) {
-        questions.remove(atOffsets: offsets)
+        questionsObject.questions.remove(atOffsets: offsets)
     }
     
     // NOTE: Answers
@@ -74,5 +88,11 @@ class DataStore {
     
     func deleteAnswers(at question: Question, with offsets: IndexSet) {
         question.answers.remove(atOffsets: offsets)
+    }
+    
+    private struct Constants {
+        static let collection = "jsonwizard"
+        static let categories = "categories"
+        static let questions = "questions"
     }
 }

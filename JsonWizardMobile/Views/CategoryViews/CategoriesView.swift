@@ -29,7 +29,7 @@ struct CategoriesView: View {
     }
     
     private var categoriesList: some View {
-        ForEach(store.categories) { category in
+        ForEach(store.categoriesObject.categories) { category in
             NavigationLink(destination: CategoryDetailView(category: category)) {
                 CategoryCardView(category: category)
             }
@@ -59,6 +59,6 @@ struct CategoriesView: View {
 #Preview {
     NavigationStack {
         CategoriesView()
-            .environment(\.store, DataStore(categories: Category.sampleData))
+            .environment(\.store, DataStore(categoriesObject: Categories(categories: Category.sampleData)))
     }
 }
