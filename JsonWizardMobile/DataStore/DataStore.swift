@@ -91,7 +91,7 @@ class DataStore {
     }
     
     private struct Constants {
-        static let collection = "jsonwizard"
+        static let collection = "development"
         static let categories = "categories"
         static let questions = "questions"
     }

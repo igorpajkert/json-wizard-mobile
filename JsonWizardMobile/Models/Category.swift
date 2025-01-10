@@ -84,11 +84,12 @@ final class Category: Identifiable, Codable {
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(color, forKey: .color)
         try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(questionsCount, forKey: .questionsCount)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, title, subtitle, questions, status, color, dateCreated
+        case id, title, subtitle, questions, status, color, dateCreated, questionsCount
     }
 }
 
