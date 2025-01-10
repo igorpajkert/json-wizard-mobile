@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F00F37312D30A1E5009E12F6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F00F37302D30A1E5009E12F6 /* FirebaseAuth */; };
 		F0E2B7882D2C9A5400FFF098 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F0E2B7872D2C9A5400FFF098 /* FirebaseCore */; };
 		F0E2B78F2D2D6E7600FFF098 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F0E2B78E2D2D6E7600FFF098 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0E2B7882D2C9A5400FFF098 /* FirebaseCore in Frameworks */,
+				F00F37312D30A1E5009E12F6 /* FirebaseAuth in Frameworks */,
 				F0E2B78F2D2D6E7600FFF098 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +97,7 @@
 			packageProductDependencies = (
 				F0E2B7872D2C9A5400FFF098 /* FirebaseCore */,
 				F0E2B78E2D2D6E7600FFF098 /* FirebaseFirestore */,
+				F00F37302D30A1E5009E12F6 /* FirebaseAuth */,
 			);
 			productName = JsonWizardMobile;
 			productReference = F0A206322D1A5AA5001E1310 /* JsonWizardMobile.app */;
@@ -374,6 +377,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F00F37302D30A1E5009E12F6 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		F0E2B7872D2C9A5400FFF098 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F0E2B7862D2C975600FFF098 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
