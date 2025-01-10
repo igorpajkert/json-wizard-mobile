@@ -30,6 +30,12 @@ struct JsonWizardMobileApp: App {
                             .navigationTitle("All Questions")
                     }
                 }
+                Tab("Account", systemImage: "person.crop.circle") {
+                    NavigationStack {
+                        AccountView()
+                            .navigationTitle("Account")
+                    }
+                }
             }
             .dataStore(store)
             .onChange(of: scenePhase) { oldState, newState in
