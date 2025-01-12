@@ -12,6 +12,8 @@ struct JsonWizardMobileApp: App {
     
     @State private var store = DataStore()
     @State private var database = DatabaseController()
+    @State private var authHandler = AuthHandler()
+    @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.scenePhase) private var scenePhase
     
@@ -38,12 +40,15 @@ struct JsonWizardMobileApp: App {
                 }
             }
             .dataStore(store)
+            .authHandler(authHandler)
             .onChange(of: scenePhase) { oldState, newState in
                 if newState == .inactive {
                     do {
                         try store.save(using: database)
                     } catch {
-                        print("Error saving data: \(error.localizedDescription)")
+                        errorWrapper = ErrorWrapper(error: error,
+                                                    guidance: "Error saving data",
+                                                    isDismissable: true)
                     }
                 }
             }
@@ -51,8 +56,13 @@ struct JsonWizardMobileApp: App {
                 do {
                     try await store.load(using: database)
                 } catch {
-                    print("Error loading data: \(error.localizedDescription)")
+                    errorWrapper = ErrorWrapper(error: error,
+                                                guidance: "Error loading data",
+                                                isDismissable: true)
                 }
+            }
+            .sheet(item: $errorWrapper) { wrapper in
+                ErrorView(errorWrapper: wrapper)
             }
         }
     }
