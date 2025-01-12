@@ -10,46 +10,89 @@ import SwiftUI
 struct AccountView: View {
     
     @State private var isPresentingSignInSheet = false
+    @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.authHandler) private var authHandler
     
+    private var userName: String { authHandler.user?.displayName ?? "User" }
+    private var userEmail: String { authHandler.user?.email ?? "Email Address" }
+    private var userRole: String { "Administrator" } // FIXME: Role
+    private var userAvatar: ImageResource { .avatarW } // FIXME: Avatar
+    private var isUserSignedIn: Bool { authHandler.user != nil }
+    private var userStatus: String { isUserSignedIn ? "User signed in" : "User signed out" }
+    
     var body: some View {
         VStack(spacing: 16) {
-            Image(.avatarW)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 120, height: 120)
-                .clipShape(Circle())
-                .shadow(radius: 4)
-            Text("Igor Pajkert")
-                .font(.title)
-                .fontWeight(.semibold)
-            Text("pajkert.igor@gmail.com")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text("Administrator")
-                .foregroundStyle(.secondary)
+            avatarImage
+            userInfo
             Divider()
-            Button("Edit Profile") {}
-                .frame(minWidth: 150, minHeight: 35)
-                .background(RoundedRectangle(cornerRadius: 64).fill(.accent))
-                .foregroundStyle(.accent.adaptedTextColor())
-            Text(authHandler.user?.uid ?? "user nil")
-            Text(authHandler.user?.email ?? "email nil")
-            Button("Sign In") {
-                presentSignInSheet()
-            }
+            changePasswordButton
             Spacer()
-            Button("Log Out") {
-                try? authHandler.signOut()
-            }
-                .foregroundStyle(.red)
+            signInButton
+            signOutButton
+            statustext
         }
-        .padding()
-        .sheet(isPresented: $isPresentingSignInSheet,
-               onDismiss: dismissSignInSheet) {
+        .padding(.vertical, 48)
+        .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
             SignInView()
         }
+        .sheet(item: $errorWrapper) { wrapper in
+            ErrorView(errorWrapper: wrapper)
+        }
+    }
+    
+    private var avatarImage: some View {
+        Image(userAvatar)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 120, height: 120)
+            .clipShape(Circle())
+            .shadow(radius: 4)
+    }
+    
+    private var userInfo: some View {
+        Group {
+            Text(userName)
+                .font(.title)
+                .fontWeight(.semibold)
+            Text(userEmail)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Text(userRole)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var signInButton: some View {
+        Button(action: presentSignInSheet) {
+            Text("Sign In")
+                .bold()
+        }
+        .disabled(isUserSignedIn)
+        .padding()
+    }
+    
+    // TODO: Change Password
+    private var changePasswordButton: some View {
+        Button(action:{}) {
+            Text("Change Password")
+        }
+        .disabled(!isUserSignedIn)
+        .padding()
+    }
+    
+    private var signOutButton: some View {
+        Button(role: .destructive, action: signOut) {
+            Text("Sign Out")
+        }
+        .disabled(!isUserSignedIn)
+        .padding()
+    }
+    
+    private var statustext: some View {
+        Text(userStatus)
+            .font(.caption)
+            .foregroundStyle(.secondary)
     }
     
     // MARK: - Intents
@@ -60,9 +103,22 @@ struct AccountView: View {
     private func dismissSignInSheet() {
         isPresentingSignInSheet = false
     }
+    
+    private func signOut() {
+        do {
+            try authHandler.signOut()
+        } catch {
+            errorWrapper = .init(error: error,
+                                 guidance: "Could not sign out.",
+                                 isDismissable: true)
+        }
+    }
 }
 
 #Preview {
-    AccountView()
-        .environment(AuthHandler())
+    NavigationStack {
+        AccountView()
+            .navigationTitle("Account")
+            .environment(AuthHandler())
+    }
 }

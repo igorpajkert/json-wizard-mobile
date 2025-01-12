@@ -22,7 +22,7 @@ struct SignInView: View {
                 VStack(spacing: 16) {
                     infoText
                     userCredentials
-                    forgotPasswordButton
+                    passwordResetButton
                     signInButton
                 }
                 .navigationTitle("Sign In")
@@ -71,8 +71,8 @@ struct SignInView: View {
         .padding(.horizontal)
     }
     
-    // TODO: Reset Password
-    private var forgotPasswordButton: some View {
+    // TODO: Password Reset
+    private var passwordResetButton: some View {
         Button(action:{}) {
             Text("Forgot your password?")
                 .font(.callout)
@@ -108,11 +108,11 @@ struct SignInView: View {
                 try await authHandler.signIn(with: email, password: password)
                 dismiss()
             } catch {
-                errorWrapper = ErrorWrapper(error: error,
-                                            guidance: "Error signing in",
-                                            isDismissable: true,
-                                            dismissAction: .init(title: "Try Again",
-                                                                 action: clearCredentials))
+                errorWrapper = .init(error: error,
+                                     guidance: "Error signing in",
+                                     isDismissable: true,
+                                     dismissAction: .init(title: "Try Again",
+                                                          action: clearCredentials))
             }
         }
     }
