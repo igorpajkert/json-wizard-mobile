@@ -46,9 +46,10 @@ struct JsonWizardMobileApp: App {
                     do {
                         try store.save(using: database)
                     } catch {
-                        errorWrapper = ErrorWrapper(error: error,
-                                                    guidance: "Error saving data",
-                                                    isDismissable: true)
+                        errorWrapper = ErrorWrapper(
+                            error: error,
+                            guidance: "Error saving data.",
+                            isDismissable: true)
                     }
                 }
             }
@@ -56,9 +57,10 @@ struct JsonWizardMobileApp: App {
                 do {
                     try await store.load(using: database)
                 } catch {
-                    errorWrapper = ErrorWrapper(error: error,
-                                                guidance: "Error loading data",
-                                                isDismissable: true)
+                    errorWrapper = ErrorWrapper(
+                        error: error,
+                        guidance: "Error loading data.",
+                        isDismissable: true)
                 }
             }
             .sheet(item: $errorWrapper) { wrapper in

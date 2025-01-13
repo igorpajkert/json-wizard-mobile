@@ -50,11 +50,18 @@ class DataStore {
     }
     
     // MARK: - Save & Load
+    /// Saves the current `categoriesObject` and `questionsObject` to the database.
+    /// - Parameter database: The `DatabaseController` used to perform the save operation.
+    /// - Throws: An error if any of the save operations fail.
     func save(using database: DatabaseController) throws {
         try database.saveData(categoriesObject, into: Constants.categories, within: Constants.collection)
         try database.saveData(questionsObject, into: Constants.questions, within: Constants.collection)
     }
     
+    /// Asynchronously loads data for `categoriesObject` and `questionsObject` from the database,
+    /// then assigns the results to the relevant properties.
+    /// - Parameter database: The `DatabaseController` used to perform the load operation.
+    /// - Throws: An error if any of the load operations fail.
     func load(using database: DatabaseController) async throws {
         async let categoriesObject: Categories = try database.loadData(from: Constants.categories, within: Constants.collection)
         async let questionsObject: Questions = try database.loadData(from: Constants.questions, within: Constants.collection)

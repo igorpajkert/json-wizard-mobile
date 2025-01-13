@@ -17,27 +17,44 @@ struct AccountView: View {
     private var userName: String { authHandler.user?.displayName ?? "User" }
     private var userEmail: String { authHandler.user?.email ?? "Email Address" }
     private var userRole: String { "Administrator" } // FIXME: Role
-    private var userAvatar: ImageResource { .avatarW } // FIXME: Avatar
+    private var userAvatar: ImageResource { .avatarIgor } // FIXME: Avatar
     private var isUserSignedIn: Bool { authHandler.user != nil }
-    private var userStatus: String { isUserSignedIn ? "User signed in" : "User signed out" }
     
     var body: some View {
+        ZStack {
+            backgroundGradient
+            ScrollView {
+                mainVStack
+                    .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
+                        SignInView()
+                    }
+                    .sheet(item: $errorWrapper) { wrapper in
+                        ErrorView(errorWrapper: wrapper)
+                    }
+                    .padding()
+            }
+        }
+    }
+    
+    private var backgroundGradient: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [.lightLavender, .lavender]),
+            startPoint: .top,
+            endPoint: .bottom)
+        .ignoresSafeArea(.all)
+    }
+    
+    private var mainVStack: some View {
         VStack(spacing: 16) {
             avatarImage
             userInfo
             Divider()
-            changePasswordButton
             Spacer()
-            signInButton
+            if !isUserSignedIn {
+                signInButton
+            }
+            changePasswordButton
             signOutButton
-            statustext
-        }
-        .padding(.vertical, 48)
-        .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
-            SignInView()
-        }
-        .sheet(item: $errorWrapper) { wrapper in
-            ErrorView(errorWrapper: wrapper)
         }
     }
     
@@ -65,34 +82,42 @@ struct AccountView: View {
     
     private var signInButton: some View {
         Button(action: presentSignInSheet) {
-            Text("Sign In")
-                .bold()
+            ZStack {
+                RoundedRectangle(cornerRadius: 32)
+                Text("Sign In")
+                    .foregroundStyle(.accent.adaptedTextColor())
+                    .bold()
+                    .padding()
+            }
         }
-        .disabled(isUserSignedIn)
-        .padding()
+        .padding(.horizontal)
     }
     
     // TODO: Change Password
     private var changePasswordButton: some View {
         Button(action:{}) {
-            Text("Change Password")
+            ZStack {
+                RoundedRectangle(cornerRadius: 32)
+                Text("Change Password")
+                    .foregroundStyle(.accent.adaptedTextColor())
+                    .padding()
+            }
         }
-        .disabled(!isUserSignedIn)
-        .padding()
+        .isHidden(!isUserSignedIn)
+        .padding(.horizontal)
     }
     
     private var signOutButton: some View {
         Button(role: .destructive, action: signOut) {
-            Text("Sign Out")
+            ZStack {
+                RoundedRectangle(cornerRadius: 32)
+                Text("Sign Out")
+                    .foregroundStyle(.red.adaptedTextColor())
+                    .padding()
+            }
         }
-        .disabled(!isUserSignedIn)
-        .padding()
-    }
-    
-    private var statustext: some View {
-        Text(userStatus)
-            .font(.caption)
-            .foregroundStyle(.secondary)
+        .isHidden(!isUserSignedIn)
+        .padding(.horizontal)
     }
     
     // MARK: - Intents
@@ -108,9 +133,10 @@ struct AccountView: View {
         do {
             try authHandler.signOut()
         } catch {
-            errorWrapper = .init(error: error,
-                                 guidance: "Could not sign out.",
-                                 isDismissable: true)
+            errorWrapper = .init(
+                error: error,
+                guidance: "Could not sign out.",
+                isDismissable: true)
         }
     }
 }

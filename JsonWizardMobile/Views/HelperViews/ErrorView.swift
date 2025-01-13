@@ -15,22 +15,30 @@ struct ErrorView: View {
     
     var body: some View {
         NavigationStack {
-            errorContent
-                .padding()
-                .multilineTextAlignment(.center)
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 32))
-                .toolbar {
-                    toolbarDismissButton
-                }
+            ScrollView {
+                errorContent
+                    .multilineTextAlignment(.center)
+                    .navigationTitle("Error")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        toolbarDismissButton
+                    }
+                    .padding()
+            }
         }
-        .padding()
+    }
+    
+    private var errorSymbol: some View {
+        Image(systemName: "xmark.circle")
+            .font(.title)
+            .imageScale(.large)
+            .foregroundStyle(.red)
     }
     
     private var errorContent: some View {
         VStack(spacing: 16) {
-            Text("An error has occurred:")
-                .font(.title)
+            errorSymbol
+                .padding(.top)
             Text(errorWrapper.error.localizedDescription)
                 .font(.headline)
             Divider()
@@ -48,9 +56,10 @@ struct ErrorView: View {
                 RoundedRectangle(cornerRadius: 32)
                 Text(errorWrapper.dismissAction?.title ?? "Dismiss")
                     .foregroundStyle(.accent.adaptedTextColor())
+                    .padding()
             }
-            .frame(width: 200, height: 44)
         }
+        .padding()
     }
     
     // MARK: Toolbar
@@ -72,14 +81,16 @@ struct ErrorView: View {
 }
 
 #Preview("No Action") {
-    ErrorView(errorWrapper: ErrorWrapper(error: ErrorWrapper.SampleError.sample,
-                                         guidance: "Try again",
-                                         isDismissable: true))
+    ErrorView(errorWrapper: ErrorWrapper(
+        error: ErrorWrapper.SampleError.sample,
+        guidance: "Try again later.",
+        isDismissable: true))
 }
 
 #Preview("Sign In") {
-    ErrorView(errorWrapper: ErrorWrapper(error: ErrorWrapper.SampleError.sample,
-                                         guidance: "Sign into your account",
-                                         isDismissable: false,
-                                         dismissAction: ErrorWrapper.ErrorAction(title: "Sign In") {}))
+    ErrorView(errorWrapper: ErrorWrapper(
+        error: ErrorWrapper.SampleError.sample,
+        guidance: "Sign into your account.",
+        isDismissable: false,
+        dismissAction: ErrorWrapper.ErrorAction(title: "Sign In") {}))
 }

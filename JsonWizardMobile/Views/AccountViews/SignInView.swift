@@ -32,6 +32,7 @@ struct SignInView: View {
                 .sheet(item: $errorWrapper) { wrapper in
                     ErrorView(errorWrapper: wrapper)
                 }
+                .padding()
             }
         }
     }
@@ -86,12 +87,11 @@ struct SignInView: View {
                 RoundedRectangle(cornerRadius: 32)
                 Text("Sign In")
                     .foregroundStyle(.accent.adaptedTextColor())
-                    .padding(.vertical)
-                    .padding(.horizontal, 48)
+                    .padding()
             }
-            .fixedSize()
         }
         .disabled(email.isEmpty || password.isEmpty)
+        .padding()
     }
     
     // MARK: Toolbar
@@ -108,11 +108,13 @@ struct SignInView: View {
                 try await authHandler.signIn(with: email, password: password)
                 dismiss()
             } catch {
-                errorWrapper = .init(error: error,
-                                     guidance: "Error signing in",
-                                     isDismissable: true,
-                                     dismissAction: .init(title: "Try Again",
-                                                          action: clearCredentials))
+                errorWrapper = .init(
+                    error: error,
+                    guidance: "Error signing in.",
+                    isDismissable: true,
+                    dismissAction: .init(
+                        title: "Try Again",
+                        action: clearCredentials))
             }
         }
     }
