@@ -1,5 +1,5 @@
 //
-//  PasswordChangeView.swift
+//  PasswordChangeSheet.swift
 //  JsonWizardMobile
 //
 //  Created by Igor Pajkert on 14/01/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PasswordChangeView: View {
+struct PasswordChangeSheet: View {
     
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
@@ -15,6 +15,7 @@ struct PasswordChangeView: View {
     @State private var isPresentingReauthenticateSheet = false
     
     @Environment(\.authHandler) private var authHandler
+    @Environment(\.dismiss) private var dismiss
     
     private var isPasswordsMatch: Bool {
         password == confirmPassword
@@ -25,23 +26,28 @@ struct PasswordChangeView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                infoText
-                userPasswords
-                if !isPasswordsEmpty {
-                    passwordsMatchIndicator
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 16) {
+                    infoText
+                    userPasswords
+                    if !isPasswordsEmpty {
+                        passwordsMatchIndicator
+                    }
+                    changePasswordButton
                 }
-                changePasswordButton
+                .navigationTitle("Change Password")
+                .toolbar {
+                    toolbarDismissButton
+                }
+                .sheet(isPresented: $isPresentingReauthenticateSheet, onDismiss: dismissReauthenticateSheet) {
+                    ReauthenticateSheet()
+                }
+                .sheet(item: $errorWrapper) { wrapper in
+                    ErrorSheet(errorWrapper: wrapper)
+                }
+                .padding()
             }
-            .navigationTitle("Change Password")
-            .sheet(isPresented: $isPresentingReauthenticateSheet, onDismiss: dismissReauthenticateSheet) {
-                ReauthenticateSheet()
-            }
-            .sheet(item: $errorWrapper) { wrapper in
-                ErrorSheet(errorWrapper: wrapper)
-            }
-            .padding()
         }
     }
     
@@ -95,18 +101,26 @@ struct PasswordChangeView: View {
         .padding()
     }
     
+    // MARK: Toolbar
+    private var toolbarDismissButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button("Dismiss") { dismiss() }
+        }
+    }
+    
     // MARK: - Intents
     func changePassword() {
         Task {
             do {
                 try await authHandler.updatePassword(to: password)
+                dismiss()
             } catch {
                 if error as? AuthHandler.AuthError == AuthHandler.AuthError.reauthenticationRequired {
                     errorWrapper = .init(
                         error: error,
                         guidance: "Re-authentication required. Please sign into your account and try again.",
                         isDismissable: true,
-                        dismissAction: .init(title: "Sign In", action: presentReauthenticateSheet))
+                        dismissAction: .init(title: "Authenticate", action: presentReauthenticateSheet))
                 } else {
                     errorWrapper = .init(
                         error: error,
@@ -134,7 +148,7 @@ struct PasswordChangeView: View {
 
 #Preview {
     NavigationStack {
-        PasswordChangeView()
+        PasswordChangeSheet()
             .environment(AuthHandler())
     }
 }

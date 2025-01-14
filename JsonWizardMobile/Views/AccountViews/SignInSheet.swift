@@ -54,7 +54,7 @@ struct SignInSheet: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Sign in to your developer account.")
+            Text("Sign into your developer account.")
                 .font(.headline)
             Text("If you have trouble accessing your account, please contact: igor.pajkert@ipsoftware.org")
                 .font(.caption)
@@ -114,7 +114,7 @@ struct SignInSheet: View {
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Error signing in.",
+                    guidance: "Error signing in. Please try again.",
                     isDismissable: true,
                     dismissAction: .init(
                         title: "Try Again",

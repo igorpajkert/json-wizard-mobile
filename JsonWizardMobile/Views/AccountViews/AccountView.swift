@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountView: View {
     
     @State private var isPresentingSignInSheet = false
+    @State private var isPresentingPasswordChangeSheet = false
     @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.authHandler) private var authHandler
@@ -27,6 +28,9 @@ struct AccountView: View {
                 mainVStack
                     .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
                         SignInSheet()
+                    }
+                    .sheet(isPresented: $isPresentingPasswordChangeSheet, onDismiss: dismissPasswordChangeSheet) {
+                        PasswordChangeSheet()
                     }
                     .sheet(item: $errorWrapper) { wrapper in
                         ErrorSheet(errorWrapper: wrapper)
@@ -94,7 +98,7 @@ struct AccountView: View {
     }
     
     private var changePasswordButton: some View {
-        NavigationLink(destination: PasswordChangeView()) {
+        Button(action: presentPasswordChangeSheet) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
                 Text("Change Password")
@@ -126,6 +130,14 @@ struct AccountView: View {
     
     private func dismissSignInSheet() {
         isPresentingSignInSheet = false
+    }
+    
+    private func presentPasswordChangeSheet() {
+        isPresentingPasswordChangeSheet = true
+    }
+    
+    private func dismissPasswordChangeSheet() {
+        isPresentingPasswordChangeSheet = false
     }
     
     private func signOut() {
