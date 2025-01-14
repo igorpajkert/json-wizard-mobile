@@ -1,5 +1,5 @@
 //
-//  ErrorView.swift
+//  ErrorSheet.swift
 //  JsonWizardMobile
 //
 //  Created by Igor Pajkert on 11/01/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ErrorView: View {
+struct ErrorSheet: View {
     
     @Environment(\.dismiss) private var dismiss
     
@@ -66,7 +66,7 @@ struct ErrorView: View {
     private var toolbarDismissButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button("Dismiss") {
-                errorWrapperAction()
+                dismiss()
             }
             .disabled(!errorWrapper.isDismissable)
         }
@@ -81,14 +81,14 @@ struct ErrorView: View {
 }
 
 #Preview("No Action") {
-    ErrorView(errorWrapper: ErrorWrapper(
+    ErrorSheet(errorWrapper: ErrorWrapper(
         error: ErrorWrapper.SampleError.sample,
         guidance: "Try again later.",
         isDismissable: true))
 }
 
 #Preview("Sign In") {
-    ErrorView(errorWrapper: ErrorWrapper(
+    ErrorSheet(errorWrapper: ErrorWrapper(
         error: ErrorWrapper.SampleError.sample,
         guidance: "Sign into your account.",
         isDismissable: false,

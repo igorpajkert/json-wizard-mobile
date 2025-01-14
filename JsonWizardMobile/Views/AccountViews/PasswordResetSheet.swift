@@ -1,16 +1,15 @@
 //
-//  SignInView.swift
+//  PasswordResetSheet.swift
 //  JsonWizardMobile
 //
-//  Created by Igor Pajkert on 11/01/2025.
+//  Created by Igor Pajkert on 12/01/2025.
 //
 
 import SwiftUI
 
-struct SignInView: View {
+struct PasswordResetSheet: View {
     
     @State private var email: String = ""
-    @State private var password: String = ""
     @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.authHandler) private var authHandler
@@ -21,16 +20,15 @@ struct SignInView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     infoText
-                    userCredentials
-                    passwordResetButton
-                    signInButton
+                    userEmail
+                    sendEmailButton
                 }
-                .navigationTitle("Sign In")
+                .navigationTitle("Reset Password")
                 .toolbar {
                     toolbarDismissButton
                 }
                 .sheet(item: $errorWrapper) { wrapper in
-                    ErrorView(errorWrapper: wrapper)
+                    ErrorSheet(errorWrapper: wrapper)
                 }
                 .padding()
             }
@@ -38,7 +36,7 @@ struct SignInView: View {
     }
     
     private var sampleImage: some View {
-        Image(.account)
+        Image(.email)
             .resizable()
             .scaledToFill()
             .frame(width: 120, height: 120)
@@ -49,48 +47,31 @@ struct SignInView: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Sign in to your developer account.")
+            Text("Send a password reset email to:")
                 .font(.headline)
-            Text("If you have trouble accessing your account, please contact: igor.pajkert@ipsoftware.org")
-                .font(.caption)
-                .foregroundStyle(.secondary)
         }
         .multilineTextAlignment(.center)
         .padding()
     }
     
-    private var userCredentials: some View {
-        Group {
-            TextField("Email", text: $email)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 32).stroke(style: StrokeStyle(lineWidth: 2)))
-            SecureField("Password", text: $password)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 32).stroke(style: StrokeStyle(lineWidth: 2)))
-        }
-        .textInputAutocapitalization(.never)
-        .padding(.horizontal)
+    private var userEmail: some View {
+        TextField("Email", text: $email)
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 32).stroke(style: StrokeStyle(lineWidth: 2)))
+            .textInputAutocapitalization(.never)
+            .padding(.horizontal)
     }
     
-    // TODO: Password Reset
-    private var passwordResetButton: some View {
-        Button(action:{}) {
-            Text("Forgot your password?")
-                .font(.callout)
-                .padding(.bottom)
-        }
-    }
-    
-    private var signInButton: some View {
-        Button(action: signIn) {
+    private var sendEmailButton: some View {
+        Button(action: sendEmail) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text("Sign In")
+                Text("Send Email")
                     .foregroundStyle(.accent.adaptedTextColor())
                     .padding()
             }
         }
-        .disabled(email.isEmpty || password.isEmpty)
+        .disabled(email.isEmpty)
         .padding()
     }
     
@@ -102,32 +83,31 @@ struct SignInView: View {
     }
     
     // MARK: - Intents
-    private func signIn() {
+    private func sendEmail() {
         Task {
             do {
-                try await authHandler.signIn(with: email, password: password)
+                try await authHandler.sendPasswordResetEmail(to: email)
                 dismiss()
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Error signing in.",
+                    guidance: "Failed to send password reset email.",
                     isDismissable: true,
                     dismissAction: .init(
                         title: "Try Again",
-                        action: clearCredentials))
+                        action: clearEmail))
             }
         }
     }
     
-    private func clearCredentials() {
+    private func clearEmail() {
         email.clear()
-        password.clear()
     }
 }
 
 #Preview {
     NavigationStack {
-        SignInView()
+        PasswordResetSheet()
             .environment(AuthHandler())
     }
 }

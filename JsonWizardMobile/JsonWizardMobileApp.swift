@@ -64,7 +64,7 @@ struct JsonWizardMobileApp: App {
                 }
             }
             .sheet(item: $errorWrapper) { wrapper in
-                ErrorView(errorWrapper: wrapper)
+                ErrorSheet(errorWrapper: wrapper)
             }
         }
     }

@@ -26,10 +26,10 @@ struct AccountView: View {
             ScrollView {
                 mainVStack
                     .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
-                        SignInView()
+                        SignInSheet()
                     }
                     .sheet(item: $errorWrapper) { wrapper in
-                        ErrorView(errorWrapper: wrapper)
+                        ErrorSheet(errorWrapper: wrapper)
                     }
                     .padding()
             }
@@ -93,9 +93,8 @@ struct AccountView: View {
         .padding(.horizontal)
     }
     
-    // TODO: Change Password
     private var changePasswordButton: some View {
-        Button(action:{}) {
+        NavigationLink(destination: PasswordChangeView()) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
                 Text("Change Password")
@@ -135,7 +134,7 @@ struct AccountView: View {
         } catch {
             errorWrapper = .init(
                 error: error,
-                guidance: "Could not sign out.",
+                guidance: "Could not sign out. Try again later.",
                 isDismissable: true)
         }
     }
