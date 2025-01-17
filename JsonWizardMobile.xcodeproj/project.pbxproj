@@ -17,7 +17,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F0E2B78A2D2D516E00FFF098 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */ = {
+		F0E6126B2D39C36C002E1027 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -30,7 +30,7 @@
 		F0A206342D1A5AA5001E1310 /* JsonWizardMobile */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				F0E2B78A2D2D516E00FFF098 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */,
+				F0E6126B2D39C36C002E1027 /* Exceptions for "JsonWizardMobile" folder in "JsonWizardMobile" target */,
 			);
 			path = JsonWizardMobile;
 			sourceTree = "<group>";

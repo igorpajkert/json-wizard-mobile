@@ -13,13 +13,13 @@ struct AccountView: View {
     @State private var isPresentingPasswordChangeSheet = false
     @State private var errorWrapper: ErrorWrapper?
     
-    @Environment(\.authHandler) private var authHandler
+    @Environment(\.auth) private var auth
     
-    private var userName: String { authHandler.user?.displayName ?? "User" }
-    private var userEmail: String { authHandler.user?.email ?? "Email Address" }
+    private var userName: String { auth.user?.displayName ?? "User" }
+    private var userEmail: String { auth.user?.email ?? "Email Address" }
     private var userRole: String { "Administrator" } // FIXME: Role
     private var userAvatar: ImageResource { .avatarIgor } // FIXME: Avatar
-    private var isUserSignedIn: Bool { authHandler.user != nil }
+    private var isUserSignedIn: Bool { auth.user != nil }
     
     var body: some View {
         ZStack {
@@ -142,7 +142,7 @@ struct AccountView: View {
     
     private func signOut() {
         do {
-            try authHandler.signOut()
+            try auth.signOut()
         } catch {
             errorWrapper = .init(
                 error: error,
@@ -156,6 +156,6 @@ struct AccountView: View {
     NavigationStack {
         AccountView()
             .navigationTitle("Account")
-            .environment(AuthHandler())
+            .environment(Authentication())
     }
 }

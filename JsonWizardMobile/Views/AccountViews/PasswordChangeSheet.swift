@@ -14,7 +14,7 @@ struct PasswordChangeSheet: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isPresentingReauthenticateSheet = false
     
-    @Environment(\.authHandler) private var authHandler
+    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
     
     private var isPasswordsMatch: Bool {
@@ -112,10 +112,10 @@ struct PasswordChangeSheet: View {
     func changePassword() {
         Task {
             do {
-                try await authHandler.updatePassword(to: password)
+                try await auth.updatePassword(to: password)
                 dismiss()
             } catch {
-                if error as? AuthHandler.AuthError == AuthHandler.AuthError.reauthenticationRequired {
+                if error as? Authentication.AuthError == Authentication.AuthError.reauthenticationRequired {
                     errorWrapper = .init(
                         error: error,
                         guidance: "Re-authentication required. Please sign into your account and try again.",
@@ -149,6 +149,6 @@ struct PasswordChangeSheet: View {
 #Preview {
     NavigationStack {
         PasswordChangeSheet()
-            .environment(AuthHandler())
+            .environment(Authentication())
     }
 }

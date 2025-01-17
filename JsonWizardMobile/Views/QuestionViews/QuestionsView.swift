@@ -10,8 +10,10 @@ import SwiftUI
 struct QuestionsView: View {
     
     @State private var isPresentingNewQuestionSheet = false
+    @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.store) private var store
+    @Environment(\.database) private var database
     
     var questions: [Question]
     
@@ -23,9 +25,14 @@ struct QuestionsView: View {
         .toolbar {
             toolbarAddButton
         }
-        .sheet(isPresented: $isPresentingNewQuestionSheet,
-               onDismiss: dismissNewQuestionSheet) {
+        .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
             NewQuestionSheet(question: store.createEmptyQuestion())
+        }
+        .sheet(item: $errorWrapper) { wrapper in
+            ErrorSheet(errorWrapper: wrapper)
+        }
+        .refreshable {
+            await refresh()
         }
     }
     
@@ -54,6 +61,17 @@ struct QuestionsView: View {
     
     private func dismissNewQuestionSheet() {
         isPresentingNewQuestionSheet = false
+    }
+    
+    private func refresh() async {
+        do {
+            try await store.refresh(using: database)
+        } catch {
+            errorWrapper = .init(
+                error: error,
+                guidance: "Could not refresh questions. Check if you are properly signed in and try again.",
+                isDismissable: true)
+        }
     }
 }
 

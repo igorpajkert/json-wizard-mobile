@@ -10,8 +10,10 @@ import SwiftUI
 struct CategoriesView: View {
     
     @State private var isPresentingNewCategorySheet = false
+    @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.store) private var store
+    @Environment(\.database) private var database
     
     var body: some View {
         List {
@@ -21,10 +23,14 @@ struct CategoriesView: View {
         .toolbar {
             toolbarAddButton
         }
-        .sheet(isPresented: $isPresentingNewCategorySheet,
-               onDismiss: dismissNewCategorySheet) {
-            CategoryEditSheet(category: store.createEmptyCategory(),
-                              editorTitle: "Add Category")
+        .sheet(isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet) {
+            CategoryEditSheet(category: store.createEmptyCategory(), editorTitle: "Add Category")
+        }
+        .sheet(item: $errorWrapper) { wrapper in
+            ErrorSheet(errorWrapper: wrapper)
+        }
+        .refreshable {
+            await refresh()
         }
     }
     
@@ -54,11 +60,23 @@ struct CategoriesView: View {
     private func dismissNewCategorySheet() {
         isPresentingNewCategorySheet = false
     }
+    
+    private func refresh() async {
+        do {
+            try await store.refresh(using: database)
+        } catch {
+            errorWrapper = .init(
+                error: error,
+                guidance: "Could not refresh categories. Check if you are properly signed in and try again.",
+                isDismissable: true)
+        }
+    }
 }
 
 #Preview {
     NavigationStack {
         CategoriesView()
             .environment(\.store, DataStore(categoriesObject: Categories(categories: Category.sampleData)))
+            .environment(\.database, DatabaseController())
     }
 }

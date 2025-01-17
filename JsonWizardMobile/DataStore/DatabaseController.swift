@@ -12,23 +12,17 @@ import FirebaseFirestore
 /// A class responsible for managing interactions with the Firestore database.
 final class DatabaseController {
     
-    /// Initializes the `DatabaseController` and configures the Firebase app.
-    /// This ensures that Firebase services are ready to use throughout the app.
-    init() {
-        FirebaseApp.configure()
-    }
-    
     /// Loads data of a specified type from a document within a collection in Firestore.
     /// - Parameters:
     ///   - document: The name of the Firestore document to fetch.
     ///   - collection: The name of the Firestore collection containing the document.
-    /// - Returns: The decoded data of the specified type `DataToLoad`.
+    /// - Returns: The decoded data of the specified type `T`.
     /// - Throws: An error if the document cannot be fetched or decoded.
     /// - Note: This function requires the data model to conform to `Codable`.
-    func loadData<DataToLoad>(from document: String, within collection: String) async throws -> DataToLoad where DataToLoad: Codable {
+    func loadData<T>(from document: String, within collection: String) async throws -> T where T: Codable {
         let db = Firestore.firestore()
         let docRef = db.collection(collection).document(document)
-        return try await docRef.getDocument(as: DataToLoad.self)
+        return try await docRef.getDocument(as: T.self)
     }
     
     /// Saves data of a specified type into a document within a collection in Firestore.
@@ -38,8 +32,20 @@ final class DatabaseController {
     ///   - collection: The name of the Firestore collection containing the document.
     /// - Throws: An error if the data cannot be encoded or saved to Firestore.
     /// - Note: This function encodes the provided data to a Firestore-compatible format.
-    func saveData<DataToSave>(_ data: DataToSave, into document: String, within collection: String) throws where DataToSave: Codable {
-        let database = Firestore.firestore()
-        try database.collection(collection).document(document).setData(from: data)
+    func saveData<T>(_ data: T, into document: String, within collection: String) async throws -> Bool where T: Codable {
+        return try await withCheckedThrowingContinuation { continuation in
+            let database = Firestore.firestore()
+            do {
+                try database.collection(collection).document(document).setData(from: data, merge: true) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: true)
+                    }
+                }
+            } catch {
+                continuation.resume(throwing: error)
+            }
+        }
     }
 }

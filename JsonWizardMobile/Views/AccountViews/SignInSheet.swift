@@ -14,7 +14,7 @@ struct SignInSheet: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isShowingPasswordResetSheet = false
     
-    @Environment(\.authHandler) private var authHandler
+    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -109,7 +109,7 @@ struct SignInSheet: View {
     private func signIn() {
         Task {
             do {
-                try await authHandler.signIn(with: email, password: password)
+                try await auth.signIn(with: email, password: password)
                 dismiss()
             } catch {
                 errorWrapper = .init(
@@ -140,6 +140,6 @@ struct SignInSheet: View {
 #Preview {
     NavigationStack {
         SignInSheet()
-            .environment(AuthHandler())
+            .environment(Authentication())
     }
 }

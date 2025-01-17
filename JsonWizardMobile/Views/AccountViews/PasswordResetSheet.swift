@@ -12,7 +12,7 @@ struct PasswordResetSheet: View {
     @State private var email: String = ""
     @State private var errorWrapper: ErrorWrapper?
     
-    @Environment(\.authHandler) private var authHandler
+    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -86,7 +86,7 @@ struct PasswordResetSheet: View {
     private func sendEmail() {
         Task {
             do {
-                try await authHandler.sendPasswordResetEmail(to: email)
+                try await auth.sendPasswordResetEmail(to: email)
                 dismiss()
             } catch {
                 errorWrapper = .init(
@@ -108,6 +108,6 @@ struct PasswordResetSheet: View {
 #Preview {
     NavigationStack {
         PasswordResetSheet()
-            .environment(AuthHandler())
+            .environment(Authentication())
     }
 }

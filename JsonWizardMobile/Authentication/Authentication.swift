@@ -1,5 +1,5 @@
 //
-//  AuthHandler.swift
+//  Authentication.swift
 //  JsonWizardMobile
 //
 //  Created by Igor Pajkert on 11/01/2025.
@@ -11,7 +11,7 @@ import FirebaseCore
 
 /// A class responsible for handling user authentication using Firebase.
 @Observable
-class AuthHandler {
+class Authentication {
     
     /// The currently signed-in user, or `nil` if no user is signed in.
     var user: User?
@@ -19,20 +19,14 @@ class AuthHandler {
     /// A listener handle that observes changes to the Firebase authentication state.
     private var handle: AuthStateDidChangeListenerHandle?
     
-    /// Indicates whether a currently signed in uer is valid.
-    var isUserValid: Bool {
-        // TODO: User Roles
-        user != nil
-    }
-    
-    /// Initializes a new instance of `AuthHandler` and begins listening to authentication state changes.
+    /// Initializes a new instance of `Authentication` and begins listening to authentication state changes.
     init() {
         handle = Auth.auth().addStateDidChangeListener { auth, user in
             self.user = user
         }
     }
     
-    /// Deinitializes the `AuthHandler`, removing the authentication state change listener.
+    /// Deinitializes the `Authentication`, removing the authentication state change listener.
     deinit {
         if let handle = handle {
             Auth.auth().removeStateDidChangeListener(handle)
@@ -121,6 +115,7 @@ class AuthHandler {
         }
     }
     
+    // MARK: - Errors
     /// Custom authentication error codes.
     public enum AuthError: Error, LocalizedError {
         /// Indicates that there is no currently authenticated user.
@@ -132,10 +127,17 @@ class AuthHandler {
         
         public var errorDescription: String? {
             switch self {
-            case .currentUserNotFound: return "No currently signed-in user was found. Please sign in first and continue."
-            case .invalidUser: return "Currently signed-in user is not a valid developer account. Ask your administrator for assistance."
+            case .currentUserNotFound: return "No currently signed-in user was found. Please sign in first to continue."
+            case .invalidUser: return "No developer account was found. Please sign in with a proper account to continue."
             case .reauthenticationRequired: return "This operation is sensitive and requires a recent sign-in. Please sign in first and try again."
             }
         }
+    }
+    
+    // MARK: - Statics
+    /// Indicates whether a currently signed in user is valid.
+    static var isUserValid: Bool {
+        // TODO: User Roles
+        Auth.auth().currentUser != nil
     }
 }

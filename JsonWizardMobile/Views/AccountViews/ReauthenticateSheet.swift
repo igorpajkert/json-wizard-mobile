@@ -13,7 +13,7 @@ struct ReauthenticateSheet: View {
     @State private var password: String = ""
     @State private var errorWrapper: ErrorWrapper?
     
-    @Environment(\.authHandler) private var authHandler
+    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -92,7 +92,7 @@ struct ReauthenticateSheet: View {
     private func authenticate() {
         Task {
             do {
-                try await authHandler.reauthenticateUser(with: email, password: password)
+                try await auth.reauthenticateUser(with: email, password: password)
                 dismiss()
             } catch {
                 errorWrapper = .init(
