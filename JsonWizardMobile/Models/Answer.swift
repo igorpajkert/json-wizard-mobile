@@ -9,7 +9,7 @@ import Foundation
 
 /// A model that represents a single answer option in a question.
 @Observable
-final class Answer: Codable, Identifiable {
+final class Answer: Identifiable, Codable {
     
     /// A unique identifier for the answer.
     let id: Int
