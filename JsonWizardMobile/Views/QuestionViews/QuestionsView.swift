@@ -10,6 +10,7 @@ import SwiftUI
 struct QuestionsView: View {
     
     @State private var isPresentingNewQuestionSheet = false
+    @State private var isPresentingSignInSheet = false
     @State private var errorWrapper: ErrorWrapper?
     
     @Environment(\.store) private var store
@@ -27,6 +28,9 @@ struct QuestionsView: View {
         }
         .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
             NewQuestionSheet(question: store.createEmptyQuestion())
+        }
+        .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
+            SignInSheet()
         }
         .sheet(item: $errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
@@ -66,12 +70,26 @@ struct QuestionsView: View {
     private func refresh() async {
         do {
             try await store.refresh(using: database)
+        } catch Authentication.AuthError.invalidUser {
+            errorWrapper = .init(
+                error: Authentication.AuthError.invalidUser,
+                guidance: "Could not refresh questions. Sign in to continue.",
+                isDismissable: true,
+                dismissAction: .init(title: "Sign In", action: presentSignInSheet))
         } catch {
             errorWrapper = .init(
                 error: error,
                 guidance: "Could not refresh questions. Check if you are properly signed in and try again.",
                 isDismissable: true)
         }
+    }
+    
+    private func presentSignInSheet() {
+        isPresentingSignInSheet = true
+    }
+    
+    private func dismissSignInSheet() {
+        isPresentingSignInSheet = false
     }
 }
 
