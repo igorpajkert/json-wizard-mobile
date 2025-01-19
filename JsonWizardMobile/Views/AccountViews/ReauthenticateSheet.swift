@@ -48,7 +48,7 @@ struct ReauthenticateSheet: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Provide credentials for your developer account to authenticate.")
+            Text("reauthenticate_sheet_info")
                 .font(.headline)
         }
         .multilineTextAlignment(.center)

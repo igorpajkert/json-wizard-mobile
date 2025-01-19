@@ -54,9 +54,9 @@ struct SignInSheet: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Sign into your developer account.")
+            Text("sign_in_sheet_info")
                 .font(.headline)
-            Text("If you have trouble accessing your account, please contact: igor.pajkert@ipsoftware.org")
+            Text("account_help_info")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -79,7 +79,7 @@ struct SignInSheet: View {
     
     private var passwordResetButton: some View {
         Button(action: showPasswordResetSheet) {
-            Text("Forgot your password?")
+            Text("forgot_password")
                 .font(.callout)
                 .padding(.bottom)
         }

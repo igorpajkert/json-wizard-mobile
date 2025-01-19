@@ -47,7 +47,7 @@ struct PasswordResetSheet: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Send a password reset email to:")
+            Text("password_reset_email")
                 .font(.headline)
         }
         .multilineTextAlignment(.center)

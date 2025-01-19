@@ -25,7 +25,7 @@ struct CategoryCardView: View {
     
     private var countAndBadge: some View {
         HStack {
-            Label("\(category.questionsCount) questions", systemImage: "rectangle.stack")
+            Label("\(category.questionsCount) questions_count", systemImage: "rectangle.stack")
                 .font(.callout)
             Spacer()
             CategoryStatusBadge(category: category)

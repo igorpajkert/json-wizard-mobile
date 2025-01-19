@@ -63,7 +63,7 @@ struct PasswordChangeSheet: View {
     private var infoText: some View {
         Group {
             sampleImage
-            Text("Change the password for your account.")
+            Text("change_password_info")
                 .font(.headline)
         }
         .multilineTextAlignment(.center)

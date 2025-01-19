@@ -64,7 +64,7 @@ struct CategoryDetailView: View {
             HStack {
                 Text("Count")
                 Spacer()
-                Text("\(category.questionsCount)")
+                Text(String(category.questionsCount))
                     .foregroundStyle(.secondary)
             }
         }

@@ -70,7 +70,7 @@ struct QuestionEditView: View {
     }
     
     private var answersCount: some View {
-        Text("\(question.answersCount) answers, \(question.correctAnswersCount) correct")
+        Text("\(question.answersCount) answers_count, \(question.correctAnswersCount) correct_answers_count")
             .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundStyle(.secondary)
