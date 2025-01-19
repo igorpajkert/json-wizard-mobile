@@ -54,7 +54,7 @@ struct QuestionEditView: View {
     // MARK: Answers
     private var answersContent: some View {
         Section("Answers") {
-            ForEach(question.answers) { answer in
+            ForEach(question.answersObject.answers) { answer in
                 AnswerCardView(answer: answer)
             }
             .onDelete(perform: deleteAnswers)

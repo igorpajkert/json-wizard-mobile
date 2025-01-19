@@ -159,11 +159,11 @@ class DataStore {
     
     // NOTE: Answers
     func addAnswer(at question: Question, with text: String) {
-        question.answers.append(Answer(id: question.answers.endIndex, answerText: text))
+        question.answersObject.answers.append(Answer(id: question.answersObject.answers.endIndex, answerText: text))
     }
     
     func deleteAnswers(at question: Question, with offsets: IndexSet) {
-        question.answers.remove(atOffsets: offsets)
+        question.answersObject.answers.remove(atOffsets: offsets)
     }
     
     // MARK: - Constants

@@ -45,13 +45,13 @@ struct AnswersErrorBadge: View {
 }
 
 #Preview("Answers", traits: .fixedLayout(width: 400, height: 120)) {
-    AnswersErrorBadge(answers: Question.sampleData[0].answers)
+    AnswersErrorBadge(answers: Question.sampleData[0].answersObject.answers)
 }
 
 #Preview("No Correct Answers", traits: .fixedLayout(width: 400, height: 120)) {
-    AnswersErrorBadge(answers: Question.sampleData[1].answers)
+    AnswersErrorBadge(answers: Question.sampleData[1].answersObject.answers)
 }
 
 #Preview("No Answers", traits: .fixedLayout(width: 400, height: 120)) {
-    AnswersErrorBadge(answers: Question.sampleData[2].answers)
+    AnswersErrorBadge(answers: Question.sampleData[2].answersObject.answers)
 }
