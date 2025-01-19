@@ -57,7 +57,7 @@ final class UserData: Identifiable, Codable, Equatable {
 enum UserRole: String, CaseIterable, Identifiable, Hashable, Codable, Nameable {
     
     case admin = "Admin"
-    case author = "Author"
+    case author = "Creator"
     case user = "User"
     
     var name: String {
