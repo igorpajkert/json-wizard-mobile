@@ -36,7 +36,7 @@ final class DatabaseController {
         return try await withCheckedThrowingContinuation { continuation in
             let database = Firestore.firestore()
             do {
-                try database.collection(collection).document(document).setData(from: data, merge: true) { error in
+                try database.collection(collection).document(document).setData(from: data) { error in
                     if let error = error {
                         continuation.resume(throwing: error)
                     } else {

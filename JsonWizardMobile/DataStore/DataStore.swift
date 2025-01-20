@@ -52,6 +52,22 @@ class DataStore {
         Question(id: nextQuestionId)
     }
     
+    /// Retrieves an array of `Category` objects that match the specified indices.
+    ///
+    /// - Parameter indices: An array of integer IDs to filter categories.
+    /// - Returns: An array of `Category` objects whose IDs match the given indices.
+    func getCategories(of indices: [Int]) -> [Category] {
+        categoriesObject.categories.filter { indices.contains($0.id) }
+    }
+    
+    /// Retrieves an array of `Question` objects that match the specified indices.
+    ///
+    /// - Parameter indices: An array of integer IDs to filter questions.
+    /// - Returns: An array of `Question` objects whose IDs match the given indices.
+    func getQuestions(of indices: [Int]) -> [Question] {
+        questionsObject.questions.filter { indices.contains($0.id) }
+    }
+    
     // MARK: Save
     /// Saves the current `categoriesObject` and `questionsObject` to the database.
     /// - Parameter database: The `DatabaseController` used to perform the save operation.
@@ -136,34 +152,6 @@ class DataStore {
                 try await loadQuestions(using: database)
             }
         }
-    }
-    
-    // MARK: - Intents
-    // NOTE: Categories
-    func addCategory(_ category: Category) {
-        categoriesObject.categories.append(category)
-    }
-    
-    func deleteCategories(with offsets: IndexSet) {
-        categoriesObject.categories.remove(atOffsets: offsets)
-    }
-    
-    // NOTE: Questions
-    func addQuestion(_ question: Question) {
-        questionsObject.questions.append(question)
-    }
-    
-    func deleteQuestions(with offsets: IndexSet) {
-        questionsObject.questions.remove(atOffsets: offsets)
-    }
-    
-    // NOTE: Answers
-    func addAnswer(at question: Question, with text: String) {
-        question.answersObject.answers.append(Answer(id: question.answersObject.answers.endIndex, answerText: text))
-    }
-    
-    func deleteAnswers(at question: Question, with offsets: IndexSet) {
-        question.answersObject.answers.remove(atOffsets: offsets)
     }
     
     // MARK: - Constants

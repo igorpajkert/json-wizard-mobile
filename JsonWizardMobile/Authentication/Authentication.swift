@@ -115,25 +115,6 @@ class Authentication {
         }
     }
     
-    // MARK: - Errors
-    /// Custom authentication error codes.
-    public enum AuthError: Error, LocalizedError {
-        /// Indicates that there is no currently authenticated user.
-        case currentUserNotFound
-        /// Indicates that currently authenticated user is not a valid developer account.
-        case invalidUser
-        /// Indicates that reauthentication is required for the current user session.
-        case reauthenticationRequired
-        
-        public var errorDescription: String? {
-            switch self {
-            case .currentUserNotFound: return "No currently signed-in user was found. Please sign in first to continue."
-            case .invalidUser: return "No developer account was found. Please sign in with a proper account to continue."
-            case .reauthenticationRequired: return "This operation is sensitive and requires a recent sign-in. Please sign in first and try again."
-            }
-        }
-    }
-    
     // MARK: - Statics
     /// Indicates whether a currently signed in user is valid.
     static var isUserValid: Bool {

@@ -25,13 +25,9 @@ struct CategoryBadge: View {
 }
 
 #Preview("Red") {
-    CategoryBadge(category: Question.sampleData[0].categories![0])
+    CategoryBadge(category: .init(id: 0, title: "Red", color: .red))
 }
 
 #Preview("Purple") {
-    CategoryBadge(category: Question.sampleData[0].categories![1])
-}
-
-#Preview("Nil") {
-    CategoryBadge(category: Question.sampleData[1].categories![0])
+    CategoryBadge(category: .init(id: 1, title: "Purple", color: .purple))
 }

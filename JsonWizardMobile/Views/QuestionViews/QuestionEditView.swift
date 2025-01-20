@@ -10,10 +10,15 @@ import SwiftUI
 struct QuestionEditView: View {
     
     @State private var newAnswerText = ""
+    @State private var isPresentingCategoriesPickerSheet = false
     
     @Environment(\.store) private var store
     
     @Bindable var question: Question
+    
+    private var categories: [Category] {
+        store.getCategories(of: question.categoryIDs)
+    }
     
     var body: some View {
         List {
@@ -21,6 +26,9 @@ struct QuestionEditView: View {
             answersContent
         }
         .listRowSpacing(10)
+        .sheet(isPresented: $isPresentingCategoriesPickerSheet, onDismiss: dismissCategoriesPickerSheet) {
+            CategoriesPickerSheet(question: question)
+        }
     }
     
     // MARK: Question
@@ -29,13 +37,13 @@ struct QuestionEditView: View {
             TextField("Question Text", text: $question.questionText, axis: .vertical)
             HStack {
                 HStack {
-                    ForEach(question.unwrappedCategories) { category in
+                    ForEach(categories) { category in
                         CategoryBadge(category: category)
                     }
                 }
                 Spacer()
                 // TODO: Categories adding
-                Button(action: {}) {
+                Button(action: presentCategoriesPickerSheet) {
                     Image(systemName: "plus.circle")
                 }
             }
@@ -87,6 +95,14 @@ struct QuestionEditView: View {
     
     private func deleteAnswers(at offsets: IndexSet) {
         store.deleteAnswers(at: question, with: offsets)
+    }
+    
+    private func presentCategoriesPickerSheet() {
+        isPresentingCategoriesPickerSheet = true
+    }
+    
+    private func dismissCategoriesPickerSheet() {
+        isPresentingCategoriesPickerSheet = false
     }
 }
 

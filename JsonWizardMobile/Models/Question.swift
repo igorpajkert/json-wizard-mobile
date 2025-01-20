@@ -20,7 +20,7 @@ final class Question: Identifiable, Codable {
     /// An optional list of categories that classify or group this question.
     ///
     /// This might be `nil` if the question has not yet been associated with any category.
-    var categories: [Category]?
+    var categoryIDs: [Int]
     /// The date and time when this question was created.
     let dateCreated: Date
     
@@ -44,12 +44,12 @@ final class Question: Identifiable, Codable {
     init(id: Int,
          questionText: String = "",
          answers: [Answer] = [],
-         categories: [Category]? = nil,
+         categories: [Category] = [],
          dateCreated: Date = .now) {
         self.id = id
         self.questionText = questionText
         self.answersObject = .init(answers: answers)
-        self.categories = categories
+        self.categoryIDs = categories.map { $0.id }
         self.dateCreated = dateCreated
     }
     
@@ -62,7 +62,7 @@ final class Question: Identifiable, Codable {
         self.id = try container.decode(Int.self, forKey: .id)
         self.questionText = try container.decode(String.self, forKey: .questionText)
         self.answersObject = try container.decode(Answers.self, forKey: .answers)
-        self.categories = try container.decodeIfPresent([Category].self, forKey: .categories)
+        self.categoryIDs = try container.decode([Int].self, forKey: .categoryIDs)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
     }
     
@@ -74,24 +74,14 @@ final class Question: Identifiable, Codable {
         try container.encode(id, forKey: .id)
         try container.encode(questionText, forKey: .questionText)
         try container.encode(answersObject, forKey: .answers)
-        try container.encodeIfPresent(categories, forKey: .categories)
+        try container.encode(categoryIDs, forKey: .categoryIDs)
         try container.encode(dateCreated, forKey: .dateCreated)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, questionText, answers, categories, dateCreated
+        case id, questionText, answers, categoryIDs, dateCreated
     }
-}
-
-// MARK: - Extension for Convenience
-extension Question {
-    /// Provides a non-optional array of categories.
-    ///
-    /// Returns `categories` if present, or an empty array otherwise. Use this
-    /// property to avoid unwrapping `categories` in views or logic that
-    /// requires a definite `[Category]` rather than an optional.
-    var unwrappedCategories: [Category] { categories ?? [] }
 }
 
 // MARK: - Equatable Conformance
