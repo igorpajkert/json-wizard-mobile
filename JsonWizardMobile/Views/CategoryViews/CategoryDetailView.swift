@@ -11,7 +11,13 @@ struct CategoryDetailView: View {
     
     @State private var isPresentingEditCategorySheet = false
     
+    @Environment(\.store) private var store
+    
     var category: Category
+    
+    private var categoryQuestions: [Question] {
+        store.getQuestions(of: category.questionIDs)
+    }
     
     var body: some View {
         List {
@@ -56,7 +62,7 @@ struct CategoryDetailView: View {
     
     private var questions: some View {
         Section(header: Text("Questions")) {
-            NavigationLink(destination: { QuestionsView(questions: category.questions) }) {
+            NavigationLink(destination: { QuestionsView(questions: categoryQuestions) }) {
                 Label("Add Questions", systemImage: "rectangle.stack.badge.plus")
                     .font(.headline)
                     .foregroundStyle(Color.accentColor)
@@ -72,7 +78,7 @@ struct CategoryDetailView: View {
     
     private var questionsPreview: some View {
         Section {
-            ForEach(category.questions) { question in
+            ForEach(categoryQuestions) { question in
                 Text(question.questionText)
             }
         }

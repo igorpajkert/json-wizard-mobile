@@ -19,7 +19,7 @@ final class Category: Identifiable, Codable {
     /// An optional subtitle providing extra context about the category.
     var subtitle: String?
     /// A list of questions belonging to this category.
-    var questions: [Question]
+    var questionIDs: [Int]
     /// The status of this category.
     var status: Status
     /// An optional color used to visually represent this category.
@@ -28,7 +28,7 @@ final class Category: Identifiable, Codable {
     let dateCreated: Date
     
     /// The total number of questions in this category.
-    var questionsCount: Int { questions.count }
+    var questionsCount: Int { questionIDs.count }
     
     /// Creates a new `Category` instance.
     ///
@@ -51,7 +51,7 @@ final class Category: Identifiable, Codable {
         self.id = id
         self.title = title
         self.subtitle = subtitle
-        self.questions = questions
+        self.questionIDs = questions.map { $0.id }
         self.status = status
         self.color = color
         self.dateCreated = dateCreated
@@ -66,7 +66,7 @@ final class Category: Identifiable, Codable {
         self.id = try container.decode(Int.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
         self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
-        self.questions = try container.decode([Question].self, forKey: .questions)
+        self.questionIDs = try container.decode([Int].self, forKey: .questionIDs)
         self.status = try container.decode(Status.self, forKey: .status)
         self.color = try container.decodeIfPresent(Color.self, forKey: .color)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
@@ -80,7 +80,7 @@ final class Category: Identifiable, Codable {
         try container.encode(id, forKey: .id)
         try container.encode(title, forKey: .title)
         try container.encodeIfPresent(subtitle, forKey: .subtitle)
-        try container.encode(questions, forKey: .questions)
+        try container.encode(questionIDs, forKey: .questionIDs)
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(color, forKey: .color)
         try container.encode(dateCreated, forKey: .dateCreated)
@@ -89,7 +89,7 @@ final class Category: Identifiable, Codable {
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, title, subtitle, questions, status, color, dateCreated, questionsCount
+        case id, title, subtitle, questionIDs, status, color, dateCreated, questionsCount
     }
 }
 

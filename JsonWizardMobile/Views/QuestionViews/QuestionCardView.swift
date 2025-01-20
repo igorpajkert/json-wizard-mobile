@@ -9,7 +9,13 @@ import SwiftUI
 
 struct QuestionCardView: View {
     
+    @Environment(\.store) private var store
+    
     var question: Question
+    
+    private var categories: [Category] {
+        store.getCategories(of: question.categoryIDs)
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +31,7 @@ struct QuestionCardView: View {
             Text(question.questionText)
                 .font(.headline)
             HStack {
-                ForEach(question.unwrappedCategories) { category in
+                ForEach(categories) { category in
                     CategoryBadge(category: category)
                 }
             }

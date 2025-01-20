@@ -433,6 +433,22 @@
         }
       }
     },
+    "choose_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz Kategorie"
+          }
+        }
+      }
+    },
     "Color" : {
       "localizations" : {
         "en" : {
@@ -561,6 +577,48 @@
         }
       }
     },
+    "error_category_already_attached" : {
+
+    },
+    "error_category_not_found" : {
+
+    },
+    "error_current_user_not_found" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No currently signed-in user was found. Please sign in first to continue."
+          }
+        }
+      }
+    },
+    "error_invalid_user" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No developer account was found. Please sign in with a proper account to continue."
+          }
+        }
+      }
+    },
+    "error_question_already_attached" : {
+
+    },
+    "error_question_not_found" : {
+
+    },
+    "error_reauthentication_required" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This operation is sensitive and requires a recent sign-in. Please sign in first and try again."
+          }
+        }
+      }
+    },
     "forgot_password" : {
       "localizations" : {
         "en" : {
@@ -592,6 +650,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "Password" : {
       "localizations" : {
