@@ -38,26 +38,49 @@ struct CategoryDetailView: View {
     
     private var categoryInfo: some View {
         Section(header: Text("Category Info")) {
-            HStack {
-                Text("Title")
-                Spacer()
-                Text(category.title)
-                    .foregroundStyle(.secondary)
-            }
-            HStack {
-                Text("Subtitle")
-                Spacer()
-                Text(category.subtitle ?? "")
-                    .foregroundStyle(.secondary)
-            }
-            HStack {
-                Text("Status")
-                Spacer()
-                CategoryStatusBadge(category: category)
-                    .foregroundStyle(.secondary)
-            }
+            categoryTitle
+            categorySubtitle
+            categoryStatus
+            categoryColor
         }
         .multilineTextAlignment(.trailing)
+    }
+    
+    private var categoryTitle: some View {
+        HStack {
+            Text("category_title_text")
+            Spacer()
+            Text(category.title)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var categorySubtitle: some View {
+        HStack {
+            Text("category_subtitle_text")
+            Spacer()
+            Text(category.subtitle ?? "")
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var categoryStatus: some View {
+        HStack {
+            Text("category_status_text")
+            Spacer()
+            CategoryStatusBadge(category: category)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var categoryColor: some View {
+        HStack {
+            Text("category_color_text")
+            Spacer()
+            Circle()
+                .fill(category.unwrappedColor)
+                .frame(width: 16, height: 16)
+        }
     }
     
     private var questions: some View {

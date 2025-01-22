@@ -13,7 +13,7 @@ struct CategoryCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(category.title)
+            CategoryBadge(category: category)
                 .font(.title)
             Text(category.subtitle ?? "Subtitle")
                 .font(.subheadline)

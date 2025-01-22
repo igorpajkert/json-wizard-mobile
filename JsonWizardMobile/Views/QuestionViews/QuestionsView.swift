@@ -27,25 +27,29 @@ struct QuestionsView: View {
     }
     
     var body: some View {
-        List {
-            questionsList
-            questionsCount
-        }
-        .listRowSpacing(10)
-        .toolbar {
-            toolbarAddButton
-        }
-        .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
-            NewQuestionSheet(parentCategory: parentCategory)
-        }
-        .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
-            SignInSheet()
-        }
-        .sheet(item: $errorWrapper) { wrapper in
-            ErrorSheet(errorWrapper: wrapper)
-        }
-        .refreshable {
-            await refresh()
+        if questions.isEmpty {
+            ContentUnavailableView("add_first_question_text", systemImage: "plus")
+        } else {
+            List {
+                questionsList
+                questionsCount
+            }
+            .listRowSpacing(10)
+            .toolbar {
+                toolbarAddButton
+            }
+            .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
+                NewQuestionSheet(parentCategory: parentCategory)
+            }
+            .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
+                SignInSheet()
+            }
+            .sheet(item: $errorWrapper) { wrapper in
+                ErrorSheet(errorWrapper: wrapper)
+            }
+            .refreshable {
+                await refresh()
+            }
         }
     }
     
@@ -125,4 +129,10 @@ struct QuestionsView: View {
 
 #Preview("Without Toolbar") {
     QuestionsView(questions: Question.sampleData)
+}
+
+#Preview("No Data") {
+    NavigationStack {
+        QuestionsView(questions: [])
+    }
 }

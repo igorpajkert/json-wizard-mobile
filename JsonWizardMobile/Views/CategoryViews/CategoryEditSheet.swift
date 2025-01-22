@@ -15,6 +15,7 @@ struct CategoryEditSheet: View {
     @Bindable var category: Category
     
     var editorTitle: String?
+    var isNewCategory: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -62,7 +63,9 @@ struct CategoryEditSheet: View {
         ToolbarItem(placement: .confirmationAction) {
             Button("Save") {
                 withAnimation {
-                    store.addCategory(category)
+                    if isNewCategory {
+                        store.addCategory(category)
+                    }
                     dismiss()
                 }
             }

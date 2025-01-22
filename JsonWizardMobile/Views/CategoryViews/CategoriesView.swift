@@ -26,7 +26,9 @@ struct CategoriesView: View {
             toolbarAddButton
         }
         .sheet(isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet) {
-            CategoryEditSheet(category: store.createEmptyCategory(), editorTitle: "Add Category")
+            CategoryEditSheet(category: store.createEmptyCategory(),
+                              editorTitle: "Add Category",
+                              isNewCategory: true)
         }
         .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
             SignInSheet()
