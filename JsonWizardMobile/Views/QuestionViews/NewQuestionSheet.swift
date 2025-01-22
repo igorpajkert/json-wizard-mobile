@@ -9,10 +9,13 @@ import SwiftUI
 
 struct NewQuestionSheet: View {
     
+    @State private var question = Question(id: 0)
+    @State private var isQuestionAdded = false
+    
     @Environment(\.store) private var store
     @Environment(\.dismiss) private var dismiss
     
-    var question: Question
+    var parentCategory: Category?
     
     var body: some View {
         NavigationStack {
@@ -24,6 +27,14 @@ struct NewQuestionSheet: View {
                     toolbarCancelButton
                 }
         }
+        .onAppear {
+            question = store.createEmptyQuestion(in: parentCategory)
+        }
+        .onDisappear {
+            if !isQuestionAdded {
+                store.unbindAll(from: question)
+            }
+        }
     }
     
     // MARK: Toolbar
@@ -32,6 +43,7 @@ struct NewQuestionSheet: View {
             Button("Save") {
                 withAnimation {
                     store.addQuestion(question)
+                    isQuestionAdded = true
                     dismiss()
                 }
             }
@@ -49,5 +61,5 @@ struct NewQuestionSheet: View {
 }
 
 #Preview {
-    NewQuestionSheet(question: Question(id: 0))
+    NewQuestionSheet()
 }

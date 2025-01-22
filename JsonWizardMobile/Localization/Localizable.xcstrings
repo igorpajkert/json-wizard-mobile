@@ -157,6 +157,58 @@
         }
       }
     },
+    "%lld categories_count" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld category"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld categories"
+                }
+              }
+            }
+          }
+        },
+        "pl" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kategorie"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kategorii"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kategoria"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld kategorii"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld questions_count" : {
       "localizations" : {
         "en" : {
@@ -652,7 +704,7 @@
       }
     },
     "OK" : {
-
+      "shouldTranslate" : false
     },
     "Password" : {
       "localizations" : {

@@ -19,6 +19,7 @@ struct CategoriesView: View {
     var body: some View {
         List {
             categoriesList
+            categoriesCount
         }
         .listRowSpacing(10)
         .toolbar {
@@ -45,6 +46,14 @@ struct CategoriesView: View {
             }
         }
         .onDelete(perform: store.deleteCategories)
+    }
+    
+    private var categoriesCount: some View {
+        Text("\(store.categoriesObject.categories.count) categories_count")
+            .frame(maxWidth: .infinity)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .listRowBackground(Color.clear)
     }
     
     // MARK: Toolbar

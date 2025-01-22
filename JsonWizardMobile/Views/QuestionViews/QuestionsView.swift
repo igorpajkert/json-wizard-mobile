@@ -12,22 +12,31 @@ struct QuestionsView: View {
     @State private var isPresentingNewQuestionSheet = false
     @State private var isPresentingSignInSheet = false
     @State private var errorWrapper: ErrorWrapper?
+    @State private var newQuestion: Question
     
     @Environment(\.store) private var store
     @Environment(\.database) private var database
     
     var questions: [Question]
+    var parentCategory: Category?
+    
+    init (questions: [Question], parentCategory: Category? = nil) {
+        self.questions = questions
+        self.parentCategory = parentCategory
+        self.newQuestion = .init(id: 0)
+    }
     
     var body: some View {
         List {
             questionsList
+            questionsCount
         }
         .listRowSpacing(10)
         .toolbar {
             toolbarAddButton
         }
         .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
-            NewQuestionSheet(question: store.createEmptyQuestion())
+            NewQuestionSheet(parentCategory: parentCategory)
         }
         .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
             SignInSheet()
@@ -49,6 +58,14 @@ struct QuestionsView: View {
         .onDelete(perform: store.deleteQuestions)
     }
     
+    private var questionsCount: some View {
+        Text("\(questions.count) questions_count")
+            .frame(maxWidth: .infinity)
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .listRowBackground(Color.clear)
+    }
+    
     // MARK: Toolbar
     private var toolbarAddButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
@@ -61,6 +78,7 @@ struct QuestionsView: View {
     // MARK: - Intents
     private func presentNewQuestionSheet() {
         isPresentingNewQuestionSheet = true
+        
     }
     
     private func dismissNewQuestionSheet() {
@@ -85,6 +103,11 @@ struct QuestionsView: View {
     }
     
     private func presentSignInSheet() {
+        if parentCategory != nil {
+            newQuestion = store.createEmptyQuestion(in: parentCategory)
+        } else {
+            newQuestion = store.createEmptyQuestion()
+        }
         isPresentingSignInSheet = true
     }
     

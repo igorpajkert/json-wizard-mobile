@@ -33,21 +33,30 @@ struct QuestionEditView: View {
     
     // MARK: Question
     private var questionContent: some View {
-        Section("Question") {
-            TextField("Question Text", text: $question.questionText, axis: .vertical)
-            HStack {
+        Group {
+            Section("Question") {
+                TextField("Question Text", text: $question.questionText, axis: .vertical)
+            }
+            Section("Categories") {
+                categoriesContent
+                creationDate
+            }
+        }
+    }
+    
+    private var categoriesContent: some View {
+        HStack {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(categories) { category in
                         CategoryBadge(category: category)
                     }
                 }
-                Spacer()
-                // TODO: Categories adding
-                Button(action: presentCategoriesPickerSheet) {
-                    Image(systemName: "plus.circle")
-                }
             }
-            creationDate
+            Spacer()
+            Button(action: presentCategoriesPickerSheet) {
+                Image(systemName: "plus.circle")
+            }
         }
     }
     
@@ -108,6 +117,22 @@ struct QuestionEditView: View {
 
 #Preview {
     NavigationStack {
-        QuestionEditView(question: Question.sampleData[0])
+        QuestionEditView(question: .init(id: 0, questionText: "Test", categories: [.init(id: 0), .init(id: 1), .init(id: 2)]))
+            .environment(\.store, DataStore(
+                categoriesObject: .init(
+                    categories:
+                        [.init(
+                            id: 0,
+                            title: "General Knowledge",
+                            color: .lightLavender),
+                         .init(
+                            id: 1,
+                            title: "Obesity",
+                            color: .pink),
+                         .init(
+                            id: 2,
+                            title: "Diabetes",
+                            color: .done),
+                        ])))
     }
 }

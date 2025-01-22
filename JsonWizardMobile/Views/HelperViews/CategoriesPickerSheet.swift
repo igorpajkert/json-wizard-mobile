@@ -12,7 +12,7 @@ struct CategoriesPickerSheet: View {
     @Environment(\.store) private var store
     @Environment(\.dismiss) private var dismiss
     
-    var question: Question
+    var question: Question    
     
     private var categories: [Category] {
         store.categoriesObject.categories
@@ -22,7 +22,7 @@ struct CategoriesPickerSheet: View {
         NavigationStack {
             List {
                 ForEach(categories) { category in
-                    var isBinded = store.isBound(category: category, with: question)
+                    let isBinded = store.isBound(category: category, with: question)
                     HStack{
                         Text(category.title)
                         Spacer()
@@ -49,7 +49,7 @@ struct CategoriesPickerSheet: View {
     }
     
     private func bind(category: Category) {
-        var isBinded = store.isBound(category: category, with: question)
+        let isBinded = store.isBound(category: category, with: question)
         if isBinded {
             store.unbind(category: category, from: question)
         } else {
@@ -64,7 +64,6 @@ struct CategoriesPickerSheet: View {
             .init(
                 id: 0,
                 title: "First Aid",
-                subtitle: "Something about first aid",
                 color: .pink),
             .init(
                 id: 1,
