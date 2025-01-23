@@ -83,7 +83,7 @@ struct CategoryEditSheet: View {
 }
 
 #Preview("Add Category") {
-    CategoryEditSheet(category: DataStore().createEmptyCategory(), editorTitle: "Add Category")
+    CategoryEditSheet(category: Category(), editorTitle: "Add Category")
     
 }
 #Preview("Edit Category") {

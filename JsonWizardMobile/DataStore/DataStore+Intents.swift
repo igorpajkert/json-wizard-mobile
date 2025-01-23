@@ -10,17 +10,15 @@ import Foundation
 // MARK: Intents
 extension DataStore {
     
-    // MARK: Bindings
+    // MARK: Binding
     func bind(category: Category, with question: Question) {
         category.questionIDs.appendIfNotContains(question.id)
         question.categoryIDs.appendIfNotContains(category.id)
-        print("Bound category \(category.id) to question \(question.id)")
     }
     
     func unbind(category: Category, from question: Question) {
         category.questionIDs.removeAll { $0 == question.id }
         question.categoryIDs.removeAll { $0 == category.id }
-        print("Unbound category \(category.id) from question \(question.id)")
     }
     
     func isBound(category: Category, with question: Question) -> Bool {
@@ -31,7 +29,6 @@ extension DataStore {
         for categoryID in question.categoryIDs {
             let category = categoriesObject.categories.first { $0.id == categoryID }
             category?.questionIDs.removeAll { $0 == question.id }
-            print("Unbound category \(categoryID) from question \(question.id)")
         }
     }
     
@@ -39,7 +36,6 @@ extension DataStore {
         for questionID in category.questionIDs {
             let question = questionsObject.questions.first { $0.id == questionID }
             question?.categoryIDs.removeAll { $0 == category.id }
-            print("Unbound question \(questionID) from category \(category.id)")
         }
     }
     
@@ -48,16 +44,13 @@ extension DataStore {
         categoriesObject.categories.append(category)
     }
     
-    //FIXME: Unbind all questions from category
     func deleteCategories(with offsets: IndexSet) {
         let categoriesToDelete = offsets.map { categoriesObject.categories[$0] }
         
         categoriesObject.categories.remove(atOffsets: offsets)
         
         categoriesToDelete.forEach { category in
-            questionsObject.questions.forEach { question in
-                question.categoryIDs.removeAll { $0 == category.id }
-            }
+            unbindAll(from: category)
         }
     }
     
@@ -66,16 +59,13 @@ extension DataStore {
         questionsObject.questions.append(question)
     }
     
-    //FIXME: Unbind all categories from question
     func deleteQuestions(with offsets: IndexSet) {
         let questionsToDelete = offsets.map { questionsObject.questions[$0] }
         
         questionsObject.questions.remove(atOffsets: offsets)
         
         questionsToDelete.forEach { question in
-            categoriesObject.categories.forEach { category in
-                category.questionIDs.removeAll { $0 == question.id }
-            }
+            unbindAll(from: question)
         }
     }
     

@@ -10,6 +10,7 @@ import Foundation
 // MARK: Errors
 extension DataStore {
     
+    // TODO: Errors Handling
     enum StoreError: Error, LocalizedError {
         case categoryAlreadyAttached
         case questionAlreadyAttached

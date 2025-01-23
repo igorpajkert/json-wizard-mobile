@@ -19,43 +19,10 @@ class DataStore {
     /// Tracks whether categories and questions are initially loaded.
     private var isInitiallyLoaded = (categories: false, questions: false)
     
-    /// Calculates and returns the next category's unique ID.
-    var nextCategoryId : Int { categoriesObject.categories.maxId + 1 }
-    /// Calculates and returns the next question's unique ID.
-    var nextQuestionId : Int { questionsObject.questions.maxId + 1 }
-    
     init(categoriesObject: Categories = Categories(),
          questionsObject: Questions = Questions()) {
         self.categoriesObject = categoriesObject
         self.questionsObject = questionsObject
-    }
-    
-    /// Creates and returns a new category with a unique identifier.
-    ///
-    /// This function calls `nextCategoryId()` to generate a unique ID for the `Category`.
-    /// You can safely use this function to initialize an empty or default `Category` object
-    /// for further customization.
-    ///
-    /// - Returns: A newly created `Category` object with a unique identifier.
-    func createEmptyCategory() -> Category {
-        Category(id: nextCategoryId)
-    }
-    
-    /// Creates and returns a new question with a unique identifier, optionally associating it with a category.
-    ///
-    /// This method uses `nextQuestionId` to generate a unique identifier for the new question. If a `Category`
-    /// is provided, the question will be associated with it by calling the `bind(category:with:)` method.
-    ///
-    /// - Parameter category: An optional `Category` to associate the question with. Defaults to `nil`.
-    /// - Returns: A newly created `Question` object with a unique identifier, optionally linked to a category.
-    func createEmptyQuestion(in category: Category? = nil) -> Question {
-        let question = Question(id: nextQuestionId)
-        
-        if let category = category {
-            bind(category: category, with: question)
-        }
-        
-        return question
     }
     
     /// Retrieves an array of `Category` objects that match the specified indices.
@@ -88,16 +55,6 @@ class DataStore {
     private func saveCategories(using database: DatabaseController) async throws -> Bool {
         guard isInitiallyLoaded.categories else { return false }
         
-        //FIXME: JSON LOG
-        do {
-            let jsonData = try JSONEncoder().encode(categoriesObject)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("CATEGORIES TO SAVE (JSON): \(jsonString)")
-            }
-        } catch {
-            print("Failed to encode categoriesObject to JSON: \(error)")
-        }
-        
         async let result = try database.saveData(
             categoriesObject,
             into: Constants.categories,
@@ -107,16 +64,6 @@ class DataStore {
     
     private func saveQuestions(using database: DatabaseController) async throws -> Bool {
         guard isInitiallyLoaded.questions else { return false }
-        
-        //FIXME: JSON LOG
-        do {
-            let jsonData = try JSONEncoder().encode(questionsObject)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("QUESTIONS TO SAVE (JSON): \(jsonString)")
-            }
-        } catch {
-            print("Failed to encode questionsObject to JSON: \(error)")
-        }
         
         async let result = try database.saveData(
             questionsObject,

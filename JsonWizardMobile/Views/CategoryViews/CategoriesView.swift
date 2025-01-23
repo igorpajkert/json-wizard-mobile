@@ -30,7 +30,8 @@ struct CategoriesView: View {
             toolbarAddButton
         }
         .sheet(isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet) {
-            CategoryEditSheet(category: store.createEmptyCategory(),
+            //FIXME: View Model
+            CategoryEditSheet(category: Category(),
                               editorTitle: "Add Category",
                               isNewCategory: true)
         }
