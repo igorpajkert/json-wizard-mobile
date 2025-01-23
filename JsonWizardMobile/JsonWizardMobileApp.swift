@@ -47,7 +47,7 @@ struct JsonWizardMobileApp: App {
                 }
                 Tab("All Questions", systemImage: "rectangle.stack") {
                     NavigationStack {
-                        QuestionsView(questions: store.questionsObject.questions)
+                        QuestionsView(questions: store.questionsObject.questions, parentCategory: nil)
                             .navigationTitle("All Questions")
                     }
                 }

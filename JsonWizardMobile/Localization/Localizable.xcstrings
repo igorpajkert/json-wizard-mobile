@@ -373,9 +373,6 @@
         }
       }
     },
-    "All" : {
-
-    },
     "All Questions" : {
       "localizations" : {
         "en" : {
@@ -487,9 +484,6 @@
           }
         }
       }
-    },
-    "Categorized" : {
-
     },
     "Category Info" : {
       "localizations" : {
@@ -1076,9 +1070,6 @@
           }
         }
       }
-    },
-    "Uncategorized" : {
-
     }
   },
   "version" : "1.0"
