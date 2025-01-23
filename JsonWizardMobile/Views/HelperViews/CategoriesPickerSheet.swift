@@ -44,7 +44,7 @@ struct CategoriesPickerSheet: View {
     // MARK: Toolbar
     private var toolbarOKButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button("OK") { dismiss() }
+            Button("button_done") { dismiss() }
         }
     }
     

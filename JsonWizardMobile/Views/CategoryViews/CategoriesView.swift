@@ -16,10 +16,14 @@ struct CategoriesView: View {
     @Environment(\.store) private var store
     @Environment(\.database) private var database
     
+    private var isCategoriesEmpty: Bool {
+        store.categoriesObject.categories.isEmpty
+    }
+    
     var body: some View {
         List {
             categoriesList
-            categoriesCount
+            categoriesCount.isHidden(isCategoriesEmpty)
         }
         .listRowSpacing(10)
         .toolbar {
@@ -38,6 +42,11 @@ struct CategoriesView: View {
         }
         .refreshable {
             await refresh()
+        }
+        .overlay(alignment: .center) {
+            if isCategoriesEmpty {
+                ContentUnavailableView("add_first_category_text", systemImage: "widget.extralarge.badge.plus")
+            }
         }
     }
     

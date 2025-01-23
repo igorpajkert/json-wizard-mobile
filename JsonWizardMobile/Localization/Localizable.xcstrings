@@ -341,18 +341,34 @@
         }
       }
     },
-    "add_first_question_text" : {
+    "add_first_category_text" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add your first question"
+            "value" : "Create a category to get started."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodaj twoje pierwsze pytanie"
+            "value" : "Utwórz kategorie, aby rozpocząć."
+          }
+        }
+      }
+    },
+    "add_first_question_text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a question to get started."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utwórz pytanie, aby rozpocząć."
           }
         }
       }
@@ -417,6 +433,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uwierzytelnij"
+          }
+        }
+      }
+    },
+    "button_done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gotowe"
           }
         }
       }
@@ -782,9 +814,6 @@
           }
         }
       }
-    },
-    "OK" : {
-      "shouldTranslate" : false
     },
     "Password" : {
       "localizations" : {
