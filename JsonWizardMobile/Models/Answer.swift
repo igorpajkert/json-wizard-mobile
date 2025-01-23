@@ -24,7 +24,7 @@ final class Answer: Identifiable, Codable {
     ///   - id: A unique numeric identifier.
     ///   - answerText: The text for this answer. Defaults to an empty string.
     ///   - isCorrect: Whether this answer is correct. Defaults to `false`.
-    init(id: Int,
+    init(id: Int = Int.randomID(),
          answerText: String = "",
          isCorrect: Bool = false) {
         self.id = id

@@ -37,7 +37,7 @@ extension Binding where Value == Color? {
     ///   value is `nil`. Defaults to `.clear`.
     /// - Returns: A non-optional `Binding<Color>` that substitutes `defaultValue`
     ///   if the wrapped value is `nil`.
-    func unwrapped(or defaultValue: Color = .clear) -> Binding<Color> {
+    func unwrapped(or defaultValue: Color = .accent) -> Binding<Color> {
         Binding<Color>(
             get: { wrappedValue ?? defaultValue },
             set: { wrappedValue = $0 }

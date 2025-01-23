@@ -41,7 +41,7 @@ final class Question: Identifiable, Codable {
     ///   - answers: An array of possible answers. Defaults to an empty array.
     ///   - categories: An optional array of categories. Defaults to `nil`.
     ///   - dateCreated: The date/time when the question was created. Defaults to the current time (`.now`).
-    init(id: Int,
+    init(id: Int = Int.randomID(),
          questionText: String = "",
          answers: [Answer] = [],
          categories: [Category] = [],

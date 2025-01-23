@@ -12,27 +12,21 @@ struct QuestionsView: View {
     @State private var isPresentingNewQuestionSheet = false
     @State private var isPresentingSignInSheet = false
     @State private var errorWrapper: ErrorWrapper?
-    @State private var newQuestion: Question
     
     @Environment(\.store) private var store
     @Environment(\.database) private var database
     
     var questions: [Question]
     var parentCategory: Category?
-    
-    init (questions: [Question], parentCategory: Category? = nil) {
-        self.questions = questions
-        self.parentCategory = parentCategory
-        self.newQuestion = .init(id: 0)
-    }
-    
+  
     var body: some View {
-        if questions.isEmpty {
-            ContentUnavailableView("add_first_question_text", systemImage: "plus")
-        } else {
             List {
-                questionsList
-                questionsCount
+                if questions.isEmpty {
+                    ContentUnavailableView("add_first_question_text", systemImage: "plus")
+                } else {
+                    questionsList
+                    questionsCount
+                }
             }
             .listRowSpacing(10)
             .toolbar {
@@ -50,7 +44,6 @@ struct QuestionsView: View {
             .refreshable {
                 await refresh()
             }
-        }
     }
     
     private var questionsList: some View {
@@ -107,11 +100,6 @@ struct QuestionsView: View {
     }
     
     private func presentSignInSheet() {
-        if parentCategory != nil {
-            newQuestion = store.createEmptyQuestion(in: parentCategory)
-        } else {
-            newQuestion = store.createEmptyQuestion()
-        }
         isPresentingSignInSheet = true
     }
     

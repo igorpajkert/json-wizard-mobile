@@ -9,15 +9,24 @@ import SwiftUI
 
 struct QuestionEditView: View {
     
+    @State private var viewModel: QuestionEditView.ViewModel?
     @State private var newAnswerText = ""
-    @State private var isPresentingCategoriesPickerSheet = false
     
     @Environment(\.store) private var store
     
     @Bindable var question: Question
     
+    var parentCategory: Category?
+    
+    private var isPresentigCategoriesPickerSheet: Binding<Bool> {
+        Binding(
+            get: { viewModel?.isPresentingCategoriesPickerSheet ?? false },
+            set: { viewModel?.isPresentingCategoriesPickerSheet = $0 }
+        )
+    }
+    
     private var categories: [Category] {
-        store.getCategories(of: question.categoryIDs)
+        viewModel?.categories ?? []
     }
     
     var body: some View {
@@ -26,8 +35,15 @@ struct QuestionEditView: View {
             answersContent
         }
         .listRowSpacing(10)
-        .sheet(isPresented: $isPresentingCategoriesPickerSheet, onDismiss: dismissCategoriesPickerSheet) {
+        .sheet(
+            isPresented: isPresentigCategoriesPickerSheet,
+            onDismiss: viewModel?.dismissCategoriesPickerSheet
+        ) {
             CategoriesPickerSheet(question: question)
+        }
+        .onAppear {
+            viewModel = .init(
+                store: store, question: question, parentCategory: parentCategory)
         }
     }
     
@@ -54,7 +70,7 @@ struct QuestionEditView: View {
                 }
             }
             Spacer()
-            Button(action: presentCategoriesPickerSheet) {
+            Button(action: { viewModel?.presentCategoriesPickerSheet() }) {
                 Image(systemName: "plus.circle")
             }
         }
@@ -74,10 +90,10 @@ struct QuestionEditView: View {
             ForEach(question.answersObject.answers) { answer in
                 AnswerCardView(answer: answer)
             }
-            .onDelete(perform: deleteAnswers)
+            .onDelete(perform: viewModel?.deleteAnswers)
             HStack {
                 TextField("Add Answer...", text: $newAnswerText, axis: .vertical)
-                Button(action: addAnswer) {
+                Button(action: { viewModel?.addAnswer(with: $newAnswerText) }) {
                     Image(systemName: "plus.circle.fill")
                 }
                 .disabled(newAnswerText.isEmpty)
@@ -87,52 +103,40 @@ struct QuestionEditView: View {
     }
     
     private var answersCount: some View {
-        Text("\(question.answersCount) answers_count, \(question.correctAnswersCount) correct_answers_count")
-            .frame(maxWidth: .infinity)
-            .font(.footnote)
-            .foregroundStyle(.secondary)
-            .listRowBackground(Color.clear)
-    }
-    
-    // MARK: - Intents
-    private func addAnswer() {
-        withAnimation {
-            store.addAnswer(at: question, with: newAnswerText)
-            newAnswerText.clear()
-        }
-    }
-    
-    private func deleteAnswers(at offsets: IndexSet) {
-        store.deleteAnswers(at: question, with: offsets)
-    }
-    
-    private func presentCategoriesPickerSheet() {
-        isPresentingCategoriesPickerSheet = true
-    }
-    
-    private func dismissCategoriesPickerSheet() {
-        isPresentingCategoriesPickerSheet = false
+        Text(
+            "\(question.answersCount) answers_count, \(question.correctAnswersCount) correct_answers_count"
+        )
+        .frame(maxWidth: .infinity)
+        .font(.footnote)
+        .foregroundStyle(.secondary)
+        .listRowBackground(Color.clear)
     }
 }
 
 #Preview {
     NavigationStack {
-        QuestionEditView(question: .init(id: 0, questionText: "Test", categories: [.init(id: 0), .init(id: 1), .init(id: 2)]))
-            .environment(\.store, DataStore(
+        QuestionEditView(
+            question: .init(
+                id: 0, questionText: "Test",
+                categories: [.init(id: 0), .init(id: 1), .init(id: 2)])
+        )
+        .environment(
+            \.store,
+             DataStore(
                 categoriesObject: .init(
-                    categories:
-                        [.init(
+                    categories: [
+                        .init(
                             id: 0,
                             title: "General Knowledge",
                             color: .lightLavender),
-                         .init(
+                        .init(
                             id: 1,
                             title: "Obesity",
                             color: .pink),
-                         .init(
+                        .init(
                             id: 2,
                             title: "Diabetes",
                             color: .done),
-                        ])))
+                    ])))
     }
 }

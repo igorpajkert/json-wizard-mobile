@@ -41,7 +41,7 @@ final class Category: Identifiable, Codable {
     ///   - color: An optional color representing this category. Defaults to `nil`.
     ///   - dateCreated: A date indicating when this category was created.
     ///     Defaults to the current time (`.now`).
-    init(id: Int,
+    init(id: Int = Int.randomID(),
          title: String = "",
          subtitle: String? = nil,
          questions: [Question] = [],
