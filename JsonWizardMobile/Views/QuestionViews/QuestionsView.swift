@@ -12,12 +12,21 @@ struct QuestionsView: View {
     @State private var isPresentingNewQuestionSheet = false
     @State private var isPresentingSignInSheet = false
     @State private var errorWrapper: ErrorWrapper?
+    @State private var searchText = ""
     
     @Environment(\.store) private var store
     @Environment(\.database) private var database
     
     var questions: [Question]
     var parentCategory: Category?
+    
+    var searchResults: [Question] {
+        if searchText.isEmpty {
+            return questions
+        } else {
+            return questions.filter { $0.questionText.localizedStandardContains(searchText) }
+        }
+    }
     
     var body: some View {
         List {
@@ -27,6 +36,8 @@ struct QuestionsView: View {
         .listRowSpacing(10)
         .toolbar {
             toolbarAddButton
+            toolbarSortButton
+            toolbarFilterButton
         }
         .sheet(isPresented: $isPresentingNewQuestionSheet, onDismiss: dismissNewQuestionSheet) {
             NewQuestionSheet(parentCategory: parentCategory)
@@ -40,6 +51,7 @@ struct QuestionsView: View {
         .refreshable {
             await refresh()
         }
+        .searchable(text: $searchText)
         .overlay(alignment: .center) {
             if questions.isEmpty {
                 ContentUnavailableView("add_first_question_text", systemImage: "rectangle.stack.badge.plus")
@@ -48,7 +60,7 @@ struct QuestionsView: View {
     }
     
     private var questionsList: some View {
-        ForEach(questions) { question in
+        ForEach(searchResults) { question in
             NavigationLink(destination: QuestionEditView(question: question)) {
                 QuestionCardView(question: question)
             }
@@ -66,9 +78,25 @@ struct QuestionsView: View {
     
     // MARK: Toolbar
     private var toolbarAddButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .confirmationAction) {
             Button(action: presentNewQuestionSheet) {
                 Image(systemName: "plus")
+            }
+        }
+    }
+    
+    private var toolbarSortButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {}) {
+                Image(systemName: "arrow.up.arrow.down")
+            }
+        }
+    }
+    
+    private var toolbarFilterButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {}) {
+                Image(systemName: "line.3.horizontal.decrease")
             }
         }
     }

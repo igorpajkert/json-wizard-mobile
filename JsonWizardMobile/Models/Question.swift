@@ -95,3 +95,10 @@ extension Question: Equatable {
 extension Question: Nameable {
     var name: String { questionText }
 }
+
+// MARK: - Hashable Conformance
+extension Question: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

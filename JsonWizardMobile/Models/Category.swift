@@ -114,3 +114,10 @@ extension Category: Equatable {
 extension Category: Nameable {
     var name: String { title }
 }
+
+// MARK: - Hashable Conformance
+extension Category: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
