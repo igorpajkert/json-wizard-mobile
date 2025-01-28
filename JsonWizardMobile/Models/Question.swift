@@ -102,3 +102,68 @@ extension Question: Hashable {
         hasher.combine(id)
     }
 }
+
+// MARK: - Sorting
+extension Question {
+    /// Represents the sorting options available for `Question` instances.
+    enum SortOptions: String, CaseIterable, Identifiable, Nameable {
+        case recent
+        case alphabetical
+        case categoriesCount
+        case answersCount
+        
+        var id: String { rawValue }
+        
+        /// A localized name for the sorting option.
+        var name: String {
+            switch self {
+            case .recent:
+                return String(localized: "sort_options_recent")
+            case .alphabetical:
+                return String(localized: "sort_options_alphabetical")
+            case .categoriesCount:
+                return String(localized: "sort_options_categories_count")
+            case .answersCount:
+                return String(localized: "sort_options_answers_count")
+            }
+        }
+    }
+}
+
+// MARK: - Filtering
+extension Question {
+    /// Represents the filtering options available for `Question` instances.
+    enum FilterOptions: String, CaseIterable, Identifiable, Nameable {
+        case none
+        case categorized
+        case uncategorized
+        case withAnswers
+        case withoutAnswers
+        case withCorrectAnswers
+        case withoutCorrectAnswers
+        
+        var id: String {
+            rawValue
+        }
+        
+        /// A localized name for the filter option.
+        var name: String {
+            switch self {
+            case .none:
+                return String(localized: "filter_options_none")
+            case .categorized:
+                return String(localized: "filter_options_categorized")
+            case .uncategorized:
+                return String(localized: "filter_options_uncategorized")
+            case .withAnswers:
+                return String(localized: "filter_options_with_answers")
+            case .withoutAnswers:
+                return String(localized: "filter_options_without_answers")
+            case .withCorrectAnswers:
+                return String(localized: "filter_options_with_correct_answers")
+            case .withoutCorrectAnswers:
+                return String(localized: "filter_options_without_correct_answers")
+            }
+        }
+    }
+}

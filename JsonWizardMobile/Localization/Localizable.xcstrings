@@ -742,10 +742,36 @@
       }
     },
     "error_category_already_attached" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category is already attached to given question."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategoria jest już przypisana do danego pytania."
+          }
+        }
+      }
     },
     "error_category_not_found" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category not found."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono kategorii. "
+          }
+        }
+      }
     },
     "error_current_user_not_found" : {
       "localizations" : {
@@ -753,6 +779,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No currently signed-in user was found. Please sign in first to continue."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obecnie nie znaleziono żadnego zalogowanego użytkownika. Zaloguj się, aby kontynuować."
           }
         }
       }
@@ -764,14 +796,46 @@
             "state" : "translated",
             "value" : "No developer account was found. Please sign in with a proper account to continue."
           }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono konta deweloperskiego. Zaloguj się na odpowiednie konto, aby kontynuować."
+          }
         }
       }
     },
     "error_question_already_attached" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question is already attached to given category."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pytanie jest już przypisane do danej kategorii."
+          }
+        }
+      }
     },
     "error_question_not_found" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question not found."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono pytania."
+          }
+        }
+      }
     },
     "error_reauthentication_required" : {
       "localizations" : {
@@ -779,6 +843,124 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This operation is sensitive and requires a recent sign-in. Please sign in first and try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta operacja jest wrażliwa i wymaga niedawnego zalogowania. Zaloguj się i spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "filter_options_categorized" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorized"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z Kategoriami"
+          }
+        }
+      }
+    },
+    "filter_options_none" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak"
+          }
+        }
+      }
+    },
+    "filter_options_uncategorized" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uncategorized"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez Kategorii"
+          }
+        }
+      }
+    },
+    "filter_options_with_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With Answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z Odpowiedziami"
+          }
+        }
+      }
+    },
+    "filter_options_with_correct_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With Correct Answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z Poprawnymi Odpowiedziami"
+          }
+        }
+      }
+    },
+    "filter_options_without_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without Answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez Odpowiedzi"
+          }
+        }
+      }
+    },
+    "filter_options_without_correct_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without Correct Answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez Poprawnych Odpowiedzi"
           }
         }
       }
@@ -795,6 +977,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zapomniałeś hasła?"
+          }
+        }
+      }
+    },
+    "menu_filter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj"
+          }
+        }
+      }
+    },
+    "menu_sort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortuj"
           }
         }
       }
@@ -859,6 +1073,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hasła zgodne"
+          }
+        }
+      }
+    },
+    "picker_filter_by" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter By"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj"
+          }
+        }
+      }
+    },
+    "picker_sort_by" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort By"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortuj"
+          }
+        }
+      }
+    },
+    "picker_sort_order" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort Order"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolejność Sortowania"
           }
         }
       }
@@ -1023,6 +1285,70 @@
         }
       }
     },
+    "sort_options_alphabetical" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetical"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alfabetycznie"
+          }
+        }
+      }
+    },
+    "sort_options_answers_count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers Count"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilość Odpowiedzi"
+          }
+        }
+      }
+    },
+    "sort_options_categories_count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories Count"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilość Kategorii "
+          }
+        }
+      }
+    },
+    "sort_options_recent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najnowsze"
+          }
+        }
+      }
+    },
     "Status" : {
       "localizations" : {
         "en" : {
@@ -1051,6 +1377,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Podtytuł"
+          }
+        }
+      }
+    },
+    "text_sort_ascending" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascending"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rosnąco"
+          }
+        }
+      }
+    },
+    "text_sort_descending" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descending"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Malejąco"
           }
         }
       }

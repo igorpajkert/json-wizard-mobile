@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    
+
     @State private var isPresentingNewCategorySheet = false
     @State private var isPresentingSignInSheet = false
     @State private var errorWrapper: ErrorWrapper?
-    
+
     @Environment(\.store) private var store
-    @Environment(\.database) private var database
-    
+
     private var isCategoriesEmpty: Bool {
         store.categoriesObject.categories.isEmpty
     }
-    
+
     var body: some View {
         List {
             categoriesList
@@ -29,11 +28,14 @@ struct CategoriesView: View {
         .toolbar {
             toolbarAddButton
         }
-        .sheet(isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet) {
+        .sheet(
+            isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet
+        ) {
             //FIXME: View Model
-            CategoryEditSheet(category: Category(),
-                              editorTitle: "Add Category",
-                              isNewCategory: true)
+            CategoryEditSheet(
+                category: Category(),
+                editorTitle: "Add Category",
+                isNewCategory: true)
         }
         .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
             SignInSheet()
@@ -46,20 +48,22 @@ struct CategoriesView: View {
         }
         .overlay(alignment: .center) {
             if isCategoriesEmpty {
-                ContentUnavailableView("add_first_category_text", systemImage: "widget.extralarge.badge.plus")
+                ContentUnavailableView(
+                    "add_first_category_text", systemImage: "widget.extralarge.badge.plus"
+                )
             }
         }
     }
-    
+
     private var categoriesList: some View {
         ForEach(store.categoriesObject.categories) { category in
             NavigationLink(destination: CategoryDetailView(category: category)) {
                 CategoryCardView(category: category)
             }
         }
-        .onDelete(perform: store.deleteCategories)
+        .onDelete(perform: deleteCategories)
     }
-    
+
     private var categoriesCount: some View {
         Text("\(store.categoriesObject.categories.count) categories_count")
             .frame(maxWidth: .infinity)
@@ -67,7 +71,7 @@ struct CategoriesView: View {
             .foregroundStyle(.secondary)
             .listRowBackground(Color.clear)
     }
-    
+
     // MARK: Toolbar
     private var toolbarAddButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
@@ -76,19 +80,19 @@ struct CategoriesView: View {
             }
         }
     }
-    
+
     // MARK: - Intents
     private func presentNewCategorySheet() {
         isPresentingNewCategorySheet = true
     }
-    
+
     private func dismissNewCategorySheet() {
         isPresentingNewCategorySheet = false
     }
-    
+
     private func refresh() async {
         do {
-            try await store.refresh(using: database)
+            try await store.refresh()
         } catch Authentication.AuthError.invalidUser {
             errorWrapper = .init(
                 error: Authentication.AuthError.invalidUser,
@@ -98,24 +102,34 @@ struct CategoriesView: View {
         } catch {
             errorWrapper = .init(
                 error: error,
-                guidance: "Could not refresh categories. Check if you are properly signed in and try again.",
+                guidance:
+                    "Could not refresh categories. Check if you are properly signed in and try again.",
                 isDismissable: true)
         }
     }
-    
+
     private func presentSignInSheet() {
         isPresentingSignInSheet = true
     }
-    
+
     private func dismissSignInSheet() {
         isPresentingSignInSheet = false
+    }
+
+    private func deleteCategories(with offsets: IndexSet) {
+        let categoriesIDsToDelete = offsets.map {
+            store.categoriesObject.categories[$0].id
+        }
+        store.delete(categories: categoriesIDsToDelete)
     }
 }
 
 #Preview {
     NavigationStack {
         CategoriesView()
-            .environment(\.store, DataStore(categoriesObject: Categories(categories: Category.sampleData)))
-            .environment(\.database, DatabaseController())
+            .environment(
+                \.store,
+                DataStore(categoriesObject: Categories(categories: Category.sampleData))
+            )
     }
 }

@@ -85,7 +85,7 @@ struct CategoryDetailView: View {
     
     private var questions: some View {
         Section(header: Text("Questions")) {
-            NavigationLink(destination: { QuestionsView(questions: categoryQuestions, parentCategory: category) }) {
+            NavigationLink(destination: { QuestionsView(parentCategory: category) }) {
                 Label("Add Questions", systemImage: "rectangle.stack.badge.plus")
                     .font(.headline)
                     .foregroundStyle(Color.accentColor)

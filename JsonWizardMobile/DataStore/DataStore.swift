@@ -43,18 +43,18 @@ class DataStore {
     
     // MARK: Save
     /// Saves the current `categoriesObject` and `questionsObject` to the database.
-    /// - Parameter database: The `DatabaseController` used to perform the save operation.
     /// - Throws: An error if any of the save operations fail.
-    func save(using database: DatabaseController) async throws {
+    func save() async throws {
         guard Authentication.isUserValid else { throw Authentication.AuthError.invalidUser }
         
-        async let _ = try await saveCategories(using: database)
-        async let _ = try await saveQuestions(using: database)
+        async let _ = try await saveCategories()
+        async let _ = try await saveQuestions()
     }
     
-    private func saveCategories(using database: DatabaseController) async throws -> Bool {
+    private func saveCategories() async throws -> Bool {
         guard isInitiallyLoaded.categories else { return false }
         
+        let database = DatabaseController()
         async let result = try database.saveData(
             categoriesObject,
             into: Constants.categories,
@@ -62,9 +62,10 @@ class DataStore {
         return try await result
     }
     
-    private func saveQuestions(using database: DatabaseController) async throws -> Bool {
+    private func saveQuestions() async throws -> Bool {
         guard isInitiallyLoaded.questions else { return false }
         
+        let database = DatabaseController()
         async let result = try database.saveData(
             questionsObject,
             into: Constants.questions,
@@ -75,16 +76,16 @@ class DataStore {
     // MARK: Load
     /// Asynchronously loads data for `categoriesObject` and `questionsObject` from the database,
     /// then assigns the results to the relevant properties.
-    /// - Parameter database: The `DatabaseController` used to perform the load operation.
     /// - Throws: An error if any of the load operations fail.
-    func load(using database: DatabaseController) async throws {
+    func load() async throws {
         guard Authentication.isUserValid else { throw Authentication.AuthError.invalidUser }
         
-        try await loadCategories(using: database)
-        try await loadQuestions(using: database)
+        try await loadCategories()
+        try await loadQuestions()
     }
     
-    private func loadCategories(using database: DatabaseController) async throws {
+    private func loadCategories() async throws {
+        let database = DatabaseController()
         async let categoriesObject: Categories = try database.loadData(
             from: Constants.categories,
             within: Constants.collection)
@@ -92,7 +93,8 @@ class DataStore {
         isInitiallyLoaded.categories = true
     }
     
-    private func loadQuestions(using database: DatabaseController) async throws {
+    private func loadQuestions() async throws {
+        let database = DatabaseController()
         async let questionsObject: Questions = try database.loadData(
             from: Constants.questions,
             within: Constants.collection)
@@ -103,26 +105,25 @@ class DataStore {
     // MARK: Refresh
     /// Refreshes the state of the application using the provided database.
     ///
-    /// - Parameter database: The database controller used to save or load data.
     /// - Throws: An error if saving or loading from the database fails, or if the user is invalid.
-    func refresh(using database: DatabaseController) async throws {
+    func refresh() async throws {
         guard Authentication.isUserValid else { throw Authentication.AuthError.invalidUser }
         
         if !isInitiallyLoaded.categories {
-            try await loadCategories(using: database)
+            try await loadCategories()
         } else {
-            let result = try await saveCategories(using: database)
+            let result = try await saveCategories()
             if result {
-                try await loadCategories(using: database)
+                try await loadCategories()
             }
         }
         
         if !isInitiallyLoaded.questions {
-            try await loadQuestions(using: database)
+            try await loadQuestions()
         } else {
-            let result = try await saveQuestions(using: database)
+            let result = try await saveQuestions()
             if result {
-                try await loadQuestions(using: database)
+                try await loadQuestions()
             }
         }
     }

@@ -8,25 +8,23 @@
 import SwiftUI
 
 struct QuestionsView: View {
-
+    
     @State private var viewModel = QuestionsView.ViewModel()
-
+    
     @Environment(\.store) private var store
-    @Environment(\.database) private var database
-
-    let questions: [Question]
-    let parentCategory: Category?
-
+    
+    var parentCategory: Category?
+    
     var body: some View {
         List {
             questionsList
-            questionsCount.isHidden(questions.isEmpty)
+            questionsCount.isHidden(viewModel.questions.isEmpty)
         }
         .listRowSpacing(10)
         .toolbar {
-            toolbarAddButton
             toolbarSortButton
             toolbarFilterButton
+            toolbarAddButton
         }
         .sheet(
             isPresented: $viewModel.isPresentingNewQuestionSheet,
@@ -48,7 +46,7 @@ struct QuestionsView: View {
         }
         .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
-            if questions.isEmpty {
+            if viewModel.questions.isEmpty {
                 ContentUnavailableView(
                     "add_first_question_text", systemImage: "rectangle.stack.badge.plus")
             }
@@ -56,50 +54,62 @@ struct QuestionsView: View {
         .onAppear {
             viewModel = .init(
                 store: store,
-                database: database,
-                questions: questions,
                 parentCategory: parentCategory)
         }
     }
-
+    
     private var questionsList: some View {
-        ForEach(viewModel.searchResults) { question in
+        ForEach(viewModel.questions) { question in
             NavigationLink(destination: QuestionEditView(question: question)) {
                 QuestionCardView(question: question)
             }
         }
         .onDelete(perform: viewModel.deleteQuestions)
     }
-
+    
     private var questionsCount: some View {
-        Text("\(questions.count) questions_count")
+        Text("\(viewModel.questions.count) questions_count")
             .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundStyle(.secondary)
             .listRowBackground(Color.clear)
     }
-
+    
     // MARK: Toolbar
     private var toolbarAddButton: some ToolbarContent {
-        ToolbarItem(placement: .confirmationAction) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button(action: viewModel.presentNewQuestionSheet) {
                 Image(systemName: "plus")
             }
         }
     }
-
+    
     private var toolbarSortButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button(action: {}) {
-                Image(systemName: "arrow.up.arrow.down")
+            Menu("menu_sort", systemImage: "arrow.up.arrow.down") {
+                Picker("picker_sort_by", selection: $viewModel.sortOption) {
+                    ForEach(Question.SortOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as Question.SortOptions)
+                    }
+                }
+                Picker("picker_sort_order", selection: $viewModel.sortOrder) {
+                    Text("text_sort_ascending").tag(SortOrder.forward)
+                    Text("text_sort_descending").tag(SortOrder.reverse)
+                }
             }
         }
     }
-
+    
     private var toolbarFilterButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button(action: {}) {
-                Image(systemName: "line.3.horizontal.decrease")
+            Menu("menu_filter", systemImage: "line.3.horizontal.decrease") {
+                Picker("picker_filter_by", selection: $viewModel.filterOption) {
+                    ForEach(Question.FilterOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as Question.FilterOptions)
+                    }
+                }
             }
         }
     }
@@ -107,14 +117,20 @@ struct QuestionsView: View {
 
 #Preview("All Questions") {
     NavigationStack {
-        QuestionsView(questions: Question.sampleData, parentCategory: nil)
+        QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
+            .environment(\.store, DataStore(
+                questionsObject: Questions(
+                    questions: Question.sampleData)))
     }
 }
 
 #Preview("No Data") {
     NavigationStack {
-        QuestionsView(questions: [], parentCategory: nil)
+        QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
+            .environment(\.store, DataStore(
+                questionsObject: Questions(
+                    questions: [])))
     }
 }

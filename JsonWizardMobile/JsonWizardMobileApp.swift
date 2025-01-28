@@ -12,7 +12,6 @@ import FirebaseCore
 struct JsonWizardMobileApp: App {
     
     @State private var store: DataStore
-    @State private var database: DatabaseController
     @State private var authentication: Authentication
     @State private var errorWrapper: ErrorWrapper?
     
@@ -30,8 +29,7 @@ struct JsonWizardMobileApp: App {
         FirebaseApp.configure()
         
         // Initialize state properties
-        store = DataStore()
-        database = DatabaseController()
+        store = DataStore()        
         authentication = Authentication()
     }
     
@@ -47,7 +45,7 @@ struct JsonWizardMobileApp: App {
                 }
                 Tab("All Questions", systemImage: "rectangle.stack") {
                     NavigationStack {
-                        QuestionsView(questions: store.questionsObject.questions, parentCategory: nil)
+                        QuestionsView(parentCategory: nil)
                             .navigationTitle("All Questions")
                     }
                 }
@@ -59,7 +57,6 @@ struct JsonWizardMobileApp: App {
                 }
             }
             .dataStore(store)
-            .database(database)
             .auth(authentication)
             .sheet(item: $errorWrapper) { wrapper in
                 ErrorSheet(errorWrapper: wrapper)
@@ -95,7 +92,7 @@ struct JsonWizardMobileApp: App {
     // MARK: - Data Handling Methods
     private func save() async {
         do {
-            try await store.save(using: database)
+            try await store.save()
         } catch {
             if error as? Authentication.AuthError == .invalidUser {
                 errorWrapper = .init(
@@ -114,7 +111,7 @@ struct JsonWizardMobileApp: App {
     
     private func load() async {
         do {
-            try await store.load(using: database)
+            try await store.load()
         } catch {
             if error as? Authentication.AuthError == .invalidUser {
                 errorWrapper = .init(

@@ -10,7 +10,7 @@ import Foundation
 // MARK: Intents
 extension DataStore {
     
-    // MARK: Binding
+    // MARK: Binding Categories with Questions
     func bind(category: Category, with question: Question) {
         category.questionIDs.appendIfNotContains(question.id)
         question.categoryIDs.appendIfNotContains(category.id)
@@ -44,14 +44,12 @@ extension DataStore {
         categoriesObject.categories.append(category)
     }
     
-    func deleteCategories(with offsets: IndexSet) {
-        let categoriesToDelete = offsets.map { categoriesObject.categories[$0] }
-        
-        categoriesObject.categories.remove(atOffsets: offsets)
-        
-        categoriesToDelete.forEach { category in
+    func delete(categories ids: [Int]) {
+        let categoreisToDelete = getCategories(of: ids)
+        categoreisToDelete.forEach { category in
             unbindAll(from: category)
         }
+        categoriesObject.categories.removeAll { ids.contains($0.id) }
     }
     
     // MARK: Questions
@@ -59,14 +57,12 @@ extension DataStore {
         questionsObject.questions.append(question)
     }
     
-    func deleteQuestions(with offsets: IndexSet) {
-        let questionsToDelete = offsets.map { questionsObject.questions[$0] }
-        
-        questionsObject.questions.remove(atOffsets: offsets)
-        
+    func delete(questions ids: [Int]) {
+        let questionsToDelete = getQuestions(of: ids)
         questionsToDelete.forEach { question in
             unbindAll(from: question)
         }
+        questionsObject.questions.removeAll { ids.contains($0.id) }
     }
     
     // MARK: Answers
