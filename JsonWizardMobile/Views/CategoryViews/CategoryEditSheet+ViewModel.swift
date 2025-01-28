@@ -13,7 +13,11 @@ extension CategoryEditSheet {
     class ViewModel {
         
         var category: Category? = nil
-        var editedCategory = Category()
+        var title = ""
+        var subtitle = ""
+        var status = Status.draft
+        var color = Color.accent
+        var dateCreated = Date.now
         
         private(set) var isSet = false
         
@@ -26,21 +30,36 @@ extension CategoryEditSheet {
         var editorTitle: String {
             category != nil ? editorTitleKeys.edit : editorTitleKeys.add
         }
-                
+        
         func set(category: Category?, store: DataStore) {
             self.category = category
             self.store = store
             
             if let category = category {
-                editedCategory = category
+                title = category.title
+                subtitle = category.subtitle ?? ""
+                status = category.status
+                color = category.color ?? .accent
+                dateCreated = category.dateCreated
             }
             
             isSet = true
         }
         
         func save() {
-            if category == nil {
-                store.addCategory(editedCategory)
+            if let category = category {
+                category.title = title
+                category.subtitle = subtitle
+                category.status = status
+                category.color = color
+            } else {
+                let newCategory = Category(
+                    title: title,
+                    subtitle: subtitle,
+                    status: status,
+                    color: color
+                )
+                store.addCategory(newCategory)
             }
         }
     }

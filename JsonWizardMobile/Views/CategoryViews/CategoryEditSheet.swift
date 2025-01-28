@@ -37,26 +37,26 @@ struct CategoryEditSheet: View {
         Form {
             Section(header: Text("section_category_info")) {
                 TextField("text_title",
-                          text: $viewModel.editedCategory.title,
+                          text: $viewModel.title,
                           axis: .vertical)
                 TextField("text_subtitle",
-                          text: $viewModel.editedCategory.subtitle.unwrapped(),
+                          text: $viewModel.subtitle,
                           axis: .vertical)
                 Picker("picker_status",
-                       selection: $viewModel.editedCategory.status) {
+                       selection: $viewModel.status) {
                     ForEach(Status.allCases) { status in
                         Text(status.name).tag(status as Status)
                     }
                 }
                 ColorPicker("picker_color",
-                            selection: $viewModel.editedCategory.color.unwrapped())
+                            selection: $viewModel.color)
             }
             creationDate
         }
     }
     
     private var creationDate: some View {
-        Text("text_date_created \(viewModel.editedCategory.dateCreated.formatted(date: .long, time: .shortened))")
+        Text("text_date_created \(viewModel.dateCreated.formatted(date: .long, time: .shortened))")
             .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundStyle(.secondary)
@@ -72,7 +72,7 @@ struct CategoryEditSheet: View {
                     dismiss()
                 }
             }
-            .disabled(viewModel.editedCategory.title.isEmpty)
+            .disabled(viewModel.title.isEmpty)
         }
     }
     
