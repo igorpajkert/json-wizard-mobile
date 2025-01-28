@@ -8,28 +8,26 @@
 import SwiftUI
 
 struct CategoriesView: View {
-
-    @State private var isPresentingNewCategorySheet = false
-    @State private var isPresentingSignInSheet = false
-    @State private var errorWrapper: ErrorWrapper?
-
+    
+    @State private var viewModel = CategoriesView.ViewModel()
+    
     @Environment(\.store) private var store
-
-    private var isCategoriesEmpty: Bool {
-        store.categoriesObject.categories.isEmpty
-    }
-
+    
     var body: some View {
         List {
             categoriesList
-            categoriesCount.isHidden(isCategoriesEmpty)
+            categoriesCount.isHidden(viewModel.isCategoriesEmpty)
         }
         .listRowSpacing(10)
         .toolbar {
             toolbarAddButton
         }
+        .navigationDestination(for: Category.self) { category in
+            CategoryDetailView(category: category)
+        }
         .sheet(
-            isPresented: $isPresentingNewCategorySheet, onDismiss: dismissNewCategorySheet
+            isPresented: $viewModel.isPresentingNewCategorySheet,
+            onDismiss: viewModel.dismissNewCategorySheet
         ) {
             //FIXME: View Model
             CategoryEditSheet(
@@ -37,99 +35,78 @@ struct CategoriesView: View {
                 editorTitle: "Add Category",
                 isNewCategory: true)
         }
-        .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
+        .sheet(
+            isPresented: $viewModel.isPresentingSignInSheet,
+            onDismiss: viewModel.dismissSignInSheet
+        ) {
             SignInSheet()
         }
-        .sheet(item: $errorWrapper) { wrapper in
+        .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
         .refreshable {
-            await refresh()
+            await viewModel.refresh()
         }
         .overlay(alignment: .center) {
-            if isCategoriesEmpty {
+            if viewModel.isCategoriesEmpty {
                 ContentUnavailableView(
-                    "add_first_category_text", systemImage: "widget.extralarge.badge.plus"
+                    "add_first_category_text",
+                    systemImage: "widget.extralarge.badge.plus"
                 )
             }
         }
+        .onAppear {
+            if !viewModel.isSet {
+                viewModel.set(store: store)
+            }
+        }
     }
-
+    
     private var categoriesList: some View {
-        ForEach(store.categoriesObject.categories) { category in
-            NavigationLink(destination: CategoryDetailView(category: category)) {
+        ForEach(viewModel.categories) { category in
+            NavigationLink(value: category) {
                 CategoryCardView(category: category)
             }
         }
-        .onDelete(perform: deleteCategories)
+        .onDelete(perform: viewModel.deleteCategories)
     }
-
+    
     private var categoriesCount: some View {
-        Text("\(store.categoriesObject.categories.count) categories_count")
+        Text("\(viewModel.categories.count) categories_count")
             .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundStyle(.secondary)
             .listRowBackground(Color.clear)
     }
-
+    
     // MARK: Toolbar
     private var toolbarAddButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button(action: presentNewCategorySheet) {
+            Button(action: viewModel.presentNewCategorySheet) {
                 Image(systemName: "plus")
             }
         }
     }
+}
 
-    // MARK: - Intents
-    private func presentNewCategorySheet() {
-        isPresentingNewCategorySheet = true
-    }
-
-    private func dismissNewCategorySheet() {
-        isPresentingNewCategorySheet = false
-    }
-
-    private func refresh() async {
-        do {
-            try await store.refresh()
-        } catch Authentication.AuthError.invalidUser {
-            errorWrapper = .init(
-                error: Authentication.AuthError.invalidUser,
-                guidance: "Could not refresh categories. Sign in to continue.",
-                isDismissable: true,
-                dismissAction: .init(title: "Sign In", action: presentSignInSheet))
-        } catch {
-            errorWrapper = .init(
-                error: error,
-                guidance:
-                    "Could not refresh categories. Check if you are properly signed in and try again.",
-                isDismissable: true)
-        }
-    }
-
-    private func presentSignInSheet() {
-        isPresentingSignInSheet = true
-    }
-
-    private func dismissSignInSheet() {
-        isPresentingSignInSheet = false
-    }
-
-    private func deleteCategories(with offsets: IndexSet) {
-        let categoriesIDsToDelete = offsets.map {
-            store.categoriesObject.categories[$0].id
-        }
-        store.delete(categories: categoriesIDsToDelete)
+#Preview("Sample Data") {
+    NavigationStack {
+        CategoriesView()
+            .navigationTitle("Categories")
+            .environment(\.store, DataStore(
+                categoriesObject: Categories(
+                    categories: Category.sampleData))
+            )
     }
 }
 
-#Preview {
+#Preview("No Data") {
     NavigationStack {
         CategoriesView()
-            .environment(
-                \.store,
-                DataStore(categoriesObject: Categories(categories: Category.sampleData))
+            .navigationTitle("Categories")
+            .environment(\.store, DataStore(
+                categoriesObject: Categories(
+                    categories: []))
             )
     }
 }

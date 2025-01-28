@@ -26,6 +26,9 @@ struct QuestionsView: View {
             toolbarFilterButton
             toolbarAddButton
         }
+        .navigationDestination(for: Question.self) { question in
+            QuestionEditView(question: question)
+        }
         .sheet(
             isPresented: $viewModel.isPresentingNewQuestionSheet,
             onDismiss: viewModel.dismissNewQuestionSheet
@@ -60,7 +63,7 @@ struct QuestionsView: View {
     
     private var questionsList: some View {
         ForEach(viewModel.questions) { question in
-            NavigationLink(destination: QuestionEditView(question: question)) {
+            NavigationLink(value: question) {
                 QuestionCardView(question: question)
             }
         }
