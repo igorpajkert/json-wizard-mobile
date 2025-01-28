@@ -10,7 +10,7 @@ import Foundation
 // MARK: Intents
 extension DataStore {
     
-    // MARK: Binding Categories with Questions
+    // MARK: Binding
     func bind(category: Category, with question: Question) {
         category.questionIDs.appendIfNotContains(question.id)
         question.categoryIDs.appendIfNotContains(category.id)
