@@ -35,21 +35,24 @@ struct CategoryEditSheet: View {
     
     private var form: some View {
         Form {
-            Section(header: Text("section_category_info")) {
+            Section("section_category_info") {
                 TextField("text_title",
                           text: $viewModel.title,
                           axis: .vertical)
                 TextField("text_subtitle",
                           text: $viewModel.subtitle,
                           axis: .vertical)
-                Picker("picker_status",
-                       selection: $viewModel.status) {
+                ColorPicker("picker_color",
+                            selection: $viewModel.color)
+            }
+            Section("section_status") {
+                Picker("picker_status", selection: $viewModel.status) {
                     ForEach(Status.allCases) { status in
                         Text(status.name).tag(status as Status)
                     }
                 }
-                ColorPicker("picker_color",
-                            selection: $viewModel.color)
+                .pickerStyle(.menu)
+                .tint(viewModel.status.mainColor)
             }
             creationDate
         }
