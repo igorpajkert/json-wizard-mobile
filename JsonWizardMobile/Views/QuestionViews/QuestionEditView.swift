@@ -62,13 +62,14 @@ struct QuestionEditView: View {
     
     private var categoriesContent: some View {
         HStack {
-            ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal) {
                 HStack {
                     ForEach(categories) { category in
                         CategoryBadge(category: category)
                     }
                 }
             }
+            .scrollIndicators(.never)
             Spacer()
             Button(action: { viewModel?.presentCategoriesPickerSheet() }) {
                 Image(systemName: "plus.circle")

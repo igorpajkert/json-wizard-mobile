@@ -30,11 +30,14 @@ struct QuestionCardView: View {
         Group {
             Text(question.questionText)
                 .font(.headline)
-            HStack {
-                ForEach(categories) { category in
-                    CategoryBadge(category: category)
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(categories) { category in
+                        CategoryBadge(category: category)
+                    }
                 }
             }
+            .scrollIndicators(.never)
         }
     }
     
