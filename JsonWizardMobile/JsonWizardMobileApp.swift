@@ -23,17 +23,13 @@ struct JsonWizardMobileApp: App {
         Authentication.isUserValid
     }
     
-    // MARK: App Initializer
     init() {
-        // Configure Firebase
         FirebaseApp.configure()
         
-        // Initialize state properties
         store = DataStore()        
         authentication = Authentication()
     }
     
-    // MARK: Main App Entry Point
     var body: some Scene {
         WindowGroup {
             TabView {
