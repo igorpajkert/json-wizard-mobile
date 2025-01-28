@@ -20,6 +20,9 @@ extension QuestionsView {
         var sortOption = Question.SortOptions.recent
         var filterOption = Question.FilterOptions.none
         
+        /// A flag indicating whether the ViewModel has been initialized with `store` and `parentCategory`.
+        private(set) var isSet = false
+        
         private var store: DataStore
         private var parentCategory: Category?
         
@@ -78,12 +81,19 @@ extension QuestionsView {
             return result
         }
         
-        init(
-            store: DataStore = DataStore(),
-            parentCategory: Category? = nil
-        ) {
+        init(store: DataStore = DataStore(), parentCategory: Category? = nil) {
             self.store = store
             self.parentCategory = parentCategory
+        }
+        
+        /// Sets the `store` and `parentCategory` properties of the ViewModel and marks it as initialized.
+        ///
+        /// Similar to "late init," this defers initialization until called.
+        /// Once this method is invoked, the ViewModel is considered ready for operation.
+        func set(store: DataStore, parentCategory: Category?) {
+            self.store = store
+            self.parentCategory = parentCategory
+            self.isSet = true
         }
         
         func presentNewQuestionSheet() {

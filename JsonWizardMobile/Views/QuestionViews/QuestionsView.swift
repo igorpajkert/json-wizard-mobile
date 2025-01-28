@@ -52,9 +52,9 @@ struct QuestionsView: View {
             }
         }
         .onAppear {
-            viewModel = .init(
-                store: store,
-                parentCategory: parentCategory)
+            if !viewModel.isSet {
+                viewModel.set(store: store, parentCategory: parentCategory)
+            }
         }
     }
     
