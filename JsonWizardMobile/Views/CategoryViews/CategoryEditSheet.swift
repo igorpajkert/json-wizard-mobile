@@ -9,49 +9,54 @@ import SwiftUI
 
 struct CategoryEditSheet: View {
     
+    @State private var viewModel = CategoryEditSheet.ViewModel()
+    
     @Environment(\.store) private var store
     @Environment(\.dismiss) private var dismiss
     
-    @Bindable var category: Category
-    
-    var editorTitle: String?
-    var isNewCategory: Bool = false
+    var category: Category?
     
     var body: some View {
         NavigationStack {
             form
-                .navigationTitle(editorTitle ?? "Edit Category")
+                .navigationTitle(viewModel.editorTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     toolbarSaveButton
                     toolbarCancleButton
+                }
+                .onAppear {
+                    if !viewModel.isSet {
+                        viewModel.set(category: category, store: store)
+                    }
                 }
         }
     }
     
     private var form: some View {
         Form {
-            Section(header: Text("Category Info")) {
-                TextField("Title",
-                          text: $category.title,
+            Section(header: Text("section_category_info")) {
+                TextField("text_title",
+                          text: $viewModel.editedCategory.title,
                           axis: .vertical)
-                TextField("Subtitle",
-                          text: $category.subtitle.unwrapped(),
+                TextField("text_subtitle",
+                          text: $viewModel.editedCategory.subtitle.unwrapped(),
                           axis: .vertical)
-                Picker("Status",
-                       selection: $category.status) {
+                Picker("picker_status",
+                       selection: $viewModel.editedCategory.status) {
                     ForEach(Status.allCases) { status in
                         Text(status.name).tag(status as Status)
                     }
                 }
-                ColorPicker("Color", selection: $category.color.unwrapped())
+                ColorPicker("picker_color",
+                            selection: $viewModel.editedCategory.color.unwrapped())
             }
             creationDate
         }
     }
     
     private var creationDate: some View {
-        Text("Created \(category.dateCreated.formatted(date: .long, time: .shortened))")
+        Text("text_date_created \(viewModel.editedCategory.dateCreated.formatted(date: .long, time: .shortened))")
             .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundStyle(.secondary)
@@ -61,21 +66,19 @@ struct CategoryEditSheet: View {
     // MARK: Toolbar
     private var toolbarSaveButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button("Save") {
+            Button("button_save") {
                 withAnimation {
-                    if isNewCategory {
-                        store.addCategory(category)
-                    }
+                    viewModel.save()
                     dismiss()
                 }
             }
-            .disabled(category.title.isEmpty)
+            .disabled(viewModel.editedCategory.title.isEmpty)
         }
     }
     
     private var toolbarCancleButton: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", role: .cancel) {
+            Button("button_cancel", role: .cancel) {
                 dismiss()
             }
         }
@@ -83,7 +86,7 @@ struct CategoryEditSheet: View {
 }
 
 #Preview("Add Category") {
-    CategoryEditSheet(category: Category(), editorTitle: "Add Category")
+    CategoryEditSheet()
     
 }
 #Preview("Edit Category") {

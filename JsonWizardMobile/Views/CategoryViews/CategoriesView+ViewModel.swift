@@ -18,7 +18,7 @@ extension CategoriesView {
         
         private(set) var isSet = false
         
-        private var store: DataStore
+        private var store = DataStore()
         
         var categories: [Category] {
             store.categoriesObject.categories
@@ -26,10 +26,6 @@ extension CategoriesView {
         
         var isCategoriesEmpty: Bool {
             categories.isEmpty
-        }
-        
-        init(store: DataStore = DataStore()) {
-            self.store = store
         }
         
         func set(store: DataStore) {

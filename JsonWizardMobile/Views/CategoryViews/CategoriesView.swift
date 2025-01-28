@@ -29,11 +29,7 @@ struct CategoriesView: View {
             isPresented: $viewModel.isPresentingNewCategorySheet,
             onDismiss: viewModel.dismissNewCategorySheet
         ) {
-            //FIXME: View Model
-            CategoryEditSheet(
-                category: Category(),
-                editorTitle: "Add Category",
-                isNewCategory: true)
+            CategoryEditSheet()
         }
         .sheet(
             isPresented: $viewModel.isPresentingSignInSheet,

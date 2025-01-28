@@ -31,8 +31,7 @@ struct CategoryDetailView: View {
         }
         .sheet(isPresented: $isPresentingEditCategorySheet,
                onDismiss: dismissEditViewSheet) {
-            CategoryEditSheet(category: category,
-                              editorTitle: "Edit Category")
+            CategoryEditSheet(category: category)
         }
     }
     

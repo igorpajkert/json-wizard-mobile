@@ -437,6 +437,22 @@
         }
       }
     },
+    "button_cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
+          }
+        }
+      }
+    },
     "button_done" : {
       "localizations" : {
         "en" : {
@@ -449,6 +465,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gotowe"
+          }
+        }
+      }
+    },
+    "button_save" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisz"
           }
         }
       }
@@ -609,22 +641,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wybierz Kategorie"
-          }
-        }
-      }
-    },
-    "Color" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Color"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kolor"
           }
         }
       }
@@ -1077,6 +1093,22 @@
         }
       }
     },
+    "picker_color" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolor"
+          }
+        }
+      }
+    },
     "picker_filter_by" : {
       "localizations" : {
         "en" : {
@@ -1121,6 +1153,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kolejność Sortowania"
+          }
+        }
+      }
+    },
+    "picker_status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
           }
         }
       }
@@ -1217,6 +1265,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zapisz"
+          }
+        }
+      }
+    },
+    "section_category_info" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category Info"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informacje o kategorii"
           }
         }
       }
@@ -1349,34 +1413,18 @@
         }
       }
     },
-    "Status" : {
+    "text_date_created %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Status"
+            "value" : "Created %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Status"
-          }
-        }
-      }
-    },
-    "Subtitle" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Subtitle"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podtytuł"
+            "value" : "Utworzono %@"
           }
         }
       }
@@ -1413,7 +1461,23 @@
         }
       }
     },
-    "Title" : {
+    "text_subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtitle"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podtytuł"
+          }
+        }
+      }
+    },
+    "text_title" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1425,6 +1489,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tytuł"
+          }
+        }
+      }
+    },
+    "title_add_category" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Category"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj Kategorię"
+          }
+        }
+      }
+    },
+    "title_edit_category" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Category"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj Kategorię"
           }
         }
       }

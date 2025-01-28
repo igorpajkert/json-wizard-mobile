@@ -23,8 +23,8 @@ extension QuestionsView {
         /// A flag indicating whether the ViewModel has been initialized with `store` and `parentCategory`.
         private(set) var isSet = false
         
-        private var store: DataStore
-        private var parentCategory: Category?
+        private var store = DataStore()
+        private var parentCategory: Category? = nil
         
         var questions: [Question] {
             var result = store.questionsObject.questions
@@ -81,11 +81,6 @@ extension QuestionsView {
             return result
         }
         
-        init(store: DataStore = DataStore(), parentCategory: Category? = nil) {
-            self.store = store
-            self.parentCategory = parentCategory
-        }
-        
         /// Sets the `store` and `parentCategory` properties of the ViewModel and marks it as initialized.
         ///
         /// Similar to "late init," this defers initialization until called.
@@ -93,7 +88,7 @@ extension QuestionsView {
         func set(store: DataStore, parentCategory: Category?) {
             self.store = store
             self.parentCategory = parentCategory
-            self.isSet = true
+            isSet = true
         }
         
         // MARK: Intents
