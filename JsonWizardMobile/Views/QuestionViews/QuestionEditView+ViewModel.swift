@@ -14,7 +14,6 @@ extension QuestionEditView {
         
         var isPresentingCategoriesPickerSheet = false
         var question = Question()
-        var categories = [Category]()
         var newAnswerText = ""
         
         private(set) var isSet = false
@@ -22,23 +21,19 @@ extension QuestionEditView {
         private var store = DataStore()
         private var parentCategory: Category? = nil
         
-        func set(store: DataStore, question: Question, parentCategory: Category?) {
-            self.store = store
-            self.question = question
-            self.parentCategory = parentCategory
-            
-            setupCategories()
-            
-            isSet = true
-        }
-        
-        func setupCategories() {
+        var categories: [Category] {
             var categories = store.getCategories(of: question.categoryIDs)
             if let parentCategory = parentCategory {
                 categories.append(parentCategory)
             }
-            let uniqueCategories = Array(Set(categories))
-            self.categories = uniqueCategories
+            return categories
+        }
+        
+        func set(store: DataStore, question: Question, parentCategory: Category?) {
+            self.store = store
+            self.question = question
+            self.parentCategory = parentCategory
+            isSet = true
         }
         
         func addAnswer() {

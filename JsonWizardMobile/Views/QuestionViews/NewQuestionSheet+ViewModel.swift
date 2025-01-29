@@ -8,19 +8,24 @@
 import Foundation
 
 extension NewQuestionSheet {
-
+    
     @Observable
     class ViewModel {
-
-        private let store: DataStore
-        private let parentCategory: Category?
-
-        init(store: DataStore, parentCategory: Category?) {
+        
+        var question = Question()
+        
+        private(set) var isSet = false
+        
+        private var store = DataStore()
+        private var parentCategory: Category? = nil
+        
+        func set(store: DataStore, parentCategory: Category?) {
             self.store = store
             self.parentCategory = parentCategory
+            isSet = true
         }
-
-        func saveQuestion(question: Question) {
+        
+        func saveQuestion() {
             if let category = parentCategory {
                 store.bind(category: category, with: question)
             }

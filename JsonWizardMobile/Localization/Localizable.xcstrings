@@ -1174,6 +1174,7 @@
       }
     },
     "Question" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1190,6 +1191,7 @@
       }
     },
     "Question Text" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1269,6 +1271,9 @@
         }
       }
     },
+    "section_categories" : {
+
+    },
     "section_category_info" : {
       "localizations" : {
         "en" : {
@@ -1284,6 +1289,9 @@
           }
         }
       }
+    },
+    "section_question" : {
+
     },
     "section_status" : {
       "localizations" : {
@@ -1444,6 +1452,9 @@
           }
         }
       }
+    },
+    "text_question_text" : {
+
     },
     "text_sort_ascending" : {
       "localizations" : {

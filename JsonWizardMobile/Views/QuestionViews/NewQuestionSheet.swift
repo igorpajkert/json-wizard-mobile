@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct NewQuestionSheet: View {
-
-    @State private var viewModel: NewQuestionSheet.ViewModel?
-    @State private var question = Question()
-
+    
+    @State private var viewModel = NewQuestionSheet.ViewModel()
+    
     @Environment(\.store) private var store
     @Environment(\.dismiss) private var dismiss
-
+    
     var parentCategory: Category?
-
+    
     var body: some View {
         NavigationStack {
             QuestionEditView(
-                question: question,
+                question: viewModel.question,
                 parentCategory: parentCategory
             )
             .navigationTitle("Add Question")
@@ -31,23 +30,28 @@ struct NewQuestionSheet: View {
             }
         }
         .onAppear {
-            viewModel = .init(store: store, parentCategory: parentCategory)
+            if !viewModel.isSet {
+                viewModel.set(
+                    store: store,
+                    parentCategory: parentCategory
+                )
+            }
         }
     }
-
+    
     // MARK: Toolbar
     private var toolbarSaveButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button("Save") {
                 withAnimation {
-                    viewModel?.saveQuestion(question: question)
+                    viewModel.saveQuestion()
                     dismiss()
                 }
             }
-            .disabled(question.questionText.isEmpty)
+            .disabled(viewModel.question.questionText.isEmpty)
         }
     }
-
+    
     private var toolbarCancelButton: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel) {
