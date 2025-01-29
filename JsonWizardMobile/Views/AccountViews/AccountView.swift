@@ -15,10 +15,15 @@ struct AccountView: View {
     
     @Environment(\.auth) private var auth
     
-    private var userName: String { auth.user?.displayName ?? "User" }
-    private var userEmail: String { auth.user?.email ?? "Email Address" }
+    private let stringKeys = (
+        user: String(localized: "text_user"),
+        email: String(localized: "text_email")
+    )
+    
+    private var userName: String { auth.user?.displayName ?? stringKeys.user }
+    private var userEmail: String { auth.user?.email ?? stringKeys.email }
     private var userRole: String { "Administrator" } // FIXME: Role
-    private var userAvatar: ImageResource { .avatarIgor } // FIXME: Avatar
+    private var userAvatar: ImageResource { .avatarWhite } // FIXME: Avatar
     private var isUserSignedIn: Bool { auth.user != nil }
     
     var body: some View {
@@ -88,7 +93,7 @@ struct AccountView: View {
         Button(action: presentSignInSheet) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text("Sign In")
+                Text("button_sign_in")
                     .foregroundStyle(.accent.adaptedTextColor())
                     .bold()
                     .padding()
@@ -101,7 +106,7 @@ struct AccountView: View {
         Button(action: presentPasswordChangeSheet) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text("Change Password")
+                Text("button_change_password")
                     .foregroundStyle(.accent.adaptedTextColor())
                     .padding()
             }
@@ -114,7 +119,7 @@ struct AccountView: View {
         Button(role: .destructive, action: signOut) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text("Sign Out")
+                Text("button_sign_out")
                     .foregroundStyle(.red.adaptedTextColor())
                     .padding()
             }
@@ -146,8 +151,9 @@ struct AccountView: View {
         } catch {
             errorWrapper = .init(
                 error: error,
-                guidance: "Could not sign out. Try again later.",
-                isDismissable: true)
+                guidance: String(localized: "guidance_sign_out_error"),
+                isDismissable: true
+            )
         }
     }
 }

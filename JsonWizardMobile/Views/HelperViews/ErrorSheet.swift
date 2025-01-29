@@ -18,7 +18,7 @@ struct ErrorSheet: View {
             ScrollView {
                 errorContent
                     .multilineTextAlignment(.center)
-                    .navigationTitle("Error")
+                    .navigationTitle("title_error")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         toolbarDismissButton
@@ -54,7 +54,7 @@ struct ErrorSheet: View {
         Button(action: errorWrapperAction) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text(errorWrapper.dismissAction?.title ?? "Dismiss")
+                Text(errorWrapper.dismissAction?.title ?? "button_dismiss")
                     .foregroundStyle(.accent.adaptedTextColor())
                     .padding()
             }
@@ -65,7 +65,7 @@ struct ErrorSheet: View {
     // MARK: Toolbar
     private var toolbarDismissButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button("Dismiss") {
+            Button("button_dismiss") {
                 dismiss()
             }
             .disabled(!errorWrapper.isDismissable)

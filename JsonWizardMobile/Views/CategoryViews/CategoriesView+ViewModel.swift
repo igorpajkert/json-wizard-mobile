@@ -56,14 +56,19 @@ extension CategoriesView {
             } catch Authentication.AuthError.invalidUser {
                 errorWrapper = .init(
                     error: Authentication.AuthError.invalidUser,
-                    guidance: "Could not refresh categories. Sign in to continue.",
+                    guidance: String(localized: "guidance_could_not_refresh_categories"),
                     isDismissable: true,
-                    dismissAction: .init(title: "Sign In", action: presentSignInSheet))
+                    dismissAction: .init(
+                        title: String(localized: "action_sign_in"),
+                        action: presentSignInSheet
+                    )
+                )
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance:
-                        "Could not refresh categories. Check if you are properly signed in and try again.",
+                    guidance: String(
+                        localized: "guidance_could_not_refresh_categories_generic"
+                    ),
                     isDismissable: true)
             }
         }

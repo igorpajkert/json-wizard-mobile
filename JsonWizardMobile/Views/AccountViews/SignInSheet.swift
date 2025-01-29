@@ -114,11 +114,13 @@ struct SignInSheet: View {
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Error signing in. Please try again.",
+                    guidance: String(localized: "guidance_sign_in_failed"),
                     isDismissable: true,
                     dismissAction: .init(
-                        title: "Try Again",
-                        action: clearCredentials))
+                        title: String(localized: "action_try_again"),
+                        action: clearCredentials
+                    )
+                )
             }
         }
     }

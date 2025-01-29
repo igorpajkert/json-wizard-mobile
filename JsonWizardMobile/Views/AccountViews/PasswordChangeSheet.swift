@@ -118,15 +118,23 @@ struct PasswordChangeSheet: View {
                 if error as? Authentication.AuthError == Authentication.AuthError.reauthenticationRequired {
                     errorWrapper = .init(
                         error: error,
-                        guidance: "Re-authentication required. Please sign into your account and try again.",
+                        guidance: String(localized: "guidance_reauthenticate_password"),
                         isDismissable: true,
-                        dismissAction: .init(title: "Authenticate", action: presentReauthenticateSheet))
+                        dismissAction: .init(
+                            title: String(localized: "action_authenticate"),
+                            action: presentReauthenticateSheet
+                        )
+                    )
                 } else {
                     errorWrapper = .init(
                         error: error,
-                        guidance: "Unable to change password. Please try again.",
+                        guidance: String(localized: "guidance_change_password_failed"),
                         isDismissable: true,
-                        dismissAction: .init(title: "Try Again", action: clearPasswords))
+                        dismissAction: .init(
+                            title: String(localized: "action_try_again"),
+                            action: clearPasswords
+                        )
+                    )
                 }
             }
         }

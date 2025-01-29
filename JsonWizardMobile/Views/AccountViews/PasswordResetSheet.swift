@@ -91,11 +91,13 @@ struct PasswordResetSheet: View {
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Failed to send password reset email.",
+                    guidance: String(localized: "guidance_auth_email_send_failed"),
                     isDismissable: true,
                     dismissAction: .init(
-                        title: "Try Again",
-                        action: clearEmail))
+                        title: String(localized: "action_try_again"),
+                        action: clearEmail
+                    )
+                )
             }
         }
     }

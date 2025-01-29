@@ -9,8 +9,13 @@ import SwiftUI
 
 struct AnswerCardView: View {
     
+    private let keys = (
+        correct: String(localized: "text_correct"),
+        incorrect: String(localized: "text_incorrect")
+    )
+    
     private var title: String {
-        answer.isCorrect ? "Correct" : "Incorrect"
+        answer.isCorrect ? keys.correct : keys.incorrect
     }
     
     private var image: String {

@@ -26,29 +26,29 @@ struct JsonWizardMobileApp: App {
     init() {
         FirebaseApp.configure()
         
-        store = DataStore()        
+        store = DataStore()
         authentication = Authentication()
     }
     
     var body: some Scene {
         WindowGroup {
             TabView {
-                Tab("Categories", systemImage: "square.stack.3d.up") {
+                Tab("tab_categories", systemImage: "square.stack.3d.up") {
                     NavigationStack {
                         CategoriesView()
-                            .navigationTitle("Categories")
+                            .navigationTitle("title_categories")
                     }
                 }
-                Tab("All Questions", systemImage: "rectangle.stack") {
+                Tab("tab_all_questions", systemImage: "rectangle.stack") {
                     NavigationStack {
                         QuestionsView(parentCategory: nil)
-                            .navigationTitle("All Questions")
+                            .navigationTitle("title_all_questions")
                     }
                 }
-                Tab("Account", systemImage: "person.crop.circle") {
+                Tab("tab_account", systemImage: "person.crop.circle") {
                     NavigationStack {
                         AccountView()
-                            .navigationTitle("Account")
+                            .navigationTitle("title_account")
                     }
                 }
             }
@@ -93,13 +93,17 @@ struct JsonWizardMobileApp: App {
             if error as? Authentication.AuthError == .invalidUser {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Sign in is required to save data. Please sign into your developer account to continue.",
+                    guidance: String(localized: "guidance_save_sign_in_required"),
                     isDismissable: false,
-                    dismissAction: .init(title: "Sign In", action: presentSignInSheet))
+                    dismissAction: .init(
+                        title: String(localized: "action_sign_in"),
+                        action: presentSignInSheet
+                    )
+                )
             } else {
                 errorWrapper = ErrorWrapper(
                     error: error,
-                    guidance: "Error saving data. Please retry later.",
+                    guidance: String(localized: "guidance_error_saving_data_generic"),
                     isDismissable: true)
             }
         }
@@ -112,13 +116,17 @@ struct JsonWizardMobileApp: App {
             if error as? Authentication.AuthError == .invalidUser {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Sign in is required to load data. Please sign into your developer account to continue.",
+                    guidance: String(localized: "guidance_load_sign_in_required"),
                     isDismissable: false,
-                    dismissAction: .init(title: "Sign In", action: presentSignInSheet))
+                    dismissAction: .init(
+                        title: String(localized: "action_sign_in"),
+                        action: presentSignInSheet
+                    )
+                )
             } else {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Error loading data. Restart the app and retry.",
+                    guidance: String(localized: "guidance_error_loading_data_generic"),
                     isDismissable: true)
             }
         }

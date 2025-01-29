@@ -19,9 +19,9 @@ struct AnswersErrorBadge: View {
     
     private var title: String {
         if answers.isEmpty {
-            return "No Answers"
+            return String(localized: "text_no_answers")
         } else if corectAnswers.isEmpty {
-            return "No Correct Answers"
+            return String(localized: "text_no_correct_answers")
         } else {
             return ""
         }

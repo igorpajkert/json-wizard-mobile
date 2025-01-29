@@ -119,14 +119,17 @@ extension QuestionsView {
             } catch Authentication.AuthError.invalidUser {
                 errorWrapper = .init(
                     error: Authentication.AuthError.invalidUser,
-                    guidance: "Could not refresh questions. Sign in to continue.",
+                    guidance: String(localized: "guidance_could_not_refresh_questions_invalid_user"),
                     isDismissable: true,
-                    dismissAction: .init(title: "Sign In", action: presentSignInSheet))
+                    dismissAction: .init(
+                        title: String(localized: "action_sign_in"),
+                        action: presentSignInSheet
+                    )
+                )
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance:
-                        "Could not refresh questions. Check if you are properly signed in and try again.",
+                    guidance: String(localized: "guidance_could_not_refresh_questions_generic"),
                     isDismissable: true)
             }
         }

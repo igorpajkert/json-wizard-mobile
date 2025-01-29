@@ -261,22 +261,6 @@
         }
       }
     },
-    "Account" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konto"
-          }
-        }
-      }
-    },
     "account_help_info" : {
       "localizations" : {
         "en" : {
@@ -289,6 +273,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jeśli masz problem z dostępem do twojego konta, skontaktuj się z: igor.pajkert@ipsoftware.org"
+          }
+        }
+      }
+    },
+    "action_authenticate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authenticate"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weryfikuj"
+          }
+        }
+      }
+    },
+    "action_sign_in" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaloguj"
+          }
+        }
+      }
+    },
+    "action_try_again" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spróbuj Ponownie"
           }
         }
       }
@@ -373,22 +405,6 @@
         }
       }
     },
-    "All Questions" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All Questions"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wszystkie Pytania"
-          }
-        }
-      }
-    },
     "Answer Text" : {
       "localizations" : {
         "en" : {
@@ -453,6 +469,38 @@
         }
       }
     },
+    "button_change_password" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Password"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień Hasło"
+          }
+        }
+      }
+    },
+    "button_dismiss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
+          }
+        }
+      }
+    },
     "button_done" : {
       "localizations" : {
         "en" : {
@@ -485,6 +533,38 @@
         }
       }
     },
+    "button_sign_in" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaloguj"
+          }
+        }
+      }
+    },
+    "button_sign_out" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Out"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyloguj"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "en" : {
@@ -497,22 +577,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anuluj"
-          }
-        }
-      }
-    },
-    "Categories" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categories"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategorie"
           }
         }
       }
@@ -737,22 +801,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Email"
-          }
-        }
-      }
-    },
-    "Error" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Błąd"
           }
         }
       }
@@ -997,6 +1045,230 @@
         }
       }
     },
+    "guidance_auth_email_send_failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to send password reset email."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się wysłać wiadomości e-mail do resetowania hasła."
+          }
+        }
+      }
+    },
+    "guidance_change_password_failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to change password. Please try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można zmienić hasła. Spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_could_not_refresh_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not refresh categories. Sign in to continue."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można odświeżyć kategorii. Zaloguj się, aby kontynuować."
+          }
+        }
+      }
+    },
+    "guidance_could_not_refresh_categories_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not refresh categories. Check if you are properly signed in and try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można odświeżyć kategorii. Sprawdź, czy jesteś poprawnie zalogowany i spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_could_not_refresh_questions_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not refresh questions. Check if you are properly signed in and try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można odświeżyć pytań. Sprawdź, czy jesteś poprawnie zalogowany i spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_could_not_refresh_questions_invalid_user" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not refresh questions. Sign in to continue."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można odświeżyć pytań. Zaloguj się, aby kontynuować."
+          }
+        }
+      }
+    },
+    "guidance_error_loading_data_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error loading data. Restart the app and retry."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd ładowania danych. Uruchom ponownie aplikację i spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_error_saving_data_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error saving data. Please retry later."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd zapisywania danych. Spróbuj ponownie później."
+          }
+        }
+      }
+    },
+    "guidance_load_sign_in_required" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in is required to load data. Please sign into your developer account to continue."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logowanie jest wymagane do załadowania danych. Zaloguj się na swoje konto deweloperskie, aby kontynuować."
+          }
+        }
+      }
+    },
+    "guidance_reauthenticate_password" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Re-authentication required. Please sign into your account and try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymagane ponowne uwierzytelnienie. Zaloguj się na swoje konto i spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_reauthentication_failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication failed. Please try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uwierzytelnianie nie powiodło się. Spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_save_sign_in_required" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in is required to save data. Please sign into your developer account to continue."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logowanie jest wymagane do zapisania danych. Zaloguj się na swoje konto deweloperskie, aby kontynuować."
+          }
+        }
+      }
+    },
+    "guidance_sign_in_failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error signing in. Please try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd logowania. Spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "guidance_sign_out_error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not sign out. Try again later."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można się wylogować. Spróbuj ponownie później."
+          }
+        }
+      }
+    },
     "menu_filter" : {
       "localizations" : {
         "en" : {
@@ -1173,40 +1445,6 @@
         }
       }
     },
-    "Question" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Question"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pytanie"
-          }
-        }
-      }
-    },
-    "Question Text" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Question Text"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tekst Pytania"
-          }
-        }
-      }
-    },
     "Questions" : {
       "localizations" : {
         "en" : {
@@ -1272,7 +1510,20 @@
       }
     },
     "section_categories" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
     },
     "section_category_info" : {
       "localizations" : {
@@ -1291,7 +1542,20 @@
       }
     },
     "section_question" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pytanie"
+          }
+        }
+      }
     },
     "section_status" : {
       "localizations" : {
@@ -1337,22 +1601,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaloguj"
-          }
-        }
-      }
-    },
-    "Sign Out" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign Out"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wyloguj"
           }
         }
       }
@@ -1437,6 +1685,70 @@
         }
       }
     },
+    "tab_account" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        }
+      }
+    },
+    "tab_all_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie Pytania"
+          }
+        }
+      }
+    },
+    "tab_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
+    },
+    "text_correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poprawne"
+          }
+        }
+      }
+    },
     "text_date_created %@" : {
       "localizations" : {
         "en" : {
@@ -1453,8 +1765,85 @@
         }
       }
     },
+    "text_email" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "text_incorrect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incorrect"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niepoprawne"
+          }
+        }
+      }
+    },
+    "text_no_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak odpowiedzi"
+          }
+        }
+      }
+    },
+    "text_no_correct_answers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No correct answers"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak poprawnych odpowiedzi"
+          }
+        }
+      }
+    },
     "text_question_text" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question Text"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question Text"
+          }
+        }
+      }
     },
     "text_sort_ascending" : {
       "localizations" : {
@@ -1520,6 +1909,38 @@
         }
       }
     },
+    "text_user" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Użytkownik"
+          }
+        }
+      }
+    },
+    "title_account" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        }
+      }
+    },
     "title_add_category" : {
       "localizations" : {
         "en" : {
@@ -1536,6 +1957,38 @@
         }
       }
     },
+    "title_all_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie Pytania"
+          }
+        }
+      }
+    },
+    "title_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
+    },
     "title_edit_category" : {
       "localizations" : {
         "en" : {
@@ -1548,6 +2001,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edytuj Kategorię"
+          }
+        }
+      }
+    },
+    "title_error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd"
           }
         }
       }

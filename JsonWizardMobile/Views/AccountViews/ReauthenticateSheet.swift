@@ -97,9 +97,13 @@ struct ReauthenticateSheet: View {
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: "Authentication failed. Please try again.",
+                    guidance: String(localized: "guidance_reauthentication_failed"),
                     isDismissable: true,
-                    dismissAction: .init(title: "Try Again", action: clearCredentials))
+                    dismissAction: .init(
+                        title: String(localized: "action_try_again"),
+                        action: clearCredentials
+                    )
+                )
             }
         }
     }
