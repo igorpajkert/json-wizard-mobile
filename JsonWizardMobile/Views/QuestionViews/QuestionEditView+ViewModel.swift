@@ -13,33 +13,38 @@ extension QuestionEditView {
     class ViewModel {
         
         var isPresentingCategoriesPickerSheet = false
+        var question = Question()
+        var categories = [Category]()
+        var newAnswerText = ""
         
-        private let store: DataStore
-        private let question: Question
-        private let parentCategory: Category?
+        private(set) var isSet = false
         
-        var categories: [Category] {
+        private var store = DataStore()
+        private var parentCategory: Category? = nil
+        
+        func set(store: DataStore, question: Question, parentCategory: Category?) {
+            self.store = store
+            self.question = question
+            self.parentCategory = parentCategory
+            
+            setupCategories()
+            
+            isSet = true
+        }
+        
+        func setupCategories() {
             var categories = store.getCategories(of: question.categoryIDs)
             if let parentCategory = parentCategory {
                 categories.append(parentCategory)
             }
-            return categories
+            let uniqueCategories = Array(Set(categories))
+            self.categories = uniqueCategories
         }
         
-        init(
-            store: DataStore,
-            question: Question,
-            parentCategory: Category?
-        ) {
-            self.store = store
-            self.question = question
-            self.parentCategory = parentCategory
-        }
-        
-        func addAnswer(with text: Binding<String>) {
+        func addAnswer() {
             withAnimation {
-                store.addAnswer(at: question, with: text.wrappedValue)
-                text.wrappedValue.clear()
+                store.addAnswer(at: question, with: newAnswerText)
+                newAnswerText.clear()
             }
         }
         

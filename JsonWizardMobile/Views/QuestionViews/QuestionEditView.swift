@@ -9,25 +9,12 @@ import SwiftUI
 
 struct QuestionEditView: View {
     
-    @State private var viewModel: QuestionEditView.ViewModel?
-    @State private var newAnswerText = ""
+    @State private var viewModel = QuestionEditView.ViewModel()
     
     @Environment(\.store) private var store
     
-    @Bindable var question: Question
-    
+    var question: Question
     var parentCategory: Category?
-    
-    private var isPresentigCategoriesPickerSheet: Binding<Bool> {
-        Binding(
-            get: { viewModel?.isPresentingCategoriesPickerSheet ?? false },
-            set: { viewModel?.isPresentingCategoriesPickerSheet = $0 }
-        )
-    }
-    
-    private var categories: [Category] {
-        viewModel?.categories ?? []
-    }
     
     var body: some View {
         List {
@@ -36,24 +23,32 @@ struct QuestionEditView: View {
         }
         .listRowSpacing(10)
         .sheet(
-            isPresented: isPresentigCategoriesPickerSheet,
-            onDismiss: viewModel?.dismissCategoriesPickerSheet
+            isPresented: $viewModel.isPresentingCategoriesPickerSheet,
+            onDismiss: viewModel.dismissCategoriesPickerSheet
         ) {
             CategoriesPickerSheet(question: question)
         }
         .onAppear {
-            viewModel = .init(
-                store: store, question: question, parentCategory: parentCategory)
+            if !viewModel.isSet {
+                viewModel.set(
+                    store: store,
+                    question: question,
+                    parentCategory: parentCategory
+                )
+            }
         }
     }
     
     // MARK: Question
     private var questionContent: some View {
         Group {
-            Section("Question") {
-                TextField("Question Text", text: $question.questionText, axis: .vertical)
+            Section("section_question") {
+                TextField("text_question_text",
+                          text: $viewModel.question.questionText,
+                          axis: .vertical
+                )
             }
-            Section("Categories") {
+            Section("section_categories") {
                 categoriesContent
                 creationDate
             }
@@ -64,14 +59,14 @@ struct QuestionEditView: View {
         HStack {
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(categories) { category in
+                    ForEach(viewModel.categories) { category in
                         CategoryBadge(category: category)
                     }
                 }
             }
             .scrollIndicators(.never)
             Spacer()
-            Button(action: { viewModel?.presentCategoriesPickerSheet() }) {
+            Button(action: viewModel.presentCategoriesPickerSheet) {
                 Image(systemName: "plus.circle")
             }
         }
@@ -91,13 +86,16 @@ struct QuestionEditView: View {
             ForEach(question.answersObject.answers) { answer in
                 AnswerCardView(answer: answer)
             }
-            .onDelete(perform: viewModel?.deleteAnswers)
+            .onDelete(perform: viewModel.deleteAnswers)
             HStack {
-                TextField("Add Answer...", text: $newAnswerText, axis: .vertical)
-                Button(action: { viewModel?.addAnswer(with: $newAnswerText) }) {
+                TextField("Add Answer...",
+                          text: $viewModel.newAnswerText,
+                          axis: .vertical
+                )
+                Button(action: viewModel.addAnswer) {
                     Image(systemName: "plus.circle.fill")
                 }
-                .disabled(newAnswerText.isEmpty)
+                .disabled(viewModel.newAnswerText.isEmpty)
             }
             answersCount
         }
