@@ -16,14 +16,15 @@ struct AccountView: View {
     @Environment(\.auth) private var auth
     
     private let stringKeys = (
-        user: String(localized: "text_user"),
-        email: String(localized: "text_email")
+        user: String(localized: "text_no_user"),
+        email: String(localized: "text_no_email"),
+        role: String(localized: "text_no_role")
     )
     
-    private var userName: String { auth.user?.displayName ?? stringKeys.user }
+    private var userName: String { auth.userData?.name ?? stringKeys.user }
     private var userEmail: String { auth.user?.email ?? stringKeys.email }
-    private var userRole: String { "Administrator" } // FIXME: Role
-    private var userAvatar: ImageResource { .avatarWhite } // FIXME: Avatar
+    private var userRole: String { auth.userData?.role?.name ?? stringKeys.role }
+    private var userAvatar: ImageResource { .avatarWhite }
     private var isUserSignedIn: Bool { auth.user != nil }
     
     var body: some View {
@@ -41,6 +42,18 @@ struct AccountView: View {
                         ErrorSheet(errorWrapper: wrapper)
                     }
                     .padding()
+                    .task {
+                        //FIXME: View Model
+                        do {
+                            try await auth.fetchUserData()
+                        } catch {
+                            errorWrapper = .init(
+                                error: error,
+                                guidance: "Could not fetch user data. Please try again later.",
+                                isDismissable: true
+                            )
+                        }
+                    }
             }
         }
     }

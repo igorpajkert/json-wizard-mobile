@@ -15,6 +15,7 @@ class Authentication {
     
     /// The currently signed-in user, or `nil` if no user is signed in.
     var user: User?
+    var userData: UserData?
     
     /// A listener handle that observes changes to the Firebase authentication state.
     private var handle: AuthStateDidChangeListenerHandle?

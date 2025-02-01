@@ -11,16 +11,19 @@ import Foundation
 final class UserData: Identifiable, Codable, Equatable {
     
     let id: String
+    let name: String
     let role: UserRole?
     
-    init(id: String, role: UserRole? = nil) {
+    init(id: String, name: String, role: UserRole? = nil) {
         self.id = id
+        self.name = name
         self.role = role
     }
     
     // MARK: - Codable Conformance | Custom encoding & decoding
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(String.self, forKey: .id)
         
         // Decode role as a String and initialize the UserRole enum
@@ -36,6 +39,7 @@ final class UserData: Identifiable, Codable, Equatable {
     
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
         try container.encode(id, forKey: .id)
         
         // Encode role as its rawValue (String) if not nil
@@ -45,7 +49,7 @@ final class UserData: Identifiable, Codable, Equatable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case id, role
+        case id, name, role
     }
     
     // MARK: - Equatable Conformance
