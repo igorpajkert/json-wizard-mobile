@@ -1765,6 +1765,22 @@
         }
       }
     },
+    "text_email" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
     "text_incorrect" : {
       "localizations" : {
         "en" : {
@@ -1813,54 +1829,6 @@
         }
       }
     },
-    "text_no_email" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Email"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Brak Adresu Email"
-          }
-        }
-      }
-    },
-    "text_no_role" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Role"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Brak Roli"
-          }
-        }
-      }
-    },
-    "text_no_user" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No User"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Brak Użytkownika"
-          }
-        }
-      }
-    },
     "text_question_text" : {
       "localizations" : {
         "en" : {
@@ -1873,6 +1841,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Question Text"
+          }
+        }
+      }
+    },
+    "text_role" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Role"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rola"
           }
         }
       }
@@ -1937,6 +1921,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tytuł"
+          }
+        }
+      }
+    },
+    "text_user" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Użytkownik"
           }
         }
       }

@@ -16,9 +16,9 @@ struct AccountView: View {
     @Environment(\.auth) private var auth
     
     private let stringKeys = (
-        user: String(localized: "text_no_user"),
-        email: String(localized: "text_no_email"),
-        role: String(localized: "text_no_role")
+        user: String(localized: "text_user"),
+        email: String(localized: "text_email"),
+        role: String(localized: "text_role")
     )
     
     private var userName: String { auth.userData?.name ?? stringKeys.user }
