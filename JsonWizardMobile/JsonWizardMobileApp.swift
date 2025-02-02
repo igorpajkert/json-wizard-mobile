@@ -19,8 +19,8 @@ struct JsonWizardMobileApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     
-    private var isUserValid: Bool {
-        Authentication.isUserValid
+    private var isUserSignedIn: Bool {
+        Authentication.isUserSignedIn
     }
     
     init() {
@@ -61,7 +61,7 @@ struct JsonWizardMobileApp: App {
                 SignInSheet()
             }
             .task {
-                if isUserValid {
+                if isUserSignedIn {
                     await load()
                 } else {
                     presentSignInSheet()
@@ -69,14 +69,14 @@ struct JsonWizardMobileApp: App {
             }
             .onChange(of: scenePhase) { oldState, newState in
                 if newState == .inactive && !isPresentingSignInSheet {
-                    guard isUserValid else { return }
+                    guard isUserSignedIn else { return }
                     Task {
                         await save()
                     }
                 }
             }
             .onChange(of: isPresentingSignInSheet) { oldState, newState in
-                if isUserValid && newState == false {
+                if isUserSignedIn && newState == false {
                     Task {
                         await load()
                     }
@@ -90,7 +90,7 @@ struct JsonWizardMobileApp: App {
         do {
             try await store.save()
         } catch {
-            if error as? Authentication.AuthError == .invalidUser {
+            if error as? Authentication.AuthError == .currentUserNotFound {
                 errorWrapper = .init(
                     error: error,
                     guidance: String(localized: "guidance_save_sign_in_required"),
@@ -113,7 +113,7 @@ struct JsonWizardMobileApp: App {
         do {
             try await store.load()
         } catch {
-            if error as? Authentication.AuthError == .invalidUser {
+            if error as? Authentication.AuthError == .currentUserNotFound {
                 errorWrapper = .init(
                     error: error,
                     guidance: String(localized: "guidance_load_sign_in_required"),

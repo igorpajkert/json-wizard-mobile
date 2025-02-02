@@ -13,6 +13,10 @@ import FirebaseCore
 @Observable
 class Authentication {
     
+    static var isUserSignedIn: Bool {
+        Auth.auth().currentUser != nil
+    }
+    
     /// The currently signed-in user, or `nil` if no user is signed in.
     var user: User?
     /// The data of the currently signed-in user.
@@ -115,12 +119,5 @@ class Authentication {
                 }
             }
         }
-    }
-    
-    // MARK: - Statics
-    /// Indicates whether a currently signed in user is valid.
-    static var isUserValid: Bool {
-        // TODO: User Roles
-        Auth.auth().currentUser != nil
     }
 }
