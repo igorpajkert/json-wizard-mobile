@@ -1077,6 +1077,23 @@
         }
       }
     },
+    "guidance_could_not_fetch_user_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not fetch user data. Please try again later."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można pobrać danych użytkownika. Spróbuj ponownie później."
+          }
+        }
+      }
+    },
     "guidance_could_not_refresh_categories" : {
       "localizations" : {
         "en" : {

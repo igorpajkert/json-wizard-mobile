@@ -54,7 +54,7 @@ struct ErrorSheet: View {
         Button(action: errorWrapperAction) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
-                Text(errorWrapper.dismissAction?.title ?? "button_dismiss")
+                Text(errorWrapper.dismissAction?.title ?? String(localized: "button_dismiss"))
                     .foregroundStyle(.accent.adaptedTextColor())
                     .padding()
             }

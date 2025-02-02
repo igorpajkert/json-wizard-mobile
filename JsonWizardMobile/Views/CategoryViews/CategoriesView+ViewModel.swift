@@ -53,9 +53,9 @@ extension CategoriesView {
         func refresh() async {
             do {
                 try await store.refresh()
-            } catch Authentication.AuthError.invalidUser {
+            } catch Authentication.AuthError.currentUserNotFound {
                 errorWrapper = .init(
-                    error: Authentication.AuthError.invalidUser,
+                    error: Authentication.AuthError.currentUserNotFound,
                     guidance: String(localized: "guidance_could_not_refresh_categories"),
                     isDismissable: true,
                     dismissAction: .init(

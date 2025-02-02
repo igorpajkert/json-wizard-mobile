@@ -18,4 +18,13 @@ extension Authentication {
         let database = DatabaseController()
         userData = try await database.loadData(from: user.uid, within: "user_data_test")
     }
+    
+    func isUserValid() async throws -> Bool {
+        try await fetchUserData()
+        if userData?.role == UserRole.admin && userData?.role == UserRole.author {
+            return true
+        } else {
+            return false
+        }
+    }
 }

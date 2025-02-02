@@ -9,49 +9,37 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @State private var isPresentingSignInSheet = false
-    @State private var isPresentingPasswordChangeSheet = false
-    @State private var errorWrapper: ErrorWrapper?
+    @State private var viewModel = AccountView.ViewModel()
     
     @Environment(\.auth) private var auth
-    
-    private let stringKeys = (
-        user: String(localized: "text_user"),
-        email: String(localized: "text_email"),
-        role: String(localized: "text_role")
-    )
-    
-    private var userName: String { auth.userData?.name ?? stringKeys.user }
-    private var userEmail: String { auth.user?.email ?? stringKeys.email }
-    private var userRole: String { auth.userData?.role?.name ?? stringKeys.role }
-    private var userAvatar: ImageResource { .avatarWhite }
-    private var isUserSignedIn: Bool { auth.user != nil }
     
     var body: some View {
         ZStack {
             backgroundGradient
             ScrollView {
                 mainVStack
-                    .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
+                    .sheet(
+                        isPresented: $viewModel.isPresentingSignInSheet,
+                        onDismiss: viewModel.dismissSignInSheet
+                    ) {
                         SignInSheet()
                     }
-                    .sheet(isPresented: $isPresentingPasswordChangeSheet, onDismiss: dismissPasswordChangeSheet) {
+                    .sheet(
+                        isPresented: $viewModel.isPresentingPasswordChangeSheet,
+                        onDismiss: viewModel.dismissPasswordChangeSheet
+                    ) {
                         PasswordChangeSheet()
                     }
-                    .sheet(item: $errorWrapper) { wrapper in
+                    .sheet(item: $viewModel.errorWrapper) { wrapper in
                         ErrorSheet(errorWrapper: wrapper)
                     }
                     .padding()
                     .task {
-                        //FIXME: View Model
-                        do {
-                            try await auth.fetchUserData()
-                        } catch {
-                            errorWrapper = .init(
-                                error: error,
-                                guidance: "Could not fetch user data. Please try again later.",
-                                isDismissable: true
-                            )
+                        await viewModel.fetchUserData()
+                    }
+                    .onAppear {
+                        if !viewModel.isSet {
+                            viewModel.set(auth: auth)
                         }
                     }
             }
@@ -62,7 +50,8 @@ struct AccountView: View {
         LinearGradient(
             gradient: Gradient(colors: [.lightLavender, .lavender]),
             startPoint: .top,
-            endPoint: .bottom)
+            endPoint: .bottom
+        )
         .ignoresSafeArea(.all)
     }
     
@@ -72,7 +61,7 @@ struct AccountView: View {
             userInfo
             Divider()
             Spacer()
-            if !isUserSignedIn {
+            if !viewModel.isUserSignedIn {
                 signInButton
             }
             changePasswordButton
@@ -81,7 +70,7 @@ struct AccountView: View {
     }
     
     private var avatarImage: some View {
-        Image(userAvatar)
+        Image(viewModel.userAvatar)
             .resizable()
             .scaledToFill()
             .frame(width: 120, height: 120)
@@ -91,19 +80,19 @@ struct AccountView: View {
     
     private var userInfo: some View {
         Group {
-            Text(userName)
+            Text(viewModel.userName)
                 .font(.title)
                 .fontWeight(.semibold)
-            Text(userEmail)
+            Text(viewModel.userEmail)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-            Text(userRole)
+            Text(viewModel.userRole)
                 .foregroundStyle(.secondary)
         }
     }
     
     private var signInButton: some View {
-        Button(action: presentSignInSheet) {
+        Button(action: viewModel.presentSignInSheet) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
                 Text("button_sign_in")
@@ -116,7 +105,7 @@ struct AccountView: View {
     }
     
     private var changePasswordButton: some View {
-        Button(action: presentPasswordChangeSheet) {
+        Button(action: viewModel.presentPasswordChangeSheet) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
                 Text("button_change_password")
@@ -124,12 +113,12 @@ struct AccountView: View {
                     .padding()
             }
         }
-        .isHidden(!isUserSignedIn)
+        .isHidden(!viewModel.isUserSignedIn)
         .padding(.horizontal)
     }
     
     private var signOutButton: some View {
-        Button(role: .destructive, action: signOut) {
+        Button(role: .destructive, action: viewModel.signOut) {
             ZStack {
                 RoundedRectangle(cornerRadius: 32)
                 Text("button_sign_out")
@@ -137,37 +126,8 @@ struct AccountView: View {
                     .padding()
             }
         }
-        .isHidden(!isUserSignedIn)
+        .isHidden(!viewModel.isUserSignedIn)
         .padding(.horizontal)
-    }
-    
-    // MARK: - Intents
-    private func presentSignInSheet() {
-        isPresentingSignInSheet = true
-    }
-    
-    private func dismissSignInSheet() {
-        isPresentingSignInSheet = false
-    }
-    
-    private func presentPasswordChangeSheet() {
-        isPresentingPasswordChangeSheet = true
-    }
-    
-    private func dismissPasswordChangeSheet() {
-        isPresentingPasswordChangeSheet = false
-    }
-    
-    private func signOut() {
-        do {
-            try auth.signOut()
-        } catch {
-            errorWrapper = .init(
-                error: error,
-                guidance: String(localized: "guidance_sign_out_error"),
-                isDismissable: true
-            )
-        }
     }
 }
 
