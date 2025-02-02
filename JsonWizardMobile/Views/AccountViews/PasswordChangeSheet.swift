@@ -14,7 +14,6 @@ struct PasswordChangeSheet: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isPresentingReauthenticateSheet = false
     
-    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
     
     private var isPasswordsMatch: Bool {
@@ -24,6 +23,8 @@ struct PasswordChangeSheet: View {
     private var isPasswordsEmpty: Bool {
         password.isEmpty || confirmPassword.isEmpty
     }
+    
+    private let auth = Authentication.shared
     
     var body: some View {
         NavigationStack {
@@ -156,7 +157,6 @@ struct PasswordChangeSheet: View {
 
 #Preview {
     NavigationStack {
-        PasswordChangeSheet()
-            .environment(Authentication())
+        PasswordChangeSheet()            
     }
 }

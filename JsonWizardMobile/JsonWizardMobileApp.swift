@@ -12,7 +12,6 @@ import FirebaseCore
 struct JsonWizardMobileApp: App {
     
     @State private var store: DataStore
-    @State private var authentication: Authentication
     @State private var errorWrapper: ErrorWrapper?
     
     @State private var isPresentingSignInSheet = false
@@ -20,14 +19,13 @@ struct JsonWizardMobileApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     private var isUserSignedIn: Bool {
-        Authentication.isUserSignedIn
+        Authentication.shared.isUserSignedIn
     }
     
     init() {
         FirebaseApp.configure()
         
         store = DataStore()
-        authentication = Authentication()
     }
     
     var body: some Scene {
@@ -53,7 +51,6 @@ struct JsonWizardMobileApp: App {
                 }
             }
             .dataStore(store)
-            .auth(authentication)
             .sheet(item: $errorWrapper) { wrapper in
                 ErrorSheet(errorWrapper: wrapper)
             }

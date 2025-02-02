@@ -13,8 +13,9 @@ struct ReauthenticateSheet: View {
     @State private var password: String = ""
     @State private var errorWrapper: ErrorWrapper?
     
-    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
+    
+    private let auth = Authentication.shared
     
     var body: some View {
         NavigationStack {

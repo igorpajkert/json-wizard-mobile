@@ -14,8 +14,9 @@ struct SignInSheet: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isShowingPasswordResetSheet = false
     
-    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
+    
+    private let auth = Authentication.shared
     
     var body: some View {
         NavigationStack {
@@ -142,6 +143,5 @@ struct SignInSheet: View {
 #Preview {
     NavigationStack {
         SignInSheet()
-            .environment(Authentication())
     }
 }

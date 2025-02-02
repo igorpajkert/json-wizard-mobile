@@ -45,7 +45,9 @@ class DataStore {
     /// Saves the current `categoriesObject` and `questionsObject` to the database.
     /// - Throws: An error if any of the save operations fail.
     func save() async throws {
-        guard Authentication.isUserSignedIn else { throw Authentication.AuthError.currentUserNotFound }
+        guard try await Authentication.shared.isUserValid() else {
+            throw Authentication.AuthError.invalidUser
+        }
         
         async let _ = try await saveCategories()
         async let _ = try await saveQuestions()
@@ -78,7 +80,9 @@ class DataStore {
     /// then assigns the results to the relevant properties.
     /// - Throws: An error if any of the load operations fail.
     func load() async throws {
-        guard Authentication.isUserSignedIn else { throw Authentication.AuthError.currentUserNotFound }
+        guard try await Authentication.shared.isUserValid() else {
+            throw Authentication.AuthError.invalidUser
+        }
         
         try await loadCategories()
         try await loadQuestions()
@@ -107,7 +111,9 @@ class DataStore {
     ///
     /// - Throws: An error if saving or loading from the database fails, or if the user is invalid.
     func refresh() async throws {
-        guard Authentication.isUserSignedIn else { throw Authentication.AuthError.currentUserNotFound }
+        guard try await Authentication.shared.isUserValid() else {
+            throw Authentication.AuthError.invalidUser
+        }
         
         if !isInitiallyLoaded.categories {
             try await loadCategories()

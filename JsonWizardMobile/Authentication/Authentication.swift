@@ -13,10 +13,9 @@ import FirebaseCore
 @Observable
 class Authentication {
     
-    static var isUserSignedIn: Bool {
-        Auth.auth().currentUser != nil
-    }
-    
+    /// Shared singleton instance of `Authentication`
+    static let shared = Authentication()
+        
     /// The currently signed-in user, or `nil` if no user is signed in.
     var user: User?
     /// The data of the currently signed-in user.
@@ -25,8 +24,13 @@ class Authentication {
     /// A listener handle that observes changes to the Firebase authentication state.
     private var handle: AuthStateDidChangeListenerHandle?
     
+    /// A flag that indicates whether the user is signed in.
+    var isUserSignedIn: Bool {
+        user != nil
+    }
+    
     /// Initializes a new instance of `Authentication` and begins listening to authentication state changes.
-    init() {
+    private init() {
         handle = Auth.auth().addStateDidChangeListener { auth, user in
             self.user = user
         }

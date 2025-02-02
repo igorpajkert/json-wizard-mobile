@@ -11,8 +11,6 @@ struct AccountView: View {
     
     @State private var viewModel = AccountView.ViewModel()
     
-    @Environment(\.auth) private var auth
-    
     var body: some View {
         ZStack {
             backgroundGradient
@@ -36,11 +34,6 @@ struct AccountView: View {
                     .padding()
                     .task {
                         await viewModel.fetchUserData()
-                    }
-                    .onAppear {
-                        if !viewModel.isSet {
-                            viewModel.set(auth: auth)
-                        }
                     }
             }
         }
@@ -135,6 +128,5 @@ struct AccountView: View {
     NavigationStack {
         AccountView()
             .navigationTitle("Account")
-            .environment(Authentication())
     }
 }

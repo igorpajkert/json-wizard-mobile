@@ -21,7 +21,7 @@ extension Authentication {
     
     func isUserValid() async throws -> Bool {
         try await fetchUserData()
-        if userData?.role == UserRole.admin && userData?.role == UserRole.author {
+        if userData?.role == UserRole.admin || userData?.role == UserRole.author {
             return true
         } else {
             return false

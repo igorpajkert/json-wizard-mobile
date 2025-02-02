@@ -12,8 +12,9 @@ struct PasswordResetSheet: View {
     @State private var email: String = ""
     @State private var errorWrapper: ErrorWrapper?
     
-    @Environment(\.auth) private var auth
     @Environment(\.dismiss) private var dismiss
+    
+    private let auth = Authentication.shared
     
     var body: some View {
         NavigationStack {
@@ -109,7 +110,6 @@ struct PasswordResetSheet: View {
 
 #Preview {
     NavigationStack {
-        PasswordResetSheet()
-            .environment(Authentication())
+        PasswordResetSheet()            
     }
 }

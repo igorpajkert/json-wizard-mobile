@@ -16,9 +16,7 @@ extension AccountView {
         var isPresentingPasswordChangeSheet = false
         var errorWrapper: ErrorWrapper?
         
-        var isSet = false
-        
-        private var auth = Authentication()
+        private let auth = Authentication.shared
         
         private let stringKeys = (
             user: String(localized: "text_user"),
@@ -31,11 +29,6 @@ extension AccountView {
         var userRole: String { auth.userData?.role?.name ?? stringKeys.role }
         var userAvatar: ImageResource { .avatarWhite }
         var isUserSignedIn: Bool { auth.user != nil }
-        
-        func set(auth: Authentication) {
-            self.auth = auth
-            isSet = true
-        }
         
         func fetchUserData() async {
             do {
