@@ -55,6 +55,7 @@ struct NewQuestionSheet: View {
     private var toolbarCancelButton: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", role: .cancel) {
+                viewModel.cleanUpBindings()
                 dismiss()
             }
         }

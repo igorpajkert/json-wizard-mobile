@@ -31,5 +31,9 @@ extension NewQuestionSheet {
             }
             store.addQuestion(question)
         }
+        
+        func cleanUpBindings() {
+            store.cleanUpBindings()
+        }
     }
 }
