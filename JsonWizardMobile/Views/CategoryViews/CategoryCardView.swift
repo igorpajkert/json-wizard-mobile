@@ -13,8 +13,11 @@ struct CategoryCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            CategoryBadge(category: category)
-                .font(.title)
+            ScrollView(.horizontal) {
+                CategoryBadge(category: category)
+                    .font(.title)
+            }
+            .scrollIndicators(.never)
             Text(category.subtitle ?? "Subtitle")
                 .font(.subheadline)
             Spacer()
