@@ -39,6 +39,24 @@ extension DataStore {
         }
     }
     
+    func cleanUpBindings() {
+        // Clean up questionIDs in categories
+        for category in categoriesObject.categories {
+            category.questionIDs.removeAll { questionID in
+                let question = questionsObject.questions.first { $0.id == questionID }
+                return question == nil || !question!.categoryIDs.contains(category.id)
+            }
+        }
+        
+        // Clean up categoryIDs in questions
+        for question in questionsObject.questions {
+            question.categoryIDs.removeAll { categoryID in
+                let category = categoriesObject.categories.first { $0.id == categoryID }
+                return category == nil || !category!.questionIDs.contains(question.id)
+            }
+        }
+    }
+    
     // MARK: Categories
     func addCategory(_ category: Category) {
         categoriesObject.categories.append(category)
