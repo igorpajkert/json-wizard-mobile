@@ -757,6 +757,38 @@
         }
       }
     },
+    "CU_description_add_category" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To assign a category to a question, first add it in the “Categories” tab."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aby móc przypisać kategorię do pytania, najpierw dodaj ją w zakładce “Kategorie”."
+          }
+        }
+      }
+    },
+    "CU_title_add_category" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add category first."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najpierw dodaj kategorię."
+          }
+        }
+      }
+    },
     "Dismiss" : {
       "localizations" : {
         "en" : {

@@ -40,6 +40,15 @@ struct CategoriesPickerSheet: View {
             .toolbar {
                 toolbarOKButton
             }
+            .overlay(alignment: .center) {
+                if categories.isEmpty {
+                    ContentUnavailableView(
+                        "CU_title_add_category",
+                        systemImage: "widget.extralarge.badge.plus",
+                        description: Text("CU_description_add_category")
+                    )
+                }
+            }
         }
     }
     
@@ -69,7 +78,7 @@ struct CategoriesPickerSheet: View {
     }
 }
 
-#Preview {
+#Preview("Data") {
     CategoriesPickerSheet(question: Question.sampleData[0])
         .environment(\.store, .init(categoriesObject: .init(categories: [
             .init(
@@ -83,4 +92,8 @@ struct CategoriesPickerSheet: View {
                 id: 2,
                 title: "Diabetes")
         ])))
+}
+
+#Preview("No data") {
+    CategoriesPickerSheet(question: Question.sampleData[0])
 }
