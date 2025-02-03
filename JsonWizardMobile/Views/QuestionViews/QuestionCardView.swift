@@ -45,7 +45,7 @@ struct QuestionCardView: View {
         HStack {
             Label("\(question.answersCount) answers_count", systemImage: "mail.stack")
             Spacer()
-            AnswersErrorBadge(answers: question.answersObject.answers)
+            AnswersErrorBadge(answers: question.answers)
         }
         .font(.callout)
     }

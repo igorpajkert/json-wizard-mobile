@@ -83,7 +83,7 @@ struct QuestionEditView: View {
     // MARK: Answers
     private var answersContent: some View {
         Section("Answers") {
-            ForEach(question.answersObject.answers) { answer in
+            ForEach(question.answers) { answer in
                 AnswerCardView(answer: answer)
             }
             .onDelete(perform: viewModel.deleteAnswers)
@@ -121,21 +121,18 @@ struct QuestionEditView: View {
         )
         .environment(
             \.store,
-             DataStore(
-                categoriesObject: .init(
-                    categories: [
-                        .init(
-                            id: 0,
-                            title: "General Knowledge",
-                            color: .lightLavender),
-                        .init(
-                            id: 1,
-                            title: "Obesity",
-                            color: .pink),
-                        .init(
-                            id: 2,
-                            title: "Diabetes",
-                            color: .done),
-                    ])))
+             DataStore(categories: [
+                .init(
+                    title: "General Knowledge",
+                    color: .inProgress
+                ),
+                .init(
+                    title: "Obesity",
+                    color: .red
+                ),
+                .init(
+                    title: "First Aid"
+                )
+             ]))
     }
 }

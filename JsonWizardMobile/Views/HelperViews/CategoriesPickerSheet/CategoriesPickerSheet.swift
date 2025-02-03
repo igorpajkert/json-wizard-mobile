@@ -68,28 +68,11 @@ struct CategoriesPickerSheet: View {
 
 #Preview("Data") {
     CategoriesPickerSheet(question: Question.sampleData[0])
-        .environment(
-            \.store,
-             .init(
-                categoriesObject: .init(
-                    categories: [
-                        .init(
-                            id: 0,
-                            title: "First Aid",
-                            color: .pink
-                        ),
-                        .init(
-                            id: 1,
-                            title: "Obesity"
-                        ),
-                        .init(
-                            id: 2,
-                            title: "Diabetes"
-                        )
-                    ]
-                )
-             )
-        )
+        .environment(\.store, .init(categories: [
+            .init(title: "Obesity"),
+            .init(title: "General Knowledge"),
+            .init(title: "Mental Health")
+        ]))
 }
 
 #Preview("No data") {

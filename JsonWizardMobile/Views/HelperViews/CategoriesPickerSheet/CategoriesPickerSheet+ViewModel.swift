@@ -20,7 +20,7 @@ extension CategoriesPickerSheet {
         private(set) var isSet = false
         
         var categories: [Category] {
-            store.categoriesObject.categories
+            store.categories
         }
         
         func set(

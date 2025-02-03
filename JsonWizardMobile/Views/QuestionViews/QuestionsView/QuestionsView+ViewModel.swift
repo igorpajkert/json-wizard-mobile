@@ -27,7 +27,7 @@ extension QuestionsView {
         private var parentCategory: Category? = nil
         
         var questions: [Question] {
-            var result = store.questionsObject.questions
+            var result = store.questions
             
             if let parentCategory = parentCategory {
                 result = result.filter { question in

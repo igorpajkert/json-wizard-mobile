@@ -21,7 +21,7 @@ extension CategoriesView {
         private var store = DataStore()
         
         var categories: [Category] {
-            store.categoriesObject.categories
+            store.categories
         }
         
         var isCategoriesEmpty: Bool {

@@ -119,9 +119,7 @@ struct QuestionsView: View {
     NavigationStack {
         QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
-            .environment(\.store, DataStore(
-                questionsObject: Questions(
-                    questions: Question.sampleData)))
+            .environment(\.store, DataStore(questions: Question.sampleData))
     }
 }
 
@@ -129,8 +127,6 @@ struct QuestionsView: View {
     NavigationStack {
         QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
-            .environment(\.store, DataStore(
-                questionsObject: Questions(
-                    questions: [])))
+            .environment(\.store, DataStore())
     }
 }

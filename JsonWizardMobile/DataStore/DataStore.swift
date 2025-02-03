@@ -12,17 +12,17 @@ import SwiftUI
 class DataStore {
     
     /// Holds a list of `Category` objects (read-only externally).
-    private(set) var categoriesObject: Categories
+    var categories: [Category]
     /// Holds a list of `Question` objects (read-only externally).
-    private(set) var questionsObject: Questions
+    var questions: [Question]
     
     /// Tracks whether categories and questions are initially loaded.
     private var isInitiallyLoaded = (categories: false, questions: false)
     
-    init(categoriesObject: Categories = Categories(),
-         questionsObject: Questions = Questions()) {
-        self.categoriesObject = categoriesObject
-        self.questionsObject = questionsObject
+    init(categories: [Category] = [Category](),
+         questions: [Question] = [Question]()) {
+        self.categories = categories
+        self.questions = questions
     }
     
     /// Retrieves an array of `Category` objects that match the specified indices.
@@ -30,7 +30,7 @@ class DataStore {
     /// - Parameter indices: An array of integer IDs to filter categories.
     /// - Returns: An array of `Category` objects whose IDs match the given indices.
     func getCategories(of indices: [Int]) -> [Category] {
-        categoriesObject.categories.filter { indices.contains($0.id) }
+        categories.filter { indices.contains($0.id) }
     }
     
     /// Retrieves an array of `Question` objects that match the specified indices.
@@ -38,7 +38,7 @@ class DataStore {
     /// - Parameter indices: An array of integer IDs to filter questions.
     /// - Returns: An array of `Question` objects whose IDs match the given indices.
     func getQuestions(of indices: [Int]) -> [Question] {
-        questionsObject.questions.filter { indices.contains($0.id) }
+        questions.filter { indices.contains($0.id) }
     }
     
     // MARK: Save
@@ -58,7 +58,7 @@ class DataStore {
         
         let database = DatabaseController()
         async let result = try database.saveData(
-            categoriesObject,
+            categories,
             into: Constants.categories,
             within: Constants.collection)
         return try await result
@@ -69,7 +69,7 @@ class DataStore {
         
         let database = DatabaseController()
         async let result = try database.saveData(
-            questionsObject,
+            questions,
             into: Constants.questions,
             within: Constants.collection)
         return try await result
@@ -90,19 +90,19 @@ class DataStore {
     
     private func loadCategories() async throws {
         let database = DatabaseController()
-        async let categoriesObject: Categories = try database.loadData(
+        async let categories: [Category] = try database.loadData(
             from: Constants.categories,
             within: Constants.collection)
-        self.categoriesObject = try await categoriesObject
+        self.categories = try await categories
         isInitiallyLoaded.categories = true
     }
     
     private func loadQuestions() async throws {
         let database = DatabaseController()
-        async let questionsObject: Questions = try database.loadData(
+        async let questions: [Question] = try database.loadData(
             from: Constants.questions,
             within: Constants.collection)
-        self.questionsObject = try await questionsObject
+        self.questions = try await questions
         isInitiallyLoaded.questions = true
     }
     

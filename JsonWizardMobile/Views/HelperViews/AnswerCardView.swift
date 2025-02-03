@@ -47,5 +47,5 @@ struct AnswerCardView: View {
 }
 
 #Preview(traits: .fixedLayout(width: 400, height: 120)) {
-    AnswerCardView(answer: Question.sampleData[0].answersObject.answers[0])
+    AnswerCardView(answer: Question.sampleData[0].answers[0])
 }

@@ -27,31 +27,31 @@ extension DataStore {
     
     func unbindAll(from question: Question) {
         for categoryID in question.categoryIDs {
-            let category = categoriesObject.categories.first { $0.id == categoryID }
+            let category = categories.first { $0.id == categoryID }
             category?.questionIDs.removeAll { $0 == question.id }
         }
     }
     
     func unbindAll(from category: Category) {
         for questionID in category.questionIDs {
-            let question = questionsObject.questions.first { $0.id == questionID }
+            let question = questions.first { $0.id == questionID }
             question?.categoryIDs.removeAll { $0 == category.id }
         }
     }
     
     func cleanUpBindings() {
         // Clean up questionIDs in categories
-        for category in categoriesObject.categories {
+        for category in categories {
             category.questionIDs.removeAll { questionID in
-                let question = questionsObject.questions.first { $0.id == questionID }
+                let question = questions.first { $0.id == questionID }
                 return question == nil || !question!.categoryIDs.contains(category.id)
             }
         }
         
         // Clean up categoryIDs in questions
-        for question in questionsObject.questions {
+        for question in questions {
             question.categoryIDs.removeAll { categoryID in
-                let category = categoriesObject.categories.first { $0.id == categoryID }
+                let category = categories.first { $0.id == categoryID }
                 return category == nil || !category!.questionIDs.contains(question.id)
             }
         }
@@ -59,7 +59,7 @@ extension DataStore {
     
     // MARK: Categories
     func addCategory(_ category: Category) {
-        categoriesObject.categories.append(category)
+        categories.append(category)
     }
     
     func delete(categories ids: [Int]) {
@@ -67,12 +67,12 @@ extension DataStore {
         categoreisToDelete.forEach { category in
             unbindAll(from: category)
         }
-        categoriesObject.categories.removeAll { ids.contains($0.id) }
+        categories.removeAll { ids.contains($0.id) }
     }
     
     // MARK: Questions
     func addQuestion(_ question: Question) {
-        questionsObject.questions.append(question)
+        questions.append(question)
     }
     
     func delete(questions ids: [Int]) {
@@ -80,15 +80,15 @@ extension DataStore {
         questionsToDelete.forEach { question in
             unbindAll(from: question)
         }
-        questionsObject.questions.removeAll { ids.contains($0.id) }
+        questions.removeAll { ids.contains($0.id) }
     }
     
     // MARK: Answers
     func addAnswer(at question: Question, with text: String) {
-        question.answersObject.answers.append(Answer(id: question.answersObject.answers.endIndex, answerText: text))
+        question.answers.append(Answer(answerText: text))
     }
     
     func deleteAnswers(at question: Question, with offsets: IndexSet) {
-        question.answersObject.answers.remove(atOffsets: offsets)
+        question.answers.remove(atOffsets: offsets)
     }
 }
