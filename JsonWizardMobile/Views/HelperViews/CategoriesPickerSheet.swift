@@ -12,7 +12,8 @@ struct CategoriesPickerSheet: View {
     @Environment(\.store) private var store
     @Environment(\.dismiss) private var dismiss
     
-    var question: Question    
+    var question: Question
+    var parentCategory: Category?
     
     private var categories: [Category] {
         store.categoriesObject.categories
@@ -22,15 +23,16 @@ struct CategoriesPickerSheet: View {
         NavigationStack {
             List {
                 ForEach(categories) { category in
-                    let isBinded = store.isBound(category: category, with: question)
-                    HStack{
+                    HStack {
                         Text(category.title)
                         Spacer()
-                        Button(action: {
-                            bind(category: category)
-                        }) {
-                            Image(systemName: isBinded ? "checkmark.circle.fill" : "circle")
-                        }
+                        Button(
+                            action: {
+                                bind(category: category)
+                            }) {
+                                Image(systemName: image(for: category))
+                            }
+                            .disabled(parentCategory == category)
                     }
                 }
             }
@@ -45,6 +47,15 @@ struct CategoriesPickerSheet: View {
     private var toolbarOKButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button("button_done") { dismiss() }
+        }
+    }
+    
+    private func image(for category: Category) -> String {
+        let isBound = store.isBound(category: category, with: question)
+        if isBound || category == parentCategory {
+            return "checkmark.circle.fill"
+        } else {
+            return "circle"
         }
     }
     

@@ -26,7 +26,7 @@ struct QuestionEditView: View {
             isPresented: $viewModel.isPresentingCategoriesPickerSheet,
             onDismiss: viewModel.dismissCategoriesPickerSheet
         ) {
-            CategoriesPickerSheet(question: question)
+            CategoriesPickerSheet(question: question, parentCategory: parentCategory)
         }
         .onAppear {
             if !viewModel.isSet {
