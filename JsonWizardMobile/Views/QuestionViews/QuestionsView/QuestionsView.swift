@@ -41,9 +41,6 @@ struct QuestionsView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
-        .refreshable {
-            await viewModel.refresh()
-        }
         .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
             if viewModel.questions.isEmpty {

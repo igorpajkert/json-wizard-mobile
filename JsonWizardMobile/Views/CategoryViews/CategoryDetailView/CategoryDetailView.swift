@@ -9,15 +9,11 @@ import SwiftUI
 
 struct CategoryDetailView: View {
     
-    @State private var isPresentingEditCategorySheet = false
+    @State private var viewModel = CategoryDetailView.ViewModel()
     
     @Environment(\.store) private var store
     
-    var category: Category
-    
-    private var categoryQuestions: [Question] {
-        store.getQuestions(of: category.questionIDs)
-    }
+    let category: Category
     
     var body: some View {
         List {
@@ -25,13 +21,21 @@ struct CategoryDetailView: View {
             questions
             questionsPreview
         }
-        .navigationTitle(category.title)
+        .navigationTitle(viewModel.category.title)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             toolbarEditButton
         }
-        .sheet(isPresented: $isPresentingEditCategorySheet,
-               onDismiss: dismissEditViewSheet) {
-            CategoryEditSheet(category: category)
+        .sheet(
+            isPresented: $viewModel.isPresentingEditCategorySheet,
+            onDismiss: viewModel.dismissEditViewSheet
+        ) {
+            CategoryEditSheet(category: viewModel.category)
+        }
+        .onAppear {
+            if !viewModel.isSet {
+                viewModel.set(store: store, category: category)
+            }
         }
     }
     
@@ -49,7 +53,7 @@ struct CategoryDetailView: View {
         HStack {
             Text("category_title_text")
             Spacer()
-            Text(category.title)
+            Text(viewModel.category.title)
                 .foregroundStyle(.secondary)
         }
     }
@@ -58,7 +62,7 @@ struct CategoryDetailView: View {
         HStack {
             Text("category_subtitle_text")
             Spacer()
-            Text(category.subtitle ?? "")
+            Text(viewModel.category.subtitle ?? "")
                 .foregroundStyle(.secondary)
         }
     }
@@ -67,7 +71,7 @@ struct CategoryDetailView: View {
         HStack {
             Text("category_status_text")
             Spacer()
-            CategoryStatusBadge(category: category)
+            CategoryStatusBadge(category: viewModel.category)
                 .foregroundStyle(.secondary)
         }
     }
@@ -77,14 +81,14 @@ struct CategoryDetailView: View {
             Text("category_color_text")
             Spacer()
             Circle()
-                .fill(category.unwrappedColor)
+                .fill(viewModel.category.unwrappedColor)
                 .frame(width: 16, height: 16)
         }
     }
     
     private var questions: some View {
         Section(header: Text("Questions")) {
-            NavigationLink(destination: { QuestionsView(parentCategory: category) }) {
+            NavigationLink(destination: { QuestionsView(parentCategory: viewModel.category) }) {
                 Label("Add Questions", systemImage: "rectangle.stack.badge.plus")
                     .font(.headline)
                     .foregroundStyle(Color.accentColor)
@@ -92,7 +96,7 @@ struct CategoryDetailView: View {
             HStack {
                 Text("Count")
                 Spacer()
-                Text(String(category.questionsCount))
+                Text(String(viewModel.category.questionsCount))
                     .foregroundStyle(.secondary)
             }
         }
@@ -100,7 +104,7 @@ struct CategoryDetailView: View {
     
     private var questionsPreview: some View {
         Section {
-            ForEach(categoryQuestions) { question in
+            ForEach(viewModel.categoryQuestions) { question in
                 Text(question.questionText)
             }
         }
@@ -109,40 +113,13 @@ struct CategoryDetailView: View {
     // MARK: Toolbar
     private var toolbarEditButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button("Edit", action: presentEditViewSheet)
+            Button("Edit", action: viewModel.presentEditViewSheet)
         }
-    }
-    
-    // MARK: - Intents
-    private func presentEditViewSheet() {
-        isPresentingEditCategorySheet = true
-    }
-    
-    private func dismissEditViewSheet() {
-        isPresentingEditCategorySheet = false
     }
 }
 
 #Preview("General Knowledge") {
     NavigationStack {
         CategoryDetailView(category: Category.sampleData[0])
-    }
-}
-
-#Preview("First Aid") {
-    NavigationStack {
-        CategoryDetailView(category: Category.sampleData[1])
-    }
-}
-
-#Preview("Obesity") {
-    NavigationStack {
-        CategoryDetailView(category: Category.sampleData[2])
-    }
-}
-
-#Preview("Pharmacology Basics") {
-    NavigationStack {
-        CategoryDetailView(category: Category.sampleData[3])
     }
 }

@@ -37,6 +37,9 @@ struct CategoriesPickerSheet: View {
             .toolbar {
                 toolbarOKButton
             }
+            .sheet(item: $viewModel.errorWrapper) { wrapper in
+                ErrorSheet(errorWrapper: wrapper)
+            }
             .overlay(alignment: .center) {
                 if viewModel.categories.isEmpty {
                     ContentUnavailableView(

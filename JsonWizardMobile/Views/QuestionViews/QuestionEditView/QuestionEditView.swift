@@ -28,6 +28,9 @@ struct QuestionEditView: View {
         ) {
             CategoriesPickerSheet(question: question, parentCategory: parentCategory)
         }
+        .sheet(item: $viewModel.errorWrapper) { wrapper in
+            ErrorSheet(errorWrapper: wrapper)
+        }
         .onAppear {
             if !viewModel.isSet {
                 viewModel.set(
@@ -36,6 +39,9 @@ struct QuestionEditView: View {
                     parentCategory: parentCategory
                 )
             }
+        }
+        .onDisappear {
+            viewModel.updateQuestion()
         }
     }
     

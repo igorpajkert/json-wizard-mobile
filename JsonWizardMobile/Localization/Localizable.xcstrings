@@ -1077,6 +1077,9 @@
         }
       }
     },
+    "guidance_add_answer_failed_generic" : {
+
+    },
     "guidance_auth_email_send_failed" : {
       "localizations" : {
         "en" : {
@@ -1109,6 +1112,22 @@
         }
       }
     },
+    "guidance_could_not_delete_categories_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not delete category. Try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się usunąć kategorii. Spróbuj ponownie."
+          }
+        }
+      }
+    },
     "guidance_could_not_fetch_user_data" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1126,114 +1145,37 @@
         }
       }
     },
-    "guidance_could_not_refresh_categories" : {
+    "guidance_failed_to_delete_answers_generic" : {
+
+    },
+    "guidance_failed_to_delete_questions_generic" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not refresh categories. Sign in to continue."
+            "value" : "Could not delete question. Try again."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie można odświeżyć kategorii. Zaloguj się, aby kontynuować."
+            "value" : "Nie udało się usunąć pytania. Spróbuj ponownie."
           }
         }
       }
     },
-    "guidance_could_not_refresh_categories_generic" : {
+    "guidance_failed_to_update_question_generic" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not refresh categories. Check if you are properly signed in and try again."
+            "value" : "Could not update question details. Please try again."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie można odświeżyć kategorii. Sprawdź, czy jesteś poprawnie zalogowany i spróbuj ponownie."
-          }
-        }
-      }
-    },
-    "guidance_could_not_refresh_questions_generic" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Could not refresh questions. Check if you are properly signed in and try again."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie można odświeżyć pytań. Sprawdź, czy jesteś poprawnie zalogowany i spróbuj ponownie."
-          }
-        }
-      }
-    },
-    "guidance_could_not_refresh_questions_invalid_user" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Could not refresh questions. Sign in to continue."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie można odświeżyć pytań. Zaloguj się, aby kontynuować."
-          }
-        }
-      }
-    },
-    "guidance_error_loading_data_generic" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error loading data. Restart the app and retry."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Błąd ładowania danych. Uruchom ponownie aplikację i spróbuj ponownie."
-          }
-        }
-      }
-    },
-    "guidance_error_saving_data_generic" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error saving data. Please retry later."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Błąd zapisywania danych. Spróbuj ponownie później."
-          }
-        }
-      }
-    },
-    "guidance_load_sign_in_required" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign in is required to load data. Please sign into your developer account to continue."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logowanie jest wymagane do załadowania danych. Zaloguj się na swoje konto deweloperskie, aby kontynuować."
+            "value" : "Nie udało się zaktualizować danych pytania. Spróbuj ponownie."
           }
         }
       }
@@ -1270,18 +1212,34 @@
         }
       }
     },
-    "guidance_save_sign_in_required" : {
+    "guidance_save_category_failed_generic" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in is required to save data. Please sign into your developer account to continue."
+            "value" : "Saving category details failed. Please try again."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Logowanie jest wymagane do zapisania danych. Zaloguj się na swoje konto deweloperskie, aby kontynuować."
+            "value" : "Zapisywanie danych kategorii nie powiodło się. Spróbuj ponownie. "
+          }
+        }
+      }
+    },
+    "guidance_saving_question_failed_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving question details failed. Please try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisywanie danych pytania nie powiodło się. Spróbuj ponownie."
           }
         }
       }
@@ -1314,6 +1272,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nie można się wylogować. Spróbuj ponownie później."
+          }
+        }
+      }
+    },
+    "guidance_unable_to_bind_category_generic" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not bind category with question. Try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się połączyć kategorii z pytaniem. Spróbuj ponownie."
           }
         }
       }

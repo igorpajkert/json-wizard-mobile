@@ -26,6 +26,8 @@ final class Category: Identifiable, Codable {
     var color: Color?
     /// The date and time when this category was created.
     let dateCreated: Date
+    /// Last modification date.
+    var dateModified: Date
     
     /// The total number of questions in this category.
     var questionsCount: Int { questionIDs.count }
@@ -47,7 +49,9 @@ final class Category: Identifiable, Codable {
          questions: [Question] = [],
          status: Status = .draft,
          color: Color? = nil,
-         dateCreated: Date = .now) {
+         dateCreated: Date = .now,
+         dateModified: Date = .now
+    ) {
         self.id = id
         self.title = title
         self.subtitle = subtitle
@@ -55,6 +59,7 @@ final class Category: Identifiable, Codable {
         self.status = status
         self.color = color
         self.dateCreated = dateCreated
+        self.dateModified = dateModified
     }
     
     // MARK: - Codable Conformance | Custom encoding & decoding
@@ -70,6 +75,7 @@ final class Category: Identifiable, Codable {
         self.status = try container.decode(Status.self, forKey: .status)
         self.color = try container.decodeIfPresent(Color.self, forKey: .color)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+        self.dateModified = try container.decode(String.self, forKey: .dateModified).toDate()
     }
     
     /// Encodes the model into an `Encoder`.
@@ -84,12 +90,13 @@ final class Category: Identifiable, Codable {
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(color, forKey: .color)
         try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(dateModified.toString(), forKey: .dateModified)
         try container.encode(questionsCount, forKey: .questionsCount)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, title, subtitle, questionIDs, status, color, dateCreated, questionsCount
+        case id, title, subtitle, questionIDs, status, color, dateCreated, dateModified, questionsCount
     }
 }
 
@@ -100,7 +107,7 @@ extension Category {
     /// If the `color` property is `nil`, this returns a fallback `.accent` color.
     /// Use `unwrappedColor` to avoid optional checks when displaying or using
     /// a color for this category.
-    var unwrappedColor: Color { color ?? .accent}
+    var unwrappedColor: Color { color ?? .accent }
 }
 
 // MARK: - Equatable Conformance

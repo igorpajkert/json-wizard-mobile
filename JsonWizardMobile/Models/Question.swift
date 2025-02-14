@@ -23,6 +23,8 @@ final class Question: Identifiable, Codable {
     var categoryIDs: [Int]
     /// The date and time when this question was created.
     let dateCreated: Date
+    /// Last modification date.
+    var dateModified: Date
     
     /// The total number of answers.
     ///
@@ -45,12 +47,15 @@ final class Question: Identifiable, Codable {
          questionText: String = "",
          answers: [Answer] = [],
          categories: [Category] = [],
-         dateCreated: Date = .now) {
+         dateCreated: Date = .now,
+         dateModified: Date = .now
+    ) {
         self.id = id
         self.questionText = questionText
         self.answers = answers
         self.categoryIDs = categories.map { $0.id }
         self.dateCreated = dateCreated
+        self.dateModified = dateModified
     }
     
     // MARK: - Codable Conformance | Custom encoding & decoding
@@ -64,6 +69,7 @@ final class Question: Identifiable, Codable {
         self.answers = try container.decode([Answer].self, forKey: .answers)
         self.categoryIDs = try container.decode([Int].self, forKey: .categoryIDs)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+        self.dateModified = try container.decode(String.self, forKey: .dateModified).toDate()
     }
     
     /// Encodes the model into an `Encoder`.
@@ -76,11 +82,12 @@ final class Question: Identifiable, Codable {
         try container.encode(answers, forKey: .answers)
         try container.encode(categoryIDs, forKey: .categoryIDs)
         try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(dateModified.toString(), forKey: .dateModified)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, questionText, answers, categoryIDs, dateCreated
+        case id, questionText, answers, categoryIDs, dateCreated, dateModified
     }
 }
 

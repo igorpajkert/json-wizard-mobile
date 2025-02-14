@@ -12,129 +12,16 @@ import FirebaseCore
 struct JsonWizardMobileApp: App {
     
     @State private var store: DataStore
-    @State private var errorWrapper: ErrorWrapper?
-    
-    @State private var isPresentingSignInSheet = false
-    
-    @Environment(\.scenePhase) private var scenePhase
-    
-    private var isUserSignedIn: Bool {
-        Authentication.shared.isUserSignedIn
-    }
     
     init() {
         FirebaseApp.configure()
-        
         store = DataStore()
     }
     
     var body: some Scene {
         WindowGroup {
-            TabView {
-                Tab("tab_categories", systemImage: "square.stack.3d.up") {
-                    NavigationStack {
-                        CategoriesView()
-                            .navigationTitle("title_categories")
-                    }
-                }
-                Tab("tab_all_questions", systemImage: "rectangle.stack") {
-                    NavigationStack {
-                        QuestionsView(parentCategory: nil)
-                            .navigationTitle("title_all_questions")
-                    }
-                }
-                Tab("tab_account", systemImage: "person.crop.circle") {
-                    NavigationStack {
-                        AccountView()
-                            .navigationTitle("title_account")
-                    }
-                }
-            }
-            .dataStore(store)
-            .sheet(item: $errorWrapper) { wrapper in
-                ErrorSheet(errorWrapper: wrapper)
-            }
-            .sheet(isPresented: $isPresentingSignInSheet, onDismiss: dismissSignInSheet) {
-                SignInSheet()
-            }
-            .task {
-                if isUserSignedIn {
-                    await load()
-                } else {
-                    presentSignInSheet()
-                }
-            }
-            .onChange(of: scenePhase) { oldState, newState in
-                if newState == .inactive && !isPresentingSignInSheet {
-                    guard isUserSignedIn else { return }
-                    Task {
-                        await save()
-                    }
-                }
-            }
-            .onChange(of: isPresentingSignInSheet) { oldState, newState in
-                if isUserSignedIn && newState == false {
-                    Task {
-                        await load()
-                    }
-                }
-            }
+            MainView()
+                .dataStore(store)
         }
-    }
-    
-    // MARK: - Data Handling Methods
-    private func save() async {
-        do {
-            try await store.save()
-        } catch {
-            if error as? Authentication.AuthError == .currentUserNotFound {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(localized: "guidance_save_sign_in_required"),
-                    isDismissable: false,
-                    dismissAction: .init(
-                        title: String(localized: "action_sign_in"),
-                        action: presentSignInSheet
-                    )
-                )
-            } else {
-                errorWrapper = ErrorWrapper(
-                    error: error,
-                    guidance: String(localized: "guidance_error_saving_data_generic"),
-                    isDismissable: true)
-            }
-        }
-    }
-    
-    private func load() async {
-        do {
-            try await store.load()
-        } catch {
-            if error as? Authentication.AuthError == .currentUserNotFound {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(localized: "guidance_load_sign_in_required"),
-                    isDismissable: false,
-                    dismissAction: .init(
-                        title: String(localized: "action_sign_in"),
-                        action: presentSignInSheet
-                    )
-                )
-            } else {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(localized: "guidance_error_loading_data_generic"),
-                    isDismissable: true)
-            }
-        }
-    }
-    
-    // MARK: - UI Presentation Methods
-    private func presentSignInSheet() {
-        isPresentingSignInSheet = true
-    }
-    
-    private func dismissSignInSheet() {
-        isPresentingSignInSheet = false
     }
 }

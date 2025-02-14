@@ -15,6 +15,7 @@ extension QuestionEditView {
         var isPresentingCategoriesPickerSheet = false
         var question = Question()
         var newAnswerText = ""
+        var errorWrapper: ErrorWrapper?
         
         private(set) var isSet = false
         
@@ -38,13 +39,27 @@ extension QuestionEditView {
         
         func addAnswer() {
             withAnimation {
-                store.addAnswer(at: question, with: newAnswerText)
-                newAnswerText.clear()
+                do {
+                    try store.addAnswer(at: question, with: newAnswerText)
+                    newAnswerText.clear()
+                } catch {
+                    errorWrapper = .init(
+                        error: error,
+                        guidance: String(localized: "guidance_add_answer_failed_generic"),
+                        isDismissable: true)
+                }
             }
         }
         
         func deleteAnswers(at offsets: IndexSet) {
-            store.deleteAnswers(at: question, with: offsets)
+            do {
+                try store.deleteAnswers(at: question, with: offsets)
+            } catch {
+                errorWrapper = .init(
+                    error: error,
+                    guidance: String(localized: "guidance_failed_to_delete_answers_generic"),
+                    isDismissable: true)
+            }
         }
         
         func presentCategoriesPickerSheet() {
@@ -53,6 +68,20 @@ extension QuestionEditView {
         
         func dismissCategoriesPickerSheet() {
             isPresentingCategoriesPickerSheet = false
+        }
+        
+        func updateQuestion() {
+            Task {
+                do {
+                    try store.update(question: question)
+                } catch {
+                    errorWrapper = .init(
+                        error: error,
+                        guidance: String(localized: "guidance_failed_to_update_question_generic"),
+                        isDismissable: true
+                    )
+                }
+            }
         }
     }
 }

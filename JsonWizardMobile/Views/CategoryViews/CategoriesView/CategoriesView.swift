@@ -40,9 +40,6 @@ struct CategoriesView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
-        .refreshable {
-            await viewModel.refresh()
-        }
         .overlay(alignment: .center) {
             if viewModel.isCategoriesEmpty {
                 ContentUnavailableView(

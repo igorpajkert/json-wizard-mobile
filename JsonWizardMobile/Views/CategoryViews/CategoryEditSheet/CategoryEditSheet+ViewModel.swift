@@ -18,6 +18,7 @@ extension CategoryEditSheet {
         var status = Status.draft
         var color = Color.accent
         var dateCreated = Date.now
+        var errorWrapper: ErrorWrapper?
         
         private(set) var isSet = false
         
@@ -47,11 +48,13 @@ extension CategoryEditSheet {
         }
         
         func save() {
+            var updatedCategory: Category?
             if let category = category {
                 category.title = title
                 category.subtitle = subtitle
                 category.status = status
                 category.color = color
+                updatedCategory = category
             } else {
                 let newCategory = Category(
                     title: title,
@@ -59,7 +62,18 @@ extension CategoryEditSheet {
                     status: status,
                     color: color
                 )
-                store.addCategory(newCategory)
+                updatedCategory = newCategory
+            }
+            
+            do {
+                guard let updatedCategory else { return }
+                try store.update(category: updatedCategory)
+            } catch {
+                errorWrapper = .init(
+                    error: error,
+                    guidance: String(localized: "guidance_save_category_failed_generic"),
+                    isDismissable: true
+                )
             }
         }
     }
