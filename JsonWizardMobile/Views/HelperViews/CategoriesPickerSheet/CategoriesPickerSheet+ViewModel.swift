@@ -16,11 +16,12 @@ extension CategoriesPickerSheet {
         
         var question = Question()
         var parentCategory: Category?
+        var errorWrapper: ErrorWrapper?
         
         private(set) var isSet = false
         
         var categories: [Category] {
-            store.categoriesObject.categories
+            store.categories
         }
         
         func set(
@@ -45,10 +46,17 @@ extension CategoriesPickerSheet {
         
         func bind(category: Category) {
             let isBound = store.isBound(category: category, with: question)
-            if isBound {
-                store.unbind(category: category, from: question)
-            } else {
-                store.bind(category: category, with: question)
+            do {
+                if isBound {
+                    try store.unbind(category: category, from: question)
+                } else {
+                    try store.bind(category: category, with: question)
+                }
+            } catch {
+                errorWrapper = .init(
+                    error: error,
+                    guidance: String(localized: "guidance_unable_to_bind_category_generic"),
+                    isDismissable: true)
             }
         }
     }

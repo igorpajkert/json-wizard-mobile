@@ -21,7 +21,7 @@ extension CategoriesView {
         private var store = DataStore()
         
         var categories: [Category] {
-            store.categoriesObject.categories
+            store.categories
         }
         
         var isCategoriesEmpty: Bool {
@@ -50,32 +50,18 @@ extension CategoriesView {
             isPresentingSignInSheet = false
         }
         
-        func refresh() async {
-            do {
-                try await store.refresh()
-            } catch Authentication.AuthError.currentUserNotFound {
-                errorWrapper = .init(
-                    error: Authentication.AuthError.currentUserNotFound,
-                    guidance: String(localized: "guidance_could_not_refresh_categories"),
-                    isDismissable: true,
-                    dismissAction: .init(
-                        title: String(localized: "action_sign_in"),
-                        action: presentSignInSheet
-                    )
-                )
-            } catch {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(
-                        localized: "guidance_could_not_refresh_categories_generic"
-                    ),
-                    isDismissable: true)
-            }
-        }
-        
         func deleteCategories(with offsets: IndexSet) {
             let categoriesIDsToDelete = offsets.map { categories[$0].id }
-            store.delete(categories: categoriesIDsToDelete)
+            Task {
+                do {
+                    try store.delete(categories: categoriesIDsToDelete)
+                } catch {
+                    errorWrapper = .init(
+                        error: error,
+                        guidance: String(localized:"guidance_could_not_delete_categories_generic"),
+                        isDismissable: true)
+                }
+            }
         }
     }
 }

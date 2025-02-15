@@ -25,6 +25,9 @@ struct CategoryEditSheet: View {
                     toolbarSaveButton
                     toolbarCancleButton
                 }
+                .sheet(item: $viewModel.errorWrapper) { wrapper in
+                    ErrorSheet(errorWrapper: wrapper)
+                }
                 .onAppear {
                     if !viewModel.isSet {
                         viewModel.set(category: category, store: store)

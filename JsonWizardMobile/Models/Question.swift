@@ -16,22 +16,24 @@ final class Question: Identifiable, Codable {
     /// The text or prompt for the question.
     var questionText: String
     /// A list of answers associated with this question.
-    var answersObject: Answers
+    var answers: [Answer]
     /// An optional list of categories that classify or group this question.
     ///
     /// This might be `nil` if the question has not yet been associated with any category.
     var categoryIDs: [Int]
     /// The date and time when this question was created.
     let dateCreated: Date
+    /// Last modification date.
+    var dateModified: Date
     
     /// The total number of answers.
     ///
     /// Equivalent to `answers.count`.
-    var answersCount: Int { answersObject.answers.count }
+    var answersCount: Int { answers.count }
     /// The total number of answers marked as correct.
     ///
     /// Counts how many items in `answers` have `isCorrect == true`.
-    var correctAnswersCount: Int { answersObject.answers.filter(\.isCorrect).count }
+    var correctAnswersCount: Int { answers.filter(\.isCorrect).count }
     
     /// Creates a new `Question` instance.
     ///
@@ -45,12 +47,15 @@ final class Question: Identifiable, Codable {
          questionText: String = "",
          answers: [Answer] = [],
          categories: [Category] = [],
-         dateCreated: Date = .now) {
+         dateCreated: Date = .now,
+         dateModified: Date = .now
+    ) {
         self.id = id
         self.questionText = questionText
-        self.answersObject = .init(answers: answers)
+        self.answers = answers
         self.categoryIDs = categories.map { $0.id }
         self.dateCreated = dateCreated
+        self.dateModified = dateModified
     }
     
     // MARK: - Codable Conformance | Custom encoding & decoding
@@ -61,9 +66,10 @@ final class Question: Identifiable, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.questionText = try container.decode(String.self, forKey: .questionText)
-        self.answersObject = try container.decode(Answers.self, forKey: .answers)
+        self.answers = try container.decode([Answer].self, forKey: .answers)
         self.categoryIDs = try container.decode([Int].self, forKey: .categoryIDs)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+        self.dateModified = try container.decode(String.self, forKey: .dateModified).toDate()
     }
     
     /// Encodes the model into an `Encoder`.
@@ -73,21 +79,27 @@ final class Question: Identifiable, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(questionText, forKey: .questionText)
-        try container.encode(answersObject, forKey: .answers)
+        try container.encode(answers, forKey: .answers)
         try container.encode(categoryIDs, forKey: .categoryIDs)
         try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(dateModified.toString(), forKey: .dateModified)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, questionText, answers, categoryIDs, dateCreated
+        case id, questionText, answers, categoryIDs, dateCreated, dateModified
     }
 }
 
 // MARK: - Equatable Conformance
 extension Question: Equatable {
     static func == (lhs: Question, rhs: Question) -> Bool {
-        lhs.id == rhs.id && lhs.questionText == rhs.questionText
+        lhs.id == rhs.id &&
+        lhs.questionText == rhs.questionText &&
+        lhs.answers == rhs.answers &&
+        lhs.categoryIDs == rhs.categoryIDs &&
+        lhs.dateCreated == rhs.dateCreated &&
+        lhs.dateModified == rhs.dateModified
     }
 }
 

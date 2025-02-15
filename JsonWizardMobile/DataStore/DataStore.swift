@@ -6,23 +6,136 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 /// A data store that manages categories and questions.
 @Observable
-class DataStore {
+final class DataStore {
     
-    /// Holds a list of `Category` objects (read-only externally).
-    private(set) var categoriesObject: Categories
-    /// Holds a list of `Question` objects (read-only externally).
-    private(set) var questionsObject: Questions
+    let database = DatabaseController()
     
-    /// Tracks whether categories and questions are initially loaded.
-    private var isInitiallyLoaded = (categories: false, questions: false)
+    var categories: [Category]
+    var questions: [Question]
     
-    init(categoriesObject: Categories = Categories(),
-         questionsObject: Questions = Questions()) {
-        self.categoriesObject = categoriesObject
-        self.questionsObject = questionsObject
+    private var categoriesListener: ListenerRegistration? = nil
+    private var questionsListener: ListenerRegistration? = nil
+    
+    init(
+        categories: [Category] = [Category](),
+        questions: [Question] = [Question]()
+    ) {
+        self.categories = categories
+        self.questions = questions
+        
+        Task {
+            do {
+                self.categories = try await database.getAllDocuments(from: Constants.Collection.categories)
+                self.questions = try await database.getAllDocuments(from: Constants.Collection.questions)
+            } catch {
+                print("Unable to fetch data: \(error.localizedDescription)")
+            }
+        }
+        
+        categoriesListener = attachCategoriesListener()
+        questionsListener = attachQuestionsListener()
+    }
+    
+    deinit {
+        categoriesListener?.remove()
+        questionsListener?.remove()
+    }
+    
+    func attachCategoriesListener() -> ListenerRegistration {
+        let db = Firestore.firestore()
+        return db.collection(Constants.Collection.categories)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching category snapshot: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let snapshot = querySnapshot else {
+                    print("No categories snaphot data available.")
+                    return
+                }
+                
+                snapshot.documentChanges.forEach { change in
+                    switch change.type {
+                    case .added:
+                        if let newCategory = try? change.document.data(as: Category.self) {
+                            self.categories.append(newCategory)
+                        } else {
+                            print("Failed to decode new category on addition.")
+                        }
+                        
+                    case .modified:
+                        guard let modifiedCategory = try? change.document.data(as: Category.self) else {
+                            print("Failed to decode category on modification.")
+                            return
+                        }
+                        if let index = self.categories.firstIndex(where: { $0.id == modifiedCategory.id }) {
+                            self.categories[index] = modifiedCategory
+                        } else {
+                            print("Modified category not found in local array.")
+                        }
+                        
+                    case .removed:
+                        guard let removedCategory = try? change.document.data(as: Category.self) else {
+                            print("Failed to decode category on removal.")
+                            return
+                        }
+                        
+                        self.categories.removeAll { $0.id == removedCategory.id }
+                    }
+                }
+            }
+    }
+    
+    func attachQuestionsListener() -> ListenerRegistration {
+        let db = Firestore.firestore()
+        return db.collection(Constants.Collection.questions)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching questions snapshot: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let snapshot = querySnapshot else {
+                    print("No questions snapshot data available.")
+                    return
+                }
+                
+                snapshot.documentChanges.forEach { change in
+                    switch change.type {
+                    case .added:
+                        if let newQuestion = try? change.document.data(as: Question.self) {
+                            self.questions.append(newQuestion)
+                        } else {
+                            print("Failed to decode new question on addition.")
+                        }
+                        
+                    case .modified:
+                        guard let modifiedQuestion = try? change.document.data(as: Question.self) else {
+                            print("Failed to decode question on modification.")
+                            return
+                        }
+                        
+                        if let index = self.questions.firstIndex(where: { $0.id == modifiedQuestion.id }) {
+                            self.questions[index] = modifiedQuestion
+                        } else {
+                            print("Modified question not found in local array.")
+                        }
+                        
+                    case .removed:
+                        guard let removedQuestion = try? change.document.data(as: Question.self) else {
+                            print("Failed to decode question on removal.")
+                            return
+                        }
+                        
+                        self.questions.removeAll { $0.id == removedQuestion.id }
+                    }
+                }
+            }
     }
     
     /// Retrieves an array of `Category` objects that match the specified indices.
@@ -30,7 +143,7 @@ class DataStore {
     /// - Parameter indices: An array of integer IDs to filter categories.
     /// - Returns: An array of `Category` objects whose IDs match the given indices.
     func getCategories(of indices: [Int]) -> [Category] {
-        categoriesObject.categories.filter { indices.contains($0.id) }
+        categories.filter { indices.contains($0.id) }
     }
     
     /// Retrieves an array of `Question` objects that match the specified indices.
@@ -38,106 +151,14 @@ class DataStore {
     /// - Parameter indices: An array of integer IDs to filter questions.
     /// - Returns: An array of `Question` objects whose IDs match the given indices.
     func getQuestions(of indices: [Int]) -> [Question] {
-        questionsObject.questions.filter { indices.contains($0.id) }
+        questions.filter { indices.contains($0.id) }
     }
     
-    // MARK: Save
-    /// Saves the current `categoriesObject` and `questionsObject` to the database.
-    /// - Throws: An error if any of the save operations fail.
-    func save() async throws {
-        guard try await Authentication.shared.isUserValid() else {
-            throw Authentication.AuthError.invalidUser
+    struct Constants {
+        
+        struct Collection {
+            static let categories = "development_categories"
+            static let questions = "development_questions"
         }
-        
-        async let _ = try await saveCategories()
-        async let _ = try await saveQuestions()
-    }
-    
-    private func saveCategories() async throws -> Bool {
-        guard isInitiallyLoaded.categories else { return false }
-        
-        let database = DatabaseController()
-        async let result = try database.saveData(
-            categoriesObject,
-            into: Constants.categories,
-            within: Constants.collection)
-        return try await result
-    }
-    
-    private func saveQuestions() async throws -> Bool {
-        guard isInitiallyLoaded.questions else { return false }
-        
-        let database = DatabaseController()
-        async let result = try database.saveData(
-            questionsObject,
-            into: Constants.questions,
-            within: Constants.collection)
-        return try await result
-    }
-    
-    // MARK: Load
-    /// Asynchronously loads data for `categoriesObject` and `questionsObject` from the database,
-    /// then assigns the results to the relevant properties.
-    /// - Throws: An error if any of the load operations fail.
-    func load() async throws {
-        guard try await Authentication.shared.isUserValid() else {
-            throw Authentication.AuthError.invalidUser
-        }
-        
-        try await loadCategories()
-        try await loadQuestions()
-    }
-    
-    private func loadCategories() async throws {
-        let database = DatabaseController()
-        async let categoriesObject: Categories = try database.loadData(
-            from: Constants.categories,
-            within: Constants.collection)
-        self.categoriesObject = try await categoriesObject
-        isInitiallyLoaded.categories = true
-    }
-    
-    private func loadQuestions() async throws {
-        let database = DatabaseController()
-        async let questionsObject: Questions = try database.loadData(
-            from: Constants.questions,
-            within: Constants.collection)
-        self.questionsObject = try await questionsObject
-        isInitiallyLoaded.questions = true
-    }
-    
-    // MARK: Refresh
-    /// Refreshes the state of the application using the provided database.
-    ///
-    /// - Throws: An error if saving or loading from the database fails, or if the user is invalid.
-    func refresh() async throws {
-        guard try await Authentication.shared.isUserValid() else {
-            throw Authentication.AuthError.invalidUser
-        }
-        
-        if !isInitiallyLoaded.categories {
-            try await loadCategories()
-        } else {
-            let result = try await saveCategories()
-            if result {
-                try await loadCategories()
-            }
-        }
-        
-        if !isInitiallyLoaded.questions {
-            try await loadQuestions()
-        } else {
-            let result = try await saveQuestions()
-            if result {
-                try await loadQuestions()
-            }
-        }
-    }
-    
-    // MARK: - Constants
-    private struct Constants {
-        static let collection = "development"
-        static let categories = "categories"
-        static let questions = "questions"
     }
 }

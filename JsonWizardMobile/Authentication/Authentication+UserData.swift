@@ -16,7 +16,7 @@ extension Authentication {
             throw AuthError.currentUserNotFound
         }
         let database = DatabaseController()
-        userData = try await database.loadData(from: user.uid, within: "user_data_test")
+        userData = try await database.getData(from: user.uid, within: "user_data_test")
     }
     
     func isUserValid() async throws -> Bool {

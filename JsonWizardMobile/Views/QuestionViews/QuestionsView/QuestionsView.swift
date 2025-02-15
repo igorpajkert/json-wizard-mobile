@@ -41,9 +41,6 @@ struct QuestionsView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
-        .refreshable {
-            await viewModel.refresh()
-        }
         .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
             if viewModel.questions.isEmpty {
@@ -119,9 +116,7 @@ struct QuestionsView: View {
     NavigationStack {
         QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
-            .environment(\.store, DataStore(
-                questionsObject: Questions(
-                    questions: Question.sampleData)))
+            .environment(\.store, DataStore(questions: Question.sampleData))
     }
 }
 
@@ -129,8 +124,6 @@ struct QuestionsView: View {
     NavigationStack {
         QuestionsView(parentCategory: nil)
             .navigationTitle("All Questions")
-            .environment(\.store, DataStore(
-                questionsObject: Questions(
-                    questions: [])))
+            .environment(\.store, DataStore())
     }
 }

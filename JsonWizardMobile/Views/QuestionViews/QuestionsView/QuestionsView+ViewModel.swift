@@ -27,7 +27,7 @@ extension QuestionsView {
         private var parentCategory: Category? = nil
         
         var questions: [Question] {
-            var result = store.questionsObject.questions
+            var result = store.questions
             
             if let parentCategory = parentCategory {
                 result = result.filter { question in
@@ -110,27 +110,14 @@ extension QuestionsView {
         
         func deleteQuestions(with offsets: IndexSet) {
             let questionIDsToDelete = offsets.map { questions[$0].id }
-            store.delete(questions: questionIDsToDelete)
-        }
-        
-        func refresh() async {
             do {
-                try await store.refresh()
-            } catch Authentication.AuthError.currentUserNotFound {
-                errorWrapper = .init(
-                    error: Authentication.AuthError.currentUserNotFound,
-                    guidance: String(localized: "guidance_could_not_refresh_questions_invalid_user"),
-                    isDismissable: true,
-                    dismissAction: .init(
-                        title: String(localized: "action_sign_in"),
-                        action: presentSignInSheet
-                    )
-                )
+                try store.delete(questions: questionIDsToDelete)
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: String(localized: "guidance_could_not_refresh_questions_generic"),
-                    isDismissable: true)
+                    guidance: String(localized: "guidance_failed_to_delete_questions_generic"),
+                    isDismissable: true
+                )
             }
         }
     }

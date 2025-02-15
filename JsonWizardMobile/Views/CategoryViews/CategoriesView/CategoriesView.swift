@@ -40,9 +40,6 @@ struct CategoriesView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
-        .refreshable {
-            await viewModel.refresh()
-        }
         .overlay(alignment: .center) {
             if viewModel.isCategoriesEmpty {
                 ContentUnavailableView(
@@ -89,10 +86,7 @@ struct CategoriesView: View {
     NavigationStack {
         CategoriesView()
             .navigationTitle("Categories")
-            .environment(\.store, DataStore(
-                categoriesObject: Categories(
-                    categories: Category.sampleData))
-            )
+            .environment(\.store, DataStore(questions: Question.sampleData))
     }
 }
 
@@ -100,9 +94,6 @@ struct CategoriesView: View {
     NavigationStack {
         CategoriesView()
             .navigationTitle("Categories")
-            .environment(\.store, DataStore(
-                categoriesObject: Categories(
-                    categories: []))
-            )
+            .environment(\.store, DataStore())
     }
 }

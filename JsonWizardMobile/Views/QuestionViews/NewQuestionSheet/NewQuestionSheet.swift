@@ -28,13 +28,16 @@ struct NewQuestionSheet: View {
                 toolbarSaveButton
                 toolbarCancelButton
             }
-        }
-        .onAppear {
-            if !viewModel.isSet {
-                viewModel.set(
-                    store: store,
-                    parentCategory: parentCategory
-                )
+            .sheet(item: $viewModel.errorWrapper) { wrapper in
+                ErrorSheet(errorWrapper: wrapper)
+            }
+            .onAppear {
+                if !viewModel.isSet {
+                    viewModel.set(
+                        store: store,
+                        parentCategory: parentCategory
+                    )
+                }
             }
         }
     }
