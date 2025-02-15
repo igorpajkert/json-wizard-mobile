@@ -69,9 +69,7 @@ final class Answer: Identifiable, Codable {
 // MARK: Equatable Conformance
 extension Answer: Equatable {
     static func == (lhs: Answer, rhs: Answer) -> Bool {
-        lhs.id == rhs.id &&
-        lhs.answerText == rhs.answerText &&
-        lhs.isCorrect == rhs.isCorrect
+        lhs.id == rhs.id
     }
 }
 
