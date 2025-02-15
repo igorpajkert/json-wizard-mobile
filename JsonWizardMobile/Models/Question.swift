@@ -94,7 +94,12 @@ final class Question: Identifiable, Codable {
 // MARK: - Equatable Conformance
 extension Question: Equatable {
     static func == (lhs: Question, rhs: Question) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.questionText == rhs.questionText &&
+        lhs.answers == rhs.answers &&
+        lhs.categoryIDs == rhs.categoryIDs &&
+        lhs.dateCreated == rhs.dateCreated &&
+        lhs.dateModified == rhs.dateModified
     }
 }
 

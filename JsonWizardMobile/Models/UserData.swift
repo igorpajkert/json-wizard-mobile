@@ -54,7 +54,9 @@ final class UserData: Identifiable, Codable, Equatable {
     
     // MARK: - Equatable Conformance
     static func == (lhs: UserData, rhs: UserData) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.role == rhs.role
     }
 }
 

@@ -113,7 +113,14 @@ extension Category {
 // MARK: - Equatable Conformance
 extension Category: Equatable {
     static func == (lhs: Category, rhs: Category) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.subtitle == rhs.subtitle &&
+        lhs.questionIDs == rhs.questionIDs &&
+        lhs.status == rhs.status &&
+        lhs.color == rhs.color &&
+        lhs.dateCreated == rhs.dateCreated &&
+        lhs.dateModified == rhs.dateModified
     }
 }
 
