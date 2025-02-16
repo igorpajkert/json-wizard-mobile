@@ -41,6 +41,21 @@ struct QuestionsView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
+        .alert("alert_title_delete_question",
+               isPresented: $viewModel.isPresentingDeletionAlert,
+               actions: {
+            Button("button_delete", role: .destructive) {
+                if let indexSet = viewModel.deletionIndexSet {
+                    viewModel.deleteQuestions(with: indexSet)
+                }
+            }
+            Button("button_cancel",
+                   role: .cancel,
+                   action: viewModel.dismissDeletionAlert
+            )
+        }, message: {
+            Text("message_delete_question_confirmation")
+        })
         .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
             if viewModel.questions.isEmpty {
@@ -61,7 +76,7 @@ struct QuestionsView: View {
                 QuestionCardView(question: question)
             }
         }
-        .onDelete(perform: viewModel.deleteQuestions)
+        .onDelete(perform: viewModel.presentDeletionAlert)
     }
     
     private var questionsCount: some View {

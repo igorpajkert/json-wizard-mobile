@@ -405,6 +405,12 @@
         }
       }
     },
+    "alert_title_delete_category" : {
+
+    },
+    "alert_title_delete_question" : {
+
+    },
     "Answer Text" : {
       "localizations" : {
         "en" : {
@@ -484,6 +490,9 @@
           }
         }
       }
+    },
+    "button_delete" : {
+
     },
     "button_dismiss" : {
       "localizations" : {
@@ -1323,6 +1332,9 @@
           }
         }
       }
+    },
+    "message_delete_category_confirmation" : {
+
     },
     "New password" : {
       "localizations" : {

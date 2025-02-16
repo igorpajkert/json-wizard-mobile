@@ -19,6 +19,8 @@ extension QuestionsView {
         var sortOrder = SortOrder.forward
         var sortOption = Question.SortOptions.recent
         var filterOption = Question.FilterOptions.none
+        var deletionIndexSet: IndexSet?
+        var isPresentingDeletionAlert = false
         
         /// A flag indicating whether the ViewModel has been initialized with `store` and `parentCategory`.
         private(set) var isSet = false
@@ -106,6 +108,15 @@ extension QuestionsView {
         
         func dismissSignInSheet() {
             isPresentingSignInSheet = false
+        }
+        
+        func presentDeletionAlert(for deletionIndexSet: IndexSet) {
+            self.deletionIndexSet = deletionIndexSet
+            isPresentingDeletionAlert = true
+        }
+        
+        func dismissDeletionAlert() {
+            deletionIndexSet = nil
         }
         
         func deleteQuestions(with offsets: IndexSet) {
