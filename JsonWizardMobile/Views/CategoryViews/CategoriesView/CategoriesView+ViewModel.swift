@@ -15,6 +15,8 @@ extension CategoriesView {
         var isPresentingNewCategorySheet = false
         var isPresentingSignInSheet = false
         var errorWrapper: ErrorWrapper?
+        var deletionIndexSet: IndexSet?
+        var isPresentingDeletionAlert = false
         
         private(set) var isSet = false
         
@@ -48,6 +50,15 @@ extension CategoriesView {
         
         func dismissSignInSheet() {
             isPresentingSignInSheet = false
+        }
+        
+        func presentDeletionAlert(for deletionIndexSet: IndexSet) {
+            self.deletionIndexSet = deletionIndexSet
+            isPresentingDeletionAlert = true
+        }
+        
+        func dismissDeletionAlert() {
+            deletionIndexSet = nil
         }
         
         func deleteCategories(with offsets: IndexSet) {

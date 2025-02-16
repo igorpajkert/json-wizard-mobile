@@ -40,6 +40,21 @@ struct CategoriesView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
+        .alert("alert_title_delete_category",
+               isPresented: $viewModel.isPresentingDeletionAlert,
+               actions: {
+            Button("button_delete", role: .destructive) {
+                if let indexSet = viewModel.deletionIndexSet {
+                    viewModel.deleteCategories(with: indexSet)
+                }
+            }
+            Button("button_cancel",
+                   role: .cancel,
+                   action: viewModel.dismissDeletionAlert
+            )
+        }, message: {
+            Text("message_delete_category_confirmation")
+        })
         .overlay(alignment: .center) {
             if viewModel.isCategoriesEmpty {
                 ContentUnavailableView(
@@ -61,7 +76,7 @@ struct CategoriesView: View {
                 CategoryCardView(category: category)
             }
         }
-        .onDelete(perform: viewModel.deleteCategories)
+        .onDelete(perform: viewModel.presentDeletionAlert)
     }
     
     private var categoriesCount: some View {
