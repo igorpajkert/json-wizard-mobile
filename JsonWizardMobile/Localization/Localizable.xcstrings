@@ -406,10 +406,36 @@
       }
     },
     "alert_title_delete_category" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Category"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Kategorię"
+          }
+        }
+      }
     },
     "alert_title_delete_question" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Pytanie"
+          }
+        }
+      }
     },
     "Answer Text" : {
       "localizations" : {
@@ -492,7 +518,20 @@
       }
     },
     "button_delete" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń"
+          }
+        }
+      }
     },
     "button_dismiss" : {
       "localizations" : {
@@ -1087,7 +1126,20 @@
       }
     },
     "guidance_add_answer_failed_generic" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adding answer failed. Try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodawanie odpowiedzi nie powiodło się. Spróbuj ponownie. "
+          }
+        }
+      }
     },
     "guidance_auth_email_send_failed" : {
       "localizations" : {
@@ -1155,7 +1207,20 @@
       }
     },
     "guidance_failed_to_delete_answers_generic" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deleting answer failed. Try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuwanie odpowiedzi nie powiodło się. Spróbuj ponownie."
+          }
+        }
+      }
     },
     "guidance_failed_to_delete_questions_generic" : {
       "localizations" : {
@@ -1334,7 +1399,36 @@
       }
     },
     "message_delete_category_confirmation" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete the selected category?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wybraną kategorię?"
+          }
+        }
+      }
+    },
+    "message_delete_question_confirmation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete the selected question?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wybrane pytanie?"
+          }
+        }
+      }
     },
     "New password" : {
       "localizations" : {
