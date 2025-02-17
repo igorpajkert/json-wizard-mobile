@@ -13,6 +13,8 @@ struct QuestionEditView: View {
     
     @Environment(\.store) private var store
     
+    @FocusState private var isTextFieldFocused: Bool
+    
     var question: Question
     var parentCategory: Category?
     
@@ -22,6 +24,9 @@ struct QuestionEditView: View {
             answersContent
         }
         .listRowSpacing(10)
+        .toolbar {
+            toolbarButtonHide
+        }
         .sheet(
             isPresented: $viewModel.isPresentingCategoriesPickerSheet,
             onDismiss: viewModel.dismissCategoriesPickerSheet
@@ -53,6 +58,7 @@ struct QuestionEditView: View {
                           text: $viewModel.question.questionText,
                           axis: .vertical
                 )
+                .focused($isTextFieldFocused)
             }
             Section("section_categories") {
                 categoriesContent
@@ -98,6 +104,7 @@ struct QuestionEditView: View {
                           text: $viewModel.newAnswerText,
                           axis: .vertical
                 )
+                .focused($isTextFieldFocused)
                 Button(action: viewModel.addAnswer) {
                     Image(systemName: "plus.circle.fill")
                 }
@@ -115,6 +122,18 @@ struct QuestionEditView: View {
         .font(.footnote)
         .foregroundStyle(.secondary)
         .listRowBackground(Color.clear)
+    }
+    
+    // MARK: Toolbar
+    private var toolbarButtonHide: some ToolbarContent {
+        ToolbarItemGroup(placement: .keyboard) {
+            if isTextFieldFocused {
+                Spacer()
+                Button("button_hide", systemImage: "keyboard.chevron.compact.down") {
+                    isTextFieldFocused = false
+                }
+            }
+        }
     }
 }
 

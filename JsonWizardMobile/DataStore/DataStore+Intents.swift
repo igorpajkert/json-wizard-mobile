@@ -87,7 +87,7 @@ extension DataStore {
     
     // MARK: Categories
     func update(category: Category) throws {
-        setDateModified(category: category)
+        category.dateModified = .now
         Task {
             _ = try await database.setData(
                 category,
@@ -112,13 +112,9 @@ extension DataStore {
         }
     }
     
-    func setDateModified(category: Category) {
-        category.dateModified = .now
-    }
-    
     // MARK: Questions
     func update(question: Question) throws {
-        setDateModified(question: question)
+        question.dateModified = .now
         Task {
             _ = try await database.setData(
                 question,
@@ -143,10 +139,6 @@ extension DataStore {
         }
     }
     
-    func setDateModified(question: Question) {
-        question.dateModified = .now
-    }
-    
     // MARK: Answers
     func addAnswer(at question: Question, with text: String) throws {
         question.answers.append(Answer(answerText: text))
@@ -156,10 +148,6 @@ extension DataStore {
     func deleteAnswers(at question: Question, with offsets: IndexSet) throws {
         question.answers.remove(atOffsets: offsets)
         try update(question: question)
-    }
-    
-    func setDateModified(answer: Answer) {
-        answer.dateModified = .now
     }
     
     // MARK: Common
