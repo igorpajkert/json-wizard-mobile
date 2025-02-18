@@ -31,6 +31,10 @@ extension QuestionEditView {
             return categories
         }
         
+        var answers: [Answer] {
+            question.answers.reversed()
+        }
+        
         func set(
             store: DataStore,
             question: Question,

@@ -118,7 +118,7 @@ struct QuestionEditView: View {
                 }
                 .disabled(viewModel.newAnswerText.isEmpty)
             }
-            ForEach(question.answers) { answer in
+            ForEach(viewModel.answers) { answer in
                 AnswerCardView(answer: answer)
             }
             .onDelete(perform: viewModel.deleteAnswers)
