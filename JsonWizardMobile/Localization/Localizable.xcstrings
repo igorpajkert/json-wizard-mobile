@@ -357,22 +357,6 @@
         }
       }
     },
-    "Add Questions" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add Questions"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dodaj Pytania"
-          }
-        }
-      }
-    },
     "add_first_category_text" : {
       "localizations" : {
         "en" : {
@@ -1378,6 +1362,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nie udało się połączyć kategorii z pytaniem. Spróbuj ponownie."
+          }
+        }
+      }
+    },
+    "label_edit_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj Pytania"
           }
         }
       }

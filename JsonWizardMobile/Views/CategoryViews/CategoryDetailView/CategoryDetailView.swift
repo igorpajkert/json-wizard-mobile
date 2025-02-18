@@ -89,7 +89,7 @@ struct CategoryDetailView: View {
     private var questions: some View {
         Section(header: Text("Questions")) {
             NavigationLink(destination: { QuestionsView(parentCategory: viewModel.category) }) {
-                Label("Add Questions", systemImage: "rectangle.stack.badge.plus")
+                Label("label_edit_questions", systemImage: "rectangle.stack.badge.plus")
                     .font(.headline)
                     .foregroundStyle(Color.accentColor)
             }
