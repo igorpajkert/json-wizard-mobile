@@ -53,7 +53,7 @@ extension DataStore {
         for questionID in questionIDs {
             if let question = questions.first(where: { $0.id == questionID }) {
                 question.categoryIDs.removeAll { $0 == category.id }
-                try self.update(question: question)
+                try update(question: question)
             }
         }
     }

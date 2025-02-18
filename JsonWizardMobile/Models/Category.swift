@@ -15,15 +15,31 @@ final class Category: Identifiable, Codable {
     /// A unique identifier for the category.
     let id: Int
     /// A short title or name for the category.
-    var title: String
+    var title: String {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// An optional subtitle providing extra context about the category.
-    var subtitle: String?
+    var subtitle: String? {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// A list of questions belonging to this category.
     var questionIDs: [Int]
     /// The status of this category.
-    var status: Status
+    var status: Status {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// An optional color used to visually represent this category.
-    var color: Color?
+    var color: Color? {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// The date and time when this category was created.
     let dateCreated: Date
     /// Last modification date.

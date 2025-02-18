@@ -14,7 +14,11 @@ final class Question: Identifiable, Codable {
     /// A unique identifier for this question.
     let id: Int
     /// The text or prompt for the question.
-    var questionText: String
+    var questionText: String {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// A list of answers associated with this question.
     var answers: [Answer]
     /// An optional list of categories that classify or group this question.

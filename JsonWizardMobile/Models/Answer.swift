@@ -14,9 +14,17 @@ final class Answer: Identifiable, Codable {
     /// A unique identifier for the answer.
     let id: Int
     /// The text content of this answer option.
-    var answerText: String
+    var answerText: String {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// Indicates whether this answer is correct.
-    var isCorrect: Bool
+    var isCorrect: Bool {
+        didSet {
+            dateModified = .now
+        }
+    }
     /// The date and time when this answer was created.
     let dateCreated: Date
     /// Last modification date.
