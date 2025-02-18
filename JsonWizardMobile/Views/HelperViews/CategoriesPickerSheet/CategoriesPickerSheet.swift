@@ -24,6 +24,7 @@ struct CategoriesPickerSheet: View {
                 ForEach(viewModel.categories) { category in
                     HStack {
                         CategoryBadge(category: category)
+                            .shadow(radius: 1)
                         Spacer()
                         Button(action: {
                             viewModel.onCategorySelected(category)
