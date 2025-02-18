@@ -11,23 +11,30 @@ import Foundation
 extension DataStore {
     
     // MARK: Binding
-    func bind(category: Category, with question: Question) throws {
+    func bind(category: Category, with question: Question, shouldUpdate: Bool) throws {
         category.questionIDs.appendIfNotContains(question.id)
         question.categoryIDs.appendIfNotContains(category.id)
-        try update(category: category, question: question)
+        try update(category: category)
+        if shouldUpdate {
+            try update(question: question)
+        }
     }
     
-    func unbind(category: Category, from question: Question) throws {
+    func unbind(category: Category, from question: Question, shouldUpdate: Bool) throws {
         category.questionIDs.removeAll { $0 == question.id }
         question.categoryIDs.removeAll { $0 == category.id }
-        try update(category: category, question: question)
+        try update(category: category)
+        if shouldUpdate {
+            try update(question: question)
+        }
     }
     
     func isBound(category: Category, with question: Question) -> Bool {
-        category.questionIDs.contains(question.id) && question.categoryIDs.contains(category.id)
+        category.questionIDs.contains(question.id) &&
+        question.categoryIDs.contains(category.id)
     }
     
-    func unbindAll(from question: Question) throws {
+    private func unbindAll(from question: Question) throws {
         let categoryIDs = question.categoryIDs
         question.categoryIDs.removeAll()
         
@@ -39,7 +46,7 @@ extension DataStore {
         }
     }
     
-    func unbindAll(from category: Category) throws {
+    private func unbindAll(from category: Category) throws {
         let questionIDs = category.questionIDs
         category.questionIDs.removeAll()
         
@@ -87,7 +94,7 @@ extension DataStore {
     
     // MARK: Categories
     func update(category: Category) throws {
-        setDateModified(category: category)
+        category.dateModified = .now
         Task {
             _ = try await database.setData(
                 category,
@@ -112,13 +119,9 @@ extension DataStore {
         }
     }
     
-    func setDateModified(category: Category) {
-        category.dateModified = .now
-    }
-    
     // MARK: Questions
     func update(question: Question) throws {
-        setDateModified(question: question)
+        question.dateModified = .now
         Task {
             _ = try await database.setData(
                 question,
@@ -143,28 +146,12 @@ extension DataStore {
         }
     }
     
-    func setDateModified(question: Question) {
-        question.dateModified = .now
-    }
-    
     // MARK: Answers
     func addAnswer(at question: Question, with text: String) throws {
         question.answers.append(Answer(answerText: text))
-        try update(question: question)
     }
     
-    func deleteAnswers(at question: Question, with offsets: IndexSet) throws {
-        question.answers.remove(atOffsets: offsets)
-        try update(question: question)
-    }
-    
-    func setDateModified(answer: Answer) {
-        answer.dateModified = .now
-    }
-    
-    // MARK: Common
-    private func update(category: Category, question: Question) throws {
-        try update(category: category)
-        try update(question: question)
+    func deleteAnswers(at question: Question, with ids: [Int]) throws {
+        question.answers.removeAll { ids.contains($0.id) }
     }
 }

@@ -16,16 +16,17 @@ struct CategoriesPickerSheet: View {
     
     var question: Question
     var parentCategory: Category?
+    var viewType: QuestionViewType
     
     var body: some View {
         NavigationStack {
             List {
                 ForEach(viewModel.categories) { category in
                     HStack {
-                        Text(category.title)
+                        CategoryBadge(category: category)
                         Spacer()
                         Button(action: {
-                            viewModel.bind(category: category)
+                            viewModel.onCategorySelected(category)
                         }) {
                             Image(systemName: viewModel.image(for: category))
                         }
@@ -54,7 +55,8 @@ struct CategoriesPickerSheet: View {
                     viewModel.set(
                         store: store,
                         question: question,
-                        parentCategory: parentCategory
+                        parentCategory: parentCategory,
+                        viewType: viewType
                     )
                 }
             }
@@ -70,7 +72,7 @@ struct CategoriesPickerSheet: View {
 }
 
 #Preview("Data") {
-    CategoriesPickerSheet(question: Question.sampleData[0])
+    CategoriesPickerSheet(question: Question.sampleData[0], viewType: .new)
         .environment(\.store, .init(categories: [
             .init(title: "Obesity"),
             .init(title: "General Knowledge"),
@@ -79,5 +81,5 @@ struct CategoriesPickerSheet: View {
 }
 
 #Preview("No data") {
-    CategoriesPickerSheet(question: Question.sampleData[0])
+    CategoriesPickerSheet(question: Question.sampleData[0], viewType: .edit)
 }

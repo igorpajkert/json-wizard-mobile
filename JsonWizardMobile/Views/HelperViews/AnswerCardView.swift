@@ -9,6 +9,10 @@ import SwiftUI
 
 struct AnswerCardView: View {
     
+    @Bindable var answer: Answer
+    
+    @FocusState private var isTextFieldFocused: Bool
+    
     private let keys = (
         correct: String(localized: "text_correct"),
         incorrect: String(localized: "text_incorrect")
@@ -26,11 +30,10 @@ struct AnswerCardView: View {
         answer.isCorrect ? .green : .red
     }
     
-    @Bindable var answer: Answer
-    
     var body: some View {
         VStack {
             TextField("Answer Text", text: $answer.answerText, axis: .vertical)
+                .focused($isTextFieldFocused)
             Spacer()
             Toggle(isOn: $answer.isCorrect) {
                 Label(title, systemImage: image)
@@ -42,7 +45,21 @@ struct AnswerCardView: View {
             }
             .tint(.accent)
         }
+        .toolbar {
+            toolbarButtonDone
+        }
         .padding(.vertical)
+    }
+    
+    private var toolbarButtonDone: some ToolbarContent {
+        ToolbarItemGroup(placement: .keyboard) {
+            if isTextFieldFocused {
+                Spacer()
+                Button("button_done") {
+                    isTextFieldFocused = false
+                }
+            }
+        }
     }
 }
 

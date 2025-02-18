@@ -565,6 +565,22 @@
         }
       }
     },
+    "button_hide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukryj"
+          }
+        }
+      }
+    },
     "button_save" : {
       "localizations" : {
         "en" : {
@@ -1136,7 +1152,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodawanie odpowiedzi nie powiodło się. Spróbuj ponownie. "
+            "value" : "Dodawanie odpowiedzi nie powiodło się. Spróbuj ponownie."
           }
         }
       }

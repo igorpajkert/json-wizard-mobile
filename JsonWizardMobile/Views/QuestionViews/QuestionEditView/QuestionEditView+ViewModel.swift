@@ -21,6 +21,7 @@ extension QuestionEditView {
         
         private var store = DataStore()
         private var parentCategory: Category? = nil
+        private var viewType: QuestionViewType = .new
         
         var categories: [Category] {
             var categories = store.getCategories(of: question.categoryIDs)
@@ -30,35 +31,57 @@ extension QuestionEditView {
             return categories
         }
         
-        func set(store: DataStore, question: Question, parentCategory: Category?) {
+        var answers: [Answer] {
+            question.answers.reversed()
+        }
+        
+        func set(
+            store: DataStore,
+            question: Question,
+            parentCategory: Category?,
+            viewType: QuestionViewType
+        ) {
             self.store = store
             self.question = question
             self.parentCategory = parentCategory
+            self.viewType = viewType
             isSet = true
         }
         
         func addAnswer() {
             withAnimation {
                 do {
-                    try store.addAnswer(at: question, with: newAnswerText)
+                    try store.addAnswer(
+                        at: question,
+                        with: newAnswerText
+                    )
                     newAnswerText.clear()
                 } catch {
                     errorWrapper = .init(
                         error: error,
-                        guidance: String(localized: "guidance_add_answer_failed_generic"),
+                        guidance: String(
+                            localized: "guidance_add_answer_failed_generic"
+                        ),
                         isDismissable: true)
                 }
             }
         }
         
         func deleteAnswers(at offsets: IndexSet) {
-            do {
-                try store.deleteAnswers(at: question, with: offsets)
-            } catch {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(localized: "guidance_failed_to_delete_answers_generic"),
-                    isDismissable: true)
+            withAnimation {
+                do {
+                    try store.deleteAnswers(
+                        at: question,
+                        with: offsets.map { answers[$0].id }
+                    )
+                } catch {
+                    errorWrapper = .init(
+                        error: error,
+                        guidance: String(
+                            localized: "guidance_failed_to_delete_answers_generic"
+                        ),
+                        isDismissable: true)
+                }
             }
         }
         
@@ -71,13 +94,16 @@ extension QuestionEditView {
         }
         
         func updateQuestion() {
+            guard viewType == .edit else { return }
             Task {
                 do {
                     try store.update(question: question)
                 } catch {
                     errorWrapper = .init(
                         error: error,
-                        guidance: String(localized: "guidance_failed_to_update_question_generic"),
+                        guidance: String(
+                            localized: "guidance_failed_to_update_question_generic"
+                        ),
                         isDismissable: true
                     )
                 }
