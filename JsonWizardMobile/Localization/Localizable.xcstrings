@@ -405,6 +405,38 @@
         }
       }
     },
+    "alert_title_delete_category" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Category"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Kategorię"
+          }
+        }
+      }
+    },
+    "alert_title_delete_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Pytanie"
+          }
+        }
+      }
+    },
     "Answer Text" : {
       "localizations" : {
         "en" : {
@@ -481,6 +513,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zmień Hasło"
+          }
+        }
+      }
+    },
+    "button_delete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń"
           }
         }
       }
@@ -1362,6 +1410,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sortuj"
+          }
+        }
+      }
+    },
+    "message_delete_category_confirmation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete the selected category?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wybraną kategorię?"
+          }
+        }
+      }
+    },
+    "message_delete_question_confirmation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete the selected question?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wybrane pytanie?"
           }
         }
       }
