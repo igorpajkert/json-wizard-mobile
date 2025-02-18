@@ -68,18 +68,20 @@ extension QuestionEditView {
         }
         
         func deleteAnswers(at offsets: IndexSet) {
-            do {
-                try store.deleteAnswers(
-                    at: question,
-                    with: offsets.map { question.answers[$0].id }
-                )
-            } catch {
-                errorWrapper = .init(
-                    error: error,
-                    guidance: String(
-                        localized: "guidance_failed_to_delete_answers_generic"
-                    ),
-                    isDismissable: true)
+            withAnimation {
+                do {
+                    try store.deleteAnswers(
+                        at: question,
+                        with: offsets.map { answers[$0].id }
+                    )
+                } catch {
+                    errorWrapper = .init(
+                        error: error,
+                        guidance: String(
+                            localized: "guidance_failed_to_delete_answers_generic"
+                        ),
+                        isDismissable: true)
+                }
             }
         }
         
