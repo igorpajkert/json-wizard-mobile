@@ -21,6 +21,7 @@ struct CategoryBadge: View {
                 .padding(.vertical, 2)
         }
         .fixedSize()
+        .shadow(radius: 1)
     }
 }
 
