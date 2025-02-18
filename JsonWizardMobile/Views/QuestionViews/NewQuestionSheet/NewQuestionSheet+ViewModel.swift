@@ -29,13 +29,19 @@ extension NewQuestionSheet {
         func saveQuestion() {
             do {
                 if let category = parentCategory {
-                    try store.bind(category: category, with: question)
+                    try store.bind(
+                        category: category,
+                        with: question,
+                        shouldUpdate: true
+                    )
                 }
                 try store.update(question: question)
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: String(localized: "guidance_saving_question_failed_generic"),
+                    guidance: String(
+                        localized: "guidance_saving_question_failed_generic"
+                    ),
                     isDismissable: true
                 )
             }

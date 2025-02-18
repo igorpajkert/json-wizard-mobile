@@ -20,6 +20,8 @@ extension CategoriesPickerSheet {
         
         private(set) var isSet = false
         
+        private var viewType: QuestionViewType = .new
+        
         var categories: [Category] {
             store.categories
         }
@@ -27,11 +29,13 @@ extension CategoriesPickerSheet {
         func set(
             store: DataStore,
             question: Question,
-            parentCategory: Category?
+            parentCategory: Category?,
+            viewType: QuestionViewType
         ) {
             self.store = store
             self.question = question
             self.parentCategory = parentCategory
+            self.viewType = viewType
             isSet = true
         }
         
@@ -44,19 +48,38 @@ extension CategoriesPickerSheet {
             }
         }
         
-        func bind(category: Category) {
+        private func bind(category: Category, shouldUpdate: Bool) {
             let isBound = store.isBound(category: category, with: question)
             do {
                 if isBound {
-                    try store.unbind(category: category, from: question)
+                    try store.unbind(
+                        category: category,
+                        from: question,
+                        shouldUpdate: shouldUpdate
+                    )
                 } else {
-                    try store.bind(category: category, with: question)
+                    try store.bind(
+                        category: category,
+                        with: question,
+                        shouldUpdate: shouldUpdate
+                    )
                 }
             } catch {
                 errorWrapper = .init(
                     error: error,
-                    guidance: String(localized: "guidance_unable_to_bind_category_generic"),
+                    guidance: String(
+                        localized: "guidance_unable_to_bind_category_generic"
+                    ),
                     isDismissable: true)
+            }
+        }
+        
+        func onCategorySelected(_ category: Category) {
+            switch viewType {
+            case .edit:
+                bind(category: category, shouldUpdate: true)
+            case .new:
+                bind(category: category, shouldUpdate: false)
             }
         }
     }

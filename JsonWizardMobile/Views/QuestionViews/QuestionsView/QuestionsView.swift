@@ -45,19 +45,28 @@ struct QuestionsView: View {
         .overlay(alignment: .center) {
             if viewModel.questions.isEmpty {
                 ContentUnavailableView(
-                    "add_first_question_text", systemImage: "rectangle.stack.badge.plus")
+                    "add_first_question_text",
+                    systemImage: "rectangle.stack.badge.plus")
             }
         }
         .onAppear {
             if !viewModel.isSet {
-                viewModel.set(store: store, parentCategory: parentCategory)
+                viewModel.set(
+                    store: store,
+                    parentCategory: parentCategory
+                )
             }
         }
     }
     
     private var questionsList: some View {
         ForEach(viewModel.questions) { question in
-            NavigationLink(destination: QuestionEditView(question: question)) {
+            NavigationLink(
+                destination: QuestionEditView(
+                    question: question,
+                    viewType: .edit
+                )
+            ) {
                 QuestionCardView(question: question)
             }
         }

@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum QuestionViewType {
+    case edit
+    case new
+}
+
 struct QuestionEditView: View {
     
     @State private var viewModel = QuestionEditView.ViewModel()
@@ -17,6 +22,7 @@ struct QuestionEditView: View {
     
     var question: Question
     var parentCategory: Category?
+    var viewType: QuestionViewType
     
     var body: some View {
         List {
@@ -31,7 +37,11 @@ struct QuestionEditView: View {
             isPresented: $viewModel.isPresentingCategoriesPickerSheet,
             onDismiss: viewModel.dismissCategoriesPickerSheet
         ) {
-            CategoriesPickerSheet(question: question, parentCategory: parentCategory)
+            CategoriesPickerSheet(
+                question: question,
+                parentCategory: parentCategory,
+                viewType: viewType
+            )
         }
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
@@ -41,7 +51,8 @@ struct QuestionEditView: View {
                 viewModel.set(
                     store: store,
                     question: question,
-                    parentCategory: parentCategory
+                    parentCategory: parentCategory,
+                    viewType: viewType
                 )
             }
         }
@@ -54,9 +65,10 @@ struct QuestionEditView: View {
     private var questionContent: some View {
         Group {
             Section("section_question") {
-                TextField("text_question_text",
-                          text: $viewModel.question.questionText,
-                          axis: .vertical
+                TextField(
+                    "text_question_text",
+                    text: $viewModel.question.questionText,
+                    axis: .vertical
                 )
                 .focused($isTextFieldFocused)
             }
@@ -95,10 +107,6 @@ struct QuestionEditView: View {
     // MARK: Answers
     private var answersContent: some View {
         Section("Answers") {
-            ForEach(question.answers) { answer in
-                AnswerCardView(answer: answer)
-            }
-            .onDelete(perform: viewModel.deleteAnswers)
             HStack {
                 TextField("Add Answer...",
                           text: $viewModel.newAnswerText,
@@ -110,6 +118,10 @@ struct QuestionEditView: View {
                 }
                 .disabled(viewModel.newAnswerText.isEmpty)
             }
+            ForEach(question.answers) { answer in
+                AnswerCardView(answer: answer)
+            }
+            .onDelete(perform: viewModel.deleteAnswers)
             answersCount
         }
     }
@@ -129,7 +141,10 @@ struct QuestionEditView: View {
         ToolbarItemGroup(placement: .keyboard) {
             if isTextFieldFocused {
                 Spacer()
-                Button("button_hide", systemImage: "keyboard.chevron.compact.down") {
+                Button(
+                    "button_hide",
+                    systemImage: "keyboard.chevron.compact.down"
+                ) {
                     isTextFieldFocused = false
                 }
             }
@@ -142,7 +157,8 @@ struct QuestionEditView: View {
         QuestionEditView(
             question: .init(
                 id: 0, questionText: "Test",
-                categories: [.init(id: 0), .init(id: 1), .init(id: 2)])
+                categories: [.init(id: 0), .init(id: 1), .init(id: 2)]),
+            viewType: .new
         )
         .environment(
             \.store,

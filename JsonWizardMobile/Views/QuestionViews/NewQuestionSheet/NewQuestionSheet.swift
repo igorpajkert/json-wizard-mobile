@@ -20,7 +20,8 @@ struct NewQuestionSheet: View {
         NavigationStack {
             QuestionEditView(
                 question: viewModel.question,
-                parentCategory: parentCategory
+                parentCategory: parentCategory,
+                viewType: .new
             )
             .navigationTitle("Add Question")
             .navigationBarTitleDisplayMode(.inline)
