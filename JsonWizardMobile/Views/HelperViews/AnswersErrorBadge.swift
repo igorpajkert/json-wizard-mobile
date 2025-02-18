@@ -14,7 +14,7 @@ struct AnswersErrorBadge: View {
     private var corectAnswers: [Answer] { answers.filter(\.isCorrect) }
     
     private var image: String {
-        answers.isEmpty || corectAnswers.isEmpty ? "exclamationmark.circle" : "checkmark.circle"
+        answers.isEmpty || corectAnswers.isEmpty ? "exclamationmark.circle.fill" : "checkmark.circle.fill"
     }
     
     private var title: String {
