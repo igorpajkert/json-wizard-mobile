@@ -19,9 +19,30 @@ extension Authentication {
         userData = try await database.getData(from: user.uid, within: "user_data_test")
     }
     
-    func isUserValid() async throws -> Bool {
-        try await fetchUserData()
-        if userData?.role == UserRole.admin || userData?.role == UserRole.author {
+    func isUserValid() -> Bool {
+        Task {
+            try? await fetchUserData()
+        }
+        
+        guard let userData = userData else { return false }
+        
+        switch userData.role {
+        case .admin: return true
+        case .creator: return true
+        case .guest: return true
+        case .user: return false
+        default: return false
+        }
+    }
+    
+    func isAdmin() -> Bool {
+        Task {
+            try? await fetchUserData()
+        }
+        
+        guard let userData = userData else { return false }
+        
+        if userData.role == .admin {
             return true
         } else {
             return false
