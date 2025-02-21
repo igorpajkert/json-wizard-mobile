@@ -15,7 +15,7 @@ class Authentication {
     
     /// Shared singleton instance of `Authentication`
     static let shared = Authentication()
-        
+    
     /// The currently signed-in user, or `nil` if no user is signed in.
     var user: User?
     /// The data of the currently signed-in user.
@@ -33,6 +33,16 @@ class Authentication {
     private init() {
         handle = Auth.auth().addStateDidChangeListener { auth, user in
             self.user = user
+            
+            if user != nil {
+                Task {
+                    do {
+                        try await self.fetchUserData()
+                    } catch {
+                        print("Error fetching user data: \(error)")
+                    }
+                }
+            }
         }
     }
     

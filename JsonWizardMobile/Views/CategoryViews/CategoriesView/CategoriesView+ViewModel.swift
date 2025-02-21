@@ -18,8 +18,7 @@ extension CategoriesView {
         var deletionIndexSet: IndexSet?
         var isPresentingDeletionAlert = false
         
-        private(set) var isSet = false
-        
+        private var isSet = false
         private var store = DataStore()
         
         var categories: [Category] {
@@ -30,12 +29,26 @@ extension CategoriesView {
             categories.isEmpty
         }
         
+        var isAdmin: Bool {
+            Authentication.shared.userData?.role == .admin
+        }
+        
+        var currentCollectionType: DataStore.CollectionType {
+            get {
+                store.currentCollectionType
+            }
+            set {
+                store.switchCollection(to: newValue)
+            }
+        }
+        
         func set(store: DataStore) {
+            guard isSet == false else { return }
             self.store = store
             isSet = true
         }
         
-        // MARK: Intents
+        // MARK: - Intents
         func presentNewCategorySheet() {
             isPresentingNewCategorySheet = true
         }

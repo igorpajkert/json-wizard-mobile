@@ -15,6 +15,9 @@ struct CategoriesView: View {
     
     var body: some View {
         List {
+            if viewModel.isAdmin {
+                CollectionPicker(selection: $viewModel.currentCollectionType)
+            }
             categoriesList
             categoriesCount.isHidden(viewModel.isCategoriesEmpty)
         }
@@ -64,9 +67,7 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            if !viewModel.isSet {
-                viewModel.set(store: store)
-            }
+            viewModel.set(store: store)
         }
     }
     
@@ -97,18 +98,9 @@ struct CategoriesView: View {
     }
 }
 
-#Preview("Sample Data") {
+#Preview {
     NavigationStack {
         CategoriesView()
             .navigationTitle("Categories")
-            .environment(\.store, DataStore(questions: Question.sampleData))
-    }
-}
-
-#Preview("No Data") {
-    NavigationStack {
-        CategoriesView()
-            .navigationTitle("Categories")
-            .environment(\.store, DataStore())
     }
 }

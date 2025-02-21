@@ -886,6 +886,7 @@
       }
     },
     "error_category_already_attached" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -902,6 +903,7 @@
       }
     },
     "error_category_not_found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -950,6 +952,7 @@
       }
     },
     "error_question_already_attached" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -966,6 +969,7 @@
       }
     },
     "error_question_not_found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1541,6 +1545,9 @@
           }
         }
       }
+    },
+    "picker_collection" : {
+
     },
     "picker_color" : {
       "localizations" : {

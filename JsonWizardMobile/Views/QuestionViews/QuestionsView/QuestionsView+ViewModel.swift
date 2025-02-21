@@ -23,10 +23,22 @@ extension QuestionsView {
         var isPresentingDeletionAlert = false
         
         /// A flag indicating whether the ViewModel has been initialized with `store` and `parentCategory`.
-        private(set) var isSet = false
-        
+        private var isSet = false
         private var store = DataStore()
         private var parentCategory: Category? = nil
+        
+        var isAdmin: Bool {
+            Authentication.shared.userData?.role == .admin
+        }
+        
+        var currentCollectionType: DataStore.CollectionType {
+            get {
+                store.currentCollectionType
+            }
+            set {
+                store.switchCollection(to: newValue)
+            }
+        }
         
         var questions: [Question] {
             var result = store.questions
@@ -88,12 +100,13 @@ extension QuestionsView {
         /// Similar to "late init," this defers initialization until called.
         /// Once this method is invoked, the ViewModel is considered ready for operation.
         func set(store: DataStore, parentCategory: Category?) {
+            guard isSet == false else { return }
             self.store = store
             self.parentCategory = parentCategory
             isSet = true
         }
         
-        // MARK: Intents
+        // MARK: - Intents
         func presentNewQuestionSheet() {
             isPresentingNewQuestionSheet = true
         }
