@@ -885,40 +885,6 @@
         }
       }
     },
-    "error_category_already_attached" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Category is already attached to given question."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategoria jest już przypisana do danego pytania."
-          }
-        }
-      }
-    },
-    "error_category_not_found" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Category not found."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie znaleziono kategorii. "
-          }
-        }
-      }
-    },
     "error_current_user_not_found" : {
       "localizations" : {
         "en" : {
@@ -947,40 +913,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nie znaleziono konta deweloperskiego. Zaloguj się na odpowiednie konto, aby kontynuować."
-          }
-        }
-      }
-    },
-    "error_question_already_attached" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Question is already attached to given category."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pytanie jest już przypisane do danej kategorii."
-          }
-        }
-      }
-    },
-    "error_question_not_found" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Question not found."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie znaleziono pytania."
           }
         }
       }
@@ -1065,6 +997,22 @@
         }
       }
     },
+    "filter_options_status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
     "filter_options_uncategorized" : {
       "localizations" : {
         "en" : {
@@ -1113,6 +1061,22 @@
         }
       }
     },
+    "filter_options_with_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z Pytaniami"
+          }
+        }
+      }
+    },
     "filter_options_without_answers" : {
       "localizations" : {
         "en" : {
@@ -1141,6 +1105,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bez Poprawnych Odpowiedzi"
+          }
+        }
+      }
+    },
+    "filter_options_without_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez Pytań"
           }
         }
       }
@@ -1547,7 +1527,20 @@
       }
     },
     "picker_collection" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collection"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolekcja"
+          }
+        }
+      }
     },
     "picker_color" : {
       "localizations" : {
@@ -1581,6 +1574,9 @@
         }
       }
     },
+    "picker_filter_by_status" : {
+
+    },
     "picker_sort_by" : {
       "localizations" : {
         "en" : {
@@ -1612,6 +1608,9 @@
           }
         }
       }
+    },
+    "picker_sorty_by" : {
+
     },
     "picker_status" : {
       "localizations" : {
@@ -1881,6 +1880,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niepoprawne"
+          }
+        }
+      }
+    },
+    "sort_options_questions_count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions Count"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilość Pytań"
           }
         }
       }
