@@ -103,7 +103,7 @@ struct CategoriesView: View {
     private var toolbarSortButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Menu("menu_sort", systemImage: "arrow.up.arrow.down") {
-                Picker("picker_sorty_by", selection: $viewModel.sortOption) {
+                Picker("picker_sort_by", selection: $viewModel.sortOption) {
                     ForEach(Category.SortOptions.allCases) { option in
                         Text(option.name)
                             .tag(option as Category.SortOptions)
