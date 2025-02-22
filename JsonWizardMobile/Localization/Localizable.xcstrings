@@ -1575,7 +1575,20 @@
       }
     },
     "picker_filter_by_status" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
     },
     "picker_sort_by" : {
       "localizations" : {
@@ -1608,9 +1621,6 @@
           }
         }
       }
-    },
-    "picker_sorty_by" : {
-
     },
     "picker_status" : {
       "localizations" : {
