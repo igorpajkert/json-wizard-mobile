@@ -99,7 +99,7 @@ extension DataStore {
             _ = try await database.setData(
                 category,
                 in: category.id.toString(),
-                within: Constants.Collection.categories,
+                within: currentCollection.categories.rawValue,
                 merge: true
             )
         }
@@ -113,7 +113,7 @@ extension DataStore {
             Task {
                 try await database.delete(
                     document: category.id.toString(),
-                    within: Constants.Collection.categories
+                    within: currentCollection.categories.rawValue
                 )
             }
         }
@@ -126,7 +126,7 @@ extension DataStore {
             _ = try await database.setData(
                 question,
                 in: question.id.toString(),
-                within: Constants.Collection.questions,
+                within: currentCollection.questions.rawValue,
                 merge: true
             )
         }
@@ -140,7 +140,7 @@ extension DataStore {
             Task {
                 try await database.delete(
                     document: question.id.toString(),
-                    within: Constants.Collection.questions
+                    within: currentCollection.questions.rawValue
                 )
             }
         }

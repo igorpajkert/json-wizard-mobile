@@ -151,3 +151,53 @@ extension Category: Hashable {
         hasher.combine(id)
     }
 }
+
+// MARK: - Sorting
+extension Category {
+    /// Represents the sorting options available for `Category` instances.
+    enum SortOptions: String, CaseIterable, Identifiable, Nameable {
+        case recent
+        case alphabetical
+        case questionsCount
+        
+        var id: String { rawValue }
+        
+        /// A localized name for the sorting option.
+        var name: String {
+            switch self {
+            case .recent:
+                return String(localized: "sort_options_recent")
+            case .alphabetical:
+                return String(localized: "sort_options_alphabetical")
+            case .questionsCount:
+                return String(localized: "sort_options_questions_count")
+            }
+        }
+    }
+}
+
+// MARK: - Filtering
+extension Category {
+    /// Represents the filtering options available for `Question` instances.
+    enum FilterOptions: String, CaseIterable, Identifiable, Nameable {
+        case none
+        case status
+        case withQuestions
+        case withoutQuestions
+        
+        var id: String { rawValue }
+        
+        var name: String {
+            switch self {
+            case .none:
+                return String(localized: "filter_options_none")
+            case .status:
+                return String(localized: "filter_options_status")
+            case .withQuestions:
+                return String(localized: "filter_options_with_questions")
+            case .withoutQuestions:
+                return String(localized: "filter_options_without_questions")
+            }
+        }
+    }
+}

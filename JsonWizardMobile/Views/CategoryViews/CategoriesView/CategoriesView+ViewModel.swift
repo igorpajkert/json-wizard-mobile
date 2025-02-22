@@ -14,28 +14,94 @@ extension CategoriesView {
         
         var isPresentingNewCategorySheet = false
         var isPresentingSignInSheet = false
+        
         var errorWrapper: ErrorWrapper?
+        
+        var searchText = ""
+        var sortOrder = SortOrder.forward
+        var sortOption = Category.SortOptions.recent
+        var filterOption = Category.FilterOptions.none
+        var selectedStatus = Status.draft
+        
         var deletionIndexSet: IndexSet?
         var isPresentingDeletionAlert = false
         
-        private(set) var isSet = false
-        
+        private var isSet = false
         private var store = DataStore()
         
-        var categories: [Category] {
-            store.categories
+        var isAdmin: Bool {
+            Authentication.shared.userData?.role == .admin
+        }
+        
+        var currentCollectionType: DataStore.CollectionType {
+            get {
+                store.currentCollectionType
+            }
+            set {
+                store.switchCollection(to: newValue)
+            }
         }
         
         var isCategoriesEmpty: Bool {
             categories.isEmpty
         }
         
+        var categories: [Category] {
+            var result = store.categories
+            
+            // Filter questions based on the search text
+            if !searchText.isEmpty {
+                result = result.filter {
+                    $0.title.localizedStandardContains(searchText)
+                }
+            }
+            
+            // Apply filtering based on the filterOption
+            switch filterOption {
+            case .none:
+                break
+            case .status:
+                switch selectedStatus {
+                case .done:
+                    result = result.filter { $0.status == .done }
+                case .inProgress:
+                    result = result.filter { $0.status == .inProgress }
+                case .draft:
+                    result = result.filter { $0.status == .draft }
+                case .needsRework:
+                    result = result.filter { $0.status == .needsRework }
+                }
+            case .withQuestions:
+                result = result.filter { $0.questionsCount > 0 }
+            case .withoutQuestions:
+                result = result.filter { $0.questionsCount == 0 }
+            }
+            
+            // Apply sorting based on the sortOption
+            switch sortOption {
+            case .recent:
+                result.sort { $0.dateCreated > $1.dateCreated }
+            case .alphabetical:
+                result.sort { $0.title < $1.title }
+            case .questionsCount:
+                result.sort { $0.questionsCount > $1.questionsCount }
+            }
+            
+            // Reverse the order if sortOrder is descending
+            if sortOrder == .reverse {
+                result.reverse()
+            }
+            
+            return result
+        }
+        
         func set(store: DataStore) {
+            guard isSet == false else { return }
             self.store = store
             isSet = true
         }
         
-        // MARK: Intents
+        // MARK: - Intents
         func presentNewCategorySheet() {
             isPresentingNewCategorySheet = true
         }

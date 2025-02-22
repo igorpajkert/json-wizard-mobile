@@ -17,6 +17,9 @@ struct QuestionsView: View {
     
     var body: some View {
         List {
+            if viewModel.isAdmin {
+                CollectionPicker(selection: $viewModel.currentCollectionType)
+            }
             questionsList
             questionsCount.isHidden(viewModel.questions.isEmpty)
         }
@@ -65,12 +68,10 @@ struct QuestionsView: View {
             }
         }
         .onAppear {
-            if !viewModel.isSet {
-                viewModel.set(
-                    store: store,
-                    parentCategory: parentCategory
-                )
-            }
+            viewModel.set(
+                store: store,
+                parentCategory: parentCategory
+            )
         }
     }
     

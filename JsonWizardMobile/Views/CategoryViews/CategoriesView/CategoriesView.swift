@@ -15,11 +15,16 @@ struct CategoriesView: View {
     
     var body: some View {
         List {
+            if viewModel.isAdmin {
+                CollectionPicker(selection: $viewModel.currentCollectionType)
+            }
             categoriesList
             categoriesCount.isHidden(viewModel.isCategoriesEmpty)
         }
         .listRowSpacing(10)
         .toolbar {
+            toolbarSortButton
+            toolbarFilterButton
             toolbarAddButton
         }
         .navigationDestination(for: Category.self) { category in
@@ -55,6 +60,7 @@ struct CategoriesView: View {
         }, message: {
             Text("message_delete_category_confirmation")
         })
+        .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
             if viewModel.isCategoriesEmpty {
                 ContentUnavailableView(
@@ -64,9 +70,7 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            if !viewModel.isSet {
-                viewModel.set(store: store)
-            }
+            viewModel.set(store: store)
         }
     }
     
@@ -95,20 +99,49 @@ struct CategoriesView: View {
             }
         }
     }
-}
-
-#Preview("Sample Data") {
-    NavigationStack {
-        CategoriesView()
-            .navigationTitle("Categories")
-            .environment(\.store, DataStore(questions: Question.sampleData))
+    
+    private var toolbarSortButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu("menu_sort", systemImage: "arrow.up.arrow.down") {
+                Picker("picker_sorty_by", selection: $viewModel.sortOption) {
+                    ForEach(Category.SortOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as Category.SortOptions)
+                    }
+                }
+                Picker("picker_sort_order", selection: $viewModel.sortOrder) {
+                    Text("text_sort_ascending").tag(SortOrder.forward)
+                    Text("text_sort_descending").tag(SortOrder.reverse)
+                }
+            }
+        }
+    }
+    
+    private var toolbarFilterButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Menu("menu_filter", systemImage: "line.3.horizontal.decrease") {
+                Picker("picker_filter_by", selection: $viewModel.filterOption) {
+                    ForEach(Category.FilterOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as Category.FilterOptions)
+                    }
+                }
+                if viewModel.filterOption == .status {
+                    Picker("picker_filter_by_status", selection: $viewModel.selectedStatus) {
+                        ForEach(Status.allCases) { status in
+                            Text(status.name)
+                                .tag(status as Status)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-#Preview("No Data") {
+#Preview {
     NavigationStack {
         CategoriesView()
             .navigationTitle("Categories")
-            .environment(\.store, DataStore())
     }
 }
