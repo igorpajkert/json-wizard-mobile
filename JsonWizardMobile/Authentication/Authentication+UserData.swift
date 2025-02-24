@@ -17,6 +17,6 @@ extension Authentication {
         }
         
         let database = DatabaseController()
-        userData = try await database.getData(from: user.uid, within: "user_data_test")
+        userData = try await database.getData(from: user.uid, within: "user_data")
     }
 }
