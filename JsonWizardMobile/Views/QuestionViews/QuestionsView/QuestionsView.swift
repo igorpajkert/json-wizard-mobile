@@ -12,6 +12,7 @@ struct QuestionsView: View {
     @State private var viewModel = QuestionsView.ViewModel()
     
     @Environment(\.store) private var store
+    @Environment(\.colorScheme) private var colorScheme
     
     var parentCategory: Category?
     
@@ -28,6 +29,9 @@ struct QuestionsView: View {
             toolbarSortButton
             toolbarFilterButton
             toolbarAddButton
+        }
+        .navigationDestination(item: $viewModel.selectedQuestion) { question in
+            QuestionEditView(question: question, viewType: .edit)
         }
         .sheet(
             isPresented: $viewModel.isPresentingNewQuestionSheet,
@@ -77,14 +81,12 @@ struct QuestionsView: View {
     
     private var questionsList: some View {
         ForEach(viewModel.questions) { question in
-            NavigationLink(
-                destination: QuestionEditView(
-                    question: question,
-                    viewType: .edit
-                )
-            ) {
+            Button {
+                viewModel.selectQuestions(question)
+            } label: {
                 QuestionCardView(question: question)
             }
+            .tint(colorScheme == .dark ? .white : .black)
         }
         .onDelete(perform: viewModel.presentDeletionAlert)
     }

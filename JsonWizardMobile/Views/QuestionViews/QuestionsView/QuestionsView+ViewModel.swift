@@ -25,6 +25,8 @@ extension QuestionsView {
         var deletionIndexSet: IndexSet?
         var isPresentingDeletionAlert = false
         
+        var selectedQuestion: Question?
+        
         private var isSet = false
         private var store = DataStore()
         private var parentCategory: Category? = nil
@@ -141,6 +143,10 @@ extension QuestionsView {
                     isDismissable: true
                 )
             }
+        }
+        
+        func selectQuestions(_ question: Question) {
+            selectedQuestion = question
         }
     }
 }

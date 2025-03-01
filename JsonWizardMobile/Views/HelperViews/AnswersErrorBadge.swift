@@ -41,6 +41,7 @@ struct AnswersErrorBadge: View {
         Label(title, systemImage: image)
             .labelStyle(.trailingIcon)
             .foregroundStyle(color)
+            .multilineTextAlignment(.trailing)
     }
 }
 
