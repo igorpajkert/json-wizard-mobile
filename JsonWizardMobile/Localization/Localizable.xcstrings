@@ -1382,6 +1382,22 @@
         }
       }
     },
+    "label_categories_count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories count"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilość kategorii"
+          }
+        }
+      }
+    },
     "label_edit_questions" : {
       "localizations" : {
         "en" : {
@@ -1394,6 +1410,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edytuj Pytania"
+          }
+        }
+      }
+    },
+    "label_questions_count" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions count"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilość pytań"
           }
         }
       }
