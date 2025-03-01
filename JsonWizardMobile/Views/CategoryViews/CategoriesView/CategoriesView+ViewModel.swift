@@ -23,8 +23,8 @@ extension CategoriesView {
         var filterOption = Category.FilterOptions.none
         var selectedStatus = Status.draft
         
-        var deletionIndexSet: IndexSet?
         var isPresentingDeletionAlert = false
+        private var categoryToDelete: Category?
         
         private var isSet = false
         private var store = DataStore()
@@ -118,20 +118,21 @@ extension CategoriesView {
             isPresentingSignInSheet = false
         }
         
-        func presentDeletionAlert(for deletionIndexSet: IndexSet) {
-            self.deletionIndexSet = deletionIndexSet
+        private func presentDeletionAlert(for category: Category) {
+            categoryToDelete = category
             isPresentingDeletionAlert = true
         }
         
-        func dismissDeletionAlert() {
-            deletionIndexSet = nil
+        private func dismissDeletionAlert() {
+            categoryToDelete = nil
         }
         
-        func deleteCategories(with offsets: IndexSet) {
-            let categoriesIDsToDelete = offsets.map { categories[$0].id }
+        private func deleteCategory() {
+            guard let categoryToDelete = categoryToDelete else { return }
             Task {
                 do {
-                    try store.delete(categories: categoriesIDsToDelete)
+                    let ids = [categoryToDelete.id]
+                    try store.delete(categories: ids)
                 } catch {
                     errorWrapper = .init(
                         error: error,
@@ -139,6 +140,19 @@ extension CategoriesView {
                         isDismissable: true)
                 }
             }
+        }
+        
+        // MARK: - Events
+        func onDelete(_ category: Category) {
+            presentDeletionAlert(for: category)
+        }
+        
+        func onDeleteConfirmation() {
+            deleteCategory()
+        }
+        
+        func onDeleteCancelation() {
+            dismissDeletionAlert()
         }
     }
 }

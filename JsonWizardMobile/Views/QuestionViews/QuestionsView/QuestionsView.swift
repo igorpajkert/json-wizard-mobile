@@ -52,13 +52,11 @@ struct QuestionsView: View {
                isPresented: $viewModel.isPresentingDeletionAlert,
                actions: {
             Button("button_delete", role: .destructive) {
-                if let indexSet = viewModel.deletionIndexSet {
-                    viewModel.deleteQuestions(with: indexSet)
-                }
+                viewModel.onDeleteConfirmaiton()
             }
             Button("button_cancel",
                    role: .cancel,
-                   action: viewModel.dismissDeletionAlert
+                   action: viewModel.onDeleteCancelation
             )
         }, message: {
             Text("message_delete_question_confirmation")
@@ -87,8 +85,12 @@ struct QuestionsView: View {
                 QuestionCardView(question: question)
             }
             .tint(colorScheme == .dark ? .white : .black)
+            .swipeActions(allowsFullSwipe: false) {
+                SwipeButtonDelete {
+                    viewModel.onDelete(question)
+                }
+            }
         }
-        .onDelete(perform: viewModel.presentDeletionAlert)
     }
     
     private var questionsCount: some View {

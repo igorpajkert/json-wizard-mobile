@@ -49,13 +49,11 @@ struct CategoriesView: View {
                isPresented: $viewModel.isPresentingDeletionAlert,
                actions: {
             Button("button_delete", role: .destructive) {
-                if let indexSet = viewModel.deletionIndexSet {
-                    viewModel.deleteCategories(with: indexSet)
-                }
+                viewModel.onDeleteConfirmation()
             }
             Button("button_cancel",
                    role: .cancel,
-                   action: viewModel.dismissDeletionAlert
+                   action: viewModel.onDeleteCancelation
             )
         }, message: {
             Text("message_delete_category_confirmation")
@@ -78,9 +76,13 @@ struct CategoriesView: View {
         ForEach(viewModel.categories) { category in
             NavigationLink(value: category) {
                 CategoryCardView(category: category)
+                    .swipeActions(allowsFullSwipe: false) {
+                        SwipeButtonDelete {
+                            viewModel.onDelete(category)
+                        }
+                    }
             }
         }
-        .onDelete(perform: viewModel.presentDeletionAlert)
     }
     
     private var categoriesCount: some View {

@@ -22,8 +22,8 @@ extension QuestionsView {
         var sortOption = Question.SortOptions.recent
         var filterOption = Question.FilterOptions.none
         
-        var deletionIndexSet: IndexSet?
         var isPresentingDeletionAlert = false
+        private var questionToDelete: Question?
         
         var selectedQuestion: Question?
         
@@ -123,19 +123,20 @@ extension QuestionsView {
             isPresentingSignInSheet = false
         }
         
-        func presentDeletionAlert(for deletionIndexSet: IndexSet) {
-            self.deletionIndexSet = deletionIndexSet
+        private func presentDeletionAlert(for question: Question) {
+            questionToDelete = question
             isPresentingDeletionAlert = true
         }
         
-        func dismissDeletionAlert() {
-            deletionIndexSet = nil
+        private func dismissDeletionAlert() {
+            questionToDelete = nil
         }
         
-        func deleteQuestions(with offsets: IndexSet) {
-            let questionIDsToDelete = offsets.map { questions[$0].id }
+        private func deleteQuestion() {
+            guard let questionToDelete = questionToDelete else { return }
             do {
-                try store.delete(questions: questionIDsToDelete)
+                let ids = [questionToDelete.id]
+                try store.delete(questions: ids)
             } catch {
                 errorWrapper = .init(
                     error: error,
@@ -147,6 +148,19 @@ extension QuestionsView {
         
         func selectQuestions(_ question: Question) {
             selectedQuestion = question
+        }
+        
+        // MARK: - Events
+        func onDelete(_ question: Question) {
+            presentDeletionAlert(for: question)
+        }
+        
+        func onDeleteConfirmaiton() {
+            deleteQuestion()
+        }
+        
+        func onDeleteCancelation() {
+            dismissDeletionAlert()
         }
     }
 }
