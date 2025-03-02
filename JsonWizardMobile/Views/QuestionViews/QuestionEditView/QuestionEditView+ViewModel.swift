@@ -67,12 +67,12 @@ extension QuestionEditView {
             }
         }
         
-        func deleteAnswers(at offsets: IndexSet) {
+        func deleteAnswer(_ answer: Answer) {
             withAnimation {
                 do {
                     try store.deleteAnswers(
                         at: question,
-                        with: offsets.map { answers[$0].id }
+                        with: [answer.id]
                     )
                 } catch {
                     errorWrapper = .init(

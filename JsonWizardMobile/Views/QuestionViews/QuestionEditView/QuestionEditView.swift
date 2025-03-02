@@ -120,8 +120,12 @@ struct QuestionEditView: View {
             }
             ForEach(viewModel.answers) { answer in
                 AnswerCardView(answer: answer)
+                    .swipeActions(allowsFullSwipe: false) {
+                        SwipeButtonDelete {
+                            viewModel.deleteAnswer(answer)
+                        }
+                    }
             }
-            .onDelete(perform: viewModel.deleteAnswers)
             answersCount
         }
     }
