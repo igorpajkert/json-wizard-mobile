@@ -22,6 +22,14 @@ extension CategoryDetailView {
             store.getQuestions(of: category.questionIDs)
         }
         
+        var lastProductionTransfer: Date? {
+            category.productionTransferDate
+        }
+        
+        var needsUpdate: Bool {
+            category.needsUpdate
+        }
+        
         func set(store: DataStore, category: Category) {
             self.store = store
             self.category = category

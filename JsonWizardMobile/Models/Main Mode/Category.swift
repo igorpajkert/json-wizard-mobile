@@ -44,21 +44,17 @@ final class Category: Identifiable, Codable {
     let dateCreated: Date
     /// Last modification date.
     var dateModified: Date
+    /// The date when the category was transferred to production.
+    var productionTransferDate: Date?
     
     /// The total number of questions in this category.
     var questionsCount: Int { questionIDs.count }
     
-    /// Creates a new `Category` instance.
-    ///
-    /// - Parameters:
-    ///   - id: A unique numeric identifier.
-    ///   - title: The name of the category. Defaults to an empty string.
-    ///   - subtitle: An optional subtitle for additional context. Defaults to `nil`.
-    ///   - questions: The list of questions in this category. Defaults to an empty array.
-    ///   - status: The state of this category. Defaults to `.draft`.
-    ///   - color: An optional color representing this category. Defaults to `nil`.
-    ///   - dateCreated: A date indicating when this category was created.
-    ///     Defaults to the current time (`.now`).
+    /// A Boolean value indicating whether the category requires an update.
+    var needsUpdate: Bool {
+        productionTransferDate.map { dateModified > $0 } ?? false
+    }
+    
     init(id: Int = Int.randomID(),
          title: String = "",
          subtitle: String? = nil,
@@ -66,7 +62,8 @@ final class Category: Identifiable, Codable {
          status: Status = .draft,
          color: Color? = nil,
          dateCreated: Date = .now,
-         dateModified: Date = .now
+         dateModified: Date = .now,
+         productionTransferDate: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -76,6 +73,7 @@ final class Category: Identifiable, Codable {
         self.color = color
         self.dateCreated = dateCreated
         self.dateModified = dateModified
+        self.productionTransferDate = productionTransferDate
     }
     
     // MARK: - Codable Conformance | Custom encoding & decoding
@@ -92,6 +90,7 @@ final class Category: Identifiable, Codable {
         self.color = try container.decodeIfPresent(Color.self, forKey: .color)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
         self.dateModified = try container.decode(String.self, forKey: .dateModified).toDate()
+        self.productionTransferDate = try container.decodeIfPresent(Date.self, forKey: .productionTransferDate)
     }
     
     /// Encodes the model into an `Encoder`.
@@ -108,11 +107,26 @@ final class Category: Identifiable, Codable {
         try container.encode(dateCreated, forKey: .dateCreated)
         try container.encode(dateModified.toString(), forKey: .dateModified)
         try container.encode(questionsCount, forKey: .questionsCount)
+        try container.encodeIfPresent(productionTransferDate, forKey: .productionTransferDate)
     }
     
     /// Keys for encoding and decoding properties.
     private enum CodingKeys: String, CodingKey {
-        case id, title, subtitle, questionIDs, status, color, dateCreated, dateModified, questionsCount
+        case id
+        case title
+        case subtitle
+        case questionIDs
+        case status
+        case color
+        case dateCreated
+        case dateModified
+        case questionsCount
+        case productionTransferDate
+    }
+    
+    // MARK: - Intents
+    func setProductionTransferDate(to date: Date) {
+        productionTransferDate = date
     }
 }
 
@@ -136,7 +150,8 @@ extension Category: Equatable {
         lhs.status == rhs.status &&
         lhs.color == rhs.color &&
         lhs.dateCreated == rhs.dateCreated &&
-        lhs.dateModified == rhs.dateModified
+        lhs.dateModified == rhs.dateModified &&
+        lhs.productionTransferDate == rhs.productionTransferDate
     }
 }
 
@@ -184,6 +199,7 @@ extension Category {
         case status
         case withQuestions
         case withoutQuestions
+        case isInProduction
         
         var id: String { rawValue }
         
@@ -197,6 +213,8 @@ extension Category {
                 return String(localized: "filter_options_with_questions")
             case .withoutQuestions:
                 return String(localized: "filter_options_without_questions")
+            case .isInProduction:
+                return String(localized: "filter_options_is_in_production")
             }
         }
     }

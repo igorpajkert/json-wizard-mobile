@@ -93,8 +93,10 @@ extension DataStore {
     }
     
     // MARK: Categories
-    func update(category: Category) throws {
-        category.dateModified = .now
+    func update(category: Category, shouldUpdateDate: Bool = true) throws {
+        if shouldUpdateDate {
+            category.dateModified = .now
+        }
         Task {
             _ = try await database.setData(
                 category,

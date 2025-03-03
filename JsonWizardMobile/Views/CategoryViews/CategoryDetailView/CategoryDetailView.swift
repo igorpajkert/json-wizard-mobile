@@ -18,6 +18,10 @@ struct CategoryDetailView: View {
     var body: some View {
         List {
             categoryInfo
+            CategoryProductionInfo(
+                lastTransferDate: viewModel.lastProductionTransfer,
+                needsUpdate: viewModel.needsUpdate
+            )
             questions
             questionsPreview
         }

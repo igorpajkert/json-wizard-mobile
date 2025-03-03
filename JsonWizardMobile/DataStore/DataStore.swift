@@ -41,19 +41,31 @@ final class DataStore {
         detachListeners()
     }
     
-    /// Retrieves an array of `Category` objects that match the specified indices.
-    ///
-    /// - Parameter indices: An array of integer IDs to filter categories.
-    /// - Returns: An array of `Category` objects whose IDs match the given indices.
-    func getCategories(of indices: [Int]) -> [Category] {
-        categories.filter { indices.contains($0.id) }
+    /// Returns categories matching the given IDs.
+    /// - Parameter ids: IDs to filter by.
+    /// - Returns: Categories with matching IDs.
+    func getCategories(of ids: [Int]) -> [Category] {
+        categories.filter { ids.contains($0.id) }
     }
     
-    /// Retrieves an array of `Question` objects that match the specified indices.
-    ///
-    /// - Parameter indices: An array of integer IDs to filter questions.
-    /// - Returns: An array of `Question` objects whose IDs match the given indices.
-    func getQuestions(of indices: [Int]) -> [Question] {
-        questions.filter { indices.contains($0.id) }
+    /// Returns the category with the specified ID.
+    /// - Parameter id: The category's ID.
+    /// - Returns: A matching category, or nil.
+    func getCategory(of id: Int) -> Category? {
+        categories.first { $0.id == id }
+    }
+    
+    /// Returns questions matching the given IDs.
+    /// - Parameter ids: IDs to filter by.
+    /// - Returns: Questions with matching IDs.
+    func getQuestions(of ids: [Int]) -> [Question] {
+        questions.filter { ids.contains($0.id) }
+    }
+    
+    /// Returns the question with the specified ID.
+    /// - Parameter id: The question's ID.
+    /// - Returns: A matching question, or nil.
+    func getQuestion(of id: Int) -> Question? {
+        questions.first { $0.id == id }
     }
 }

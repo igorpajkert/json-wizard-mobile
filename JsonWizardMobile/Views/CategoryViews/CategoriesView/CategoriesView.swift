@@ -45,6 +45,14 @@ struct CategoriesView: View {
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
+        .sheet(
+            isPresented: $viewModel.isPresentingMigrationSheet,
+            onDismiss: viewModel.onMigrateDismissed
+        ) {
+            if let category = viewModel.categoryToMigrate {
+                CategoryMigrationSheet(category: category)
+            }
+        }
         .alert("alert_title_delete_category",
                isPresented: $viewModel.isPresentingDeletionAlert,
                actions: {
@@ -57,6 +65,13 @@ struct CategoriesView: View {
             )
         }, message: {
             Text("message_delete_category_confirmation")
+        })
+        .alert("alert_title_migration_declined",
+               isPresented: $viewModel.isPresentingMigrationDeclinedAlert,
+               actions: {
+            Button("button_ok", action: viewModel.onMigrationDeclinedAlertDismissed)
+        }, message: {
+            Text("message_migration_declined")
         })
         .searchable(text: $viewModel.searchText)
         .overlay(alignment: .center) {
@@ -78,7 +93,12 @@ struct CategoriesView: View {
                 CategoryCardView(category: category)
                     .swipeActions(allowsFullSwipe: false) {
                         SwipeButtonDelete {
-                            viewModel.onDelete(category)
+                            viewModel.onDeleteTapped(category)
+                        }
+                    }
+                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                        SwipeButtonMigrate {
+                            viewModel.onMigrateTapped(with: category)
                         }
                     }
             }

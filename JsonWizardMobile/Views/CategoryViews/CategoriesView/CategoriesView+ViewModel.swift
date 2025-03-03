@@ -14,6 +14,7 @@ extension CategoriesView {
         
         var isPresentingNewCategorySheet = false
         var isPresentingSignInSheet = false
+        var isPresentingMigrationSheet = false
         
         var errorWrapper: ErrorWrapper?
         
@@ -23,7 +24,10 @@ extension CategoriesView {
         var filterOption = Category.FilterOptions.none
         var selectedStatus = Status.draft
         
+        var isPresentingMigrationDeclinedAlert = false
         var isPresentingDeletionAlert = false
+        
+        var categoryToMigrate: Category?
         private var categoryToDelete: Category?
         
         private var isSet = false
@@ -75,6 +79,8 @@ extension CategoriesView {
                 result = result.filter { $0.questionsCount > 0 }
             case .withoutQuestions:
                 result = result.filter { $0.questionsCount == 0 }
+            case .isInProduction:
+                result = result.filter { $0.productionTransferDate != nil }
             }
             
             // Apply sorting based on the sortOption
@@ -118,6 +124,23 @@ extension CategoriesView {
             isPresentingSignInSheet = false
         }
         
+        private func presentMigrationSheet(with category: Category) {
+            categoryToMigrate = category
+            isPresentingMigrationSheet = true
+        }
+        
+        private func dismissMigrationSheet() {
+            isPresentingMigrationSheet = false
+        }
+        
+        private func presentMigrationDeclinedAlert() {
+            isPresentingMigrationDeclinedAlert = true
+        }
+        
+        private func dismissMigrationDeclinedAlert() {
+            isPresentingMigrationDeclinedAlert = false
+        }
+        
         private func presentDeletionAlert(for category: Category) {
             categoryToDelete = category
             isPresentingDeletionAlert = true
@@ -142,8 +165,8 @@ extension CategoriesView {
             }
         }
         
-        // MARK: - Events
-        func onDelete(_ category: Category) {
+        // MARK: - Events | Deletion
+        func onDeleteTapped(_ category: Category) {
             presentDeletionAlert(for: category)
         }
         
@@ -153,6 +176,23 @@ extension CategoriesView {
         
         func onDeleteCancelation() {
             dismissDeletionAlert()
+        }
+        
+        // MARK: - Events | Migration
+        func onMigrateTapped(with category: Category) {
+            if isAdmin {
+                presentMigrationSheet(with: category)
+            } else {
+                presentMigrationDeclinedAlert()
+            }
+        }
+        
+        func onMigrateDismissed() {
+            dismissMigrationSheet()
+        }
+        
+        func onMigrationDeclinedAlertDismissed() {
+            dismissMigrationDeclinedAlert()
         }
     }
 }

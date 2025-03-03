@@ -53,6 +53,20 @@ extension DataStore {
         changeData(to: collection)
     }
     
+    func getCollectionNames(for collection: CollectionType) -> (categories: String, questions: String) {
+        switch collection {
+        case .development:
+            return (categories: Collection.devCategories.rawValue,
+                    questions: Collection.devQuestions.rawValue)
+        case .test:
+            return (categories: Collection.testCategories.rawValue,
+                    questions: Collection.testQuestions.rawValue)
+        case .production:
+            return (categories: Collection.prodCategories.rawValue,
+                    questions: Collection.prodQuestions.rawValue)
+        }
+    }
+    
     private func changeCollection(to collection: CollectionType) {
         currentCollectionType = collection
         
