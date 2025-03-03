@@ -27,8 +27,8 @@ final class DataStore {
     var questionsListener: ListenerRegistration? = nil
     
     init(
-        categories: [Category] = [Category](),
-        questions: [Question] = [Question]()
+        categories: [Category] = [],
+        questions: [Question] = []
     ) {
         self.categories = categories
         self.questions = questions

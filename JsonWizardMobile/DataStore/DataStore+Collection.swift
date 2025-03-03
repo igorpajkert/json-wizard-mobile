@@ -86,7 +86,13 @@ extension DataStore {
     }
     
     private func changeData(to collection: CollectionType) {
+        clearData()
         fetchData(for: collection)
         attachListeners(to: collection)
+    }
+    
+    private func clearData() {
+        categories = []
+        questions = []
     }
 }

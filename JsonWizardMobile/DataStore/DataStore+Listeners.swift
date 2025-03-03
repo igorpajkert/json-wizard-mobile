@@ -11,6 +11,8 @@ import FirebaseFirestore
 extension DataStore {
     
     func attachListeners(to collection: CollectionType) {
+        detachListeners()
+        
         switch collection {
         case .development:
             categoriesListener = attachCategoriesListener(to: .devCategories)
