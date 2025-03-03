@@ -97,6 +97,7 @@ extension DataStore {
         if shouldUpdateDate {
             category.dateModified = .now
         }
+        
         Task {
             _ = try await database.setData(
                 category,
@@ -124,6 +125,8 @@ extension DataStore {
     // MARK: Questions
     func update(question: Question) throws {
         question.dateModified = .now
+        try updateCategoriesModificationDate(for: question)
+        
         Task {
             _ = try await database.setData(
                 question,
@@ -145,6 +148,13 @@ extension DataStore {
                     within: currentCollection.questions.rawValue
                 )
             }
+        }
+    }
+    
+    func updateCategoriesModificationDate(for question: Question) throws {
+        let categories = getCategories(of: question.categoryIDs)
+        for category in categories {
+            try update(category: category, shouldUpdateDate: true)
         }
     }
     
