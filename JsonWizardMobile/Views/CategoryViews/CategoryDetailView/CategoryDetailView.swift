@@ -18,10 +18,9 @@ struct CategoryDetailView: View {
     var body: some View {
         List {
             categoryInfo
-            CategoryProductionInfo(
-                lastTransferDate: viewModel.lastProductionTransfer,
-                needsUpdate: viewModel.needsUpdate
-            )
+            if viewModel.isNotProduction {
+                migrationDetails
+            }
             questions
             questionsPreview
         }
@@ -35,6 +34,12 @@ struct CategoryDetailView: View {
             onDismiss: viewModel.dismissEditViewSheet
         ) {
             CategoryEditSheet(category: viewModel.category)
+        }
+        .sheet(
+            isPresented: $viewModel.isPresentingMigrationSheet,
+            onDismiss: viewModel.onMigrateDismissed
+        ) {
+            CategoryMigrationSheet(category: category)
         }
         .onAppear {
             if !viewModel.isSet {
@@ -87,6 +92,20 @@ struct CategoryDetailView: View {
             Circle()
                 .fill(viewModel.category.unwrappedColor)
                 .frame(width: 16, height: 16)
+        }
+    }
+    
+    private var migrationDetails: some View {
+        Group {
+            CategoryProductionInfo(
+                lastTransferDate: viewModel.lastProductionTransfer,
+                needsUpdate: viewModel.needsUpdate
+            )
+            if viewModel.isAdmin {
+                Button("button_migrate") {
+                    viewModel.onMigrateTapped()
+                }
+            }
         }
     }
     

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoryCardView: View {
     
+    @Environment(\.store) private var store
+    
     var category: Category
     
     var body: some View {
@@ -22,6 +24,18 @@ struct CategoryCardView: View {
                 .font(.subheadline)
             Spacer()
             countAndBadge
+            if category.productionTransferDate != nil &&
+                store.currentCollectionType != .production {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .foregroundStyle(.red)
+                    Text("text_is_in_production")
+                        .foregroundStyle(.red.adaptedTextColor())
+                        .font(.caption)
+                        .bold()
+                }
+                .frame(maxWidth: .infinity, maxHeight: 20)
+            }
         }
         .padding(.vertical)
     }

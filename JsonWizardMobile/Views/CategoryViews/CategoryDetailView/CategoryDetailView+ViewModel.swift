@@ -13,6 +13,7 @@ extension CategoryDetailView {
     class ViewModel {
         
         var isPresentingEditCategorySheet = false
+        var isPresentingMigrationSheet = false
         var category = Category()
         
         private(set) var isSet = false
@@ -30,6 +31,14 @@ extension CategoryDetailView {
             category.needsUpdate
         }
         
+        var isNotProduction: Bool {
+            store.currentCollectionType != .production
+        }
+        
+        var isAdmin: Bool {
+            Authentication.shared.userData?.role == .admin
+        }
+        
         func set(store: DataStore, category: Category) {
             self.store = store
             self.category = category
@@ -43,6 +52,23 @@ extension CategoryDetailView {
         
         func dismissEditViewSheet() {
             isPresentingEditCategorySheet = false
+        }
+        
+        private func presentMigrationSheet() {
+            isPresentingMigrationSheet = true
+        }
+        
+        private func dismissMigrationSheet() {
+            isPresentingMigrationSheet = false
+        }
+        
+        // MARK: - Events
+        func onMigrateTapped() {
+            presentMigrationSheet()
+        }
+        
+        func onMigrateDismissed() {
+            dismissMigrationSheet()
         }
     }
 }

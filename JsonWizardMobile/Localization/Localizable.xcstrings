@@ -2262,6 +2262,22 @@
         }
       }
     },
+    "text_is_in_production" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is in production"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jest na produkcji"
+          }
+        }
+      }
+    },
     "text_last_transfer" : {
       "localizations" : {
         "en" : {
