@@ -27,7 +27,7 @@ extension AccountView {
         var userName: String { auth.userData?.name ?? stringKeys.user }
         var userEmail: String { auth.user?.email ?? stringKeys.email }
         var userRole: String { auth.userData?.role?.name ?? stringKeys.role }
-        var userAvatar: ImageResource { .avatarWhite }
+        var userAvatar: ImageResource { .avatar }
         var isUserSignedIn: Bool { auth.user != nil }
         
         func fetchUserData() async {
