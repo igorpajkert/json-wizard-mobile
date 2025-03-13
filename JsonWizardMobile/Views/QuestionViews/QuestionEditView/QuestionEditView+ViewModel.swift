@@ -24,7 +24,7 @@ extension QuestionEditView {
         private var viewType: QuestionViewType = .new
         
         var categories: [Category] {
-            var categories = store.getCategories(of: question.categoryIDs)
+            var categories = store.getCategories(with: question.categoryIDs)
             if let parentCategory = parentCategory {
                 categories.append(parentCategory)
             }

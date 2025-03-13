@@ -20,7 +20,7 @@ extension CategoryDetailView {
         private var store = DataStore()
         
         var categoryQuestions: [Question] {
-            store.getQuestions(of: category.questionIDs)
+            store.getQuestions(with: category.questionIDs)
         }
         
         var lastProductionTransfer: Date? {
