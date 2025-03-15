@@ -14,7 +14,7 @@ struct QuestionCardView: View {
     var question: Question
     
     private var categories: [Category] {
-        store.getCategories(of: question.categoryIDs)
+        store.getCategories(with: question.categoryIDs)
     }
     
     var body: some View {

@@ -26,15 +26,7 @@ struct CategoryCardView: View {
             countAndBadge
             if category.productionTransferDate != nil &&
                 store.currentCollectionType != .production {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .foregroundStyle(.red)
-                    Text("text_is_in_production")
-                        .foregroundStyle(.red.adaptedTextColor())
-                        .font(.caption)
-                        .bold()
-                }
-                .frame(maxWidth: .infinity, maxHeight: 20)
+                CategoryProductionBadge()
             }
         }
         .padding(.vertical)
@@ -51,5 +43,22 @@ struct CategoryCardView: View {
 }
 
 #Preview(traits: .fixedLayout(width: 400, height: 120)) {
-    CategoryCardView(category: Category.sampleData[0])
+    CategoryCardView(category: Category.sampleData[4])
+}
+
+struct CategoryProductionBadge: View {
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(.red)
+            Text("text_is_in_production")
+                .foregroundStyle(.red.adaptedTextColor())
+                .font(.caption)
+                .bold()
+                .textCase(.uppercase)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 20)
+        .shadow(radius: 2)
+    }
 }

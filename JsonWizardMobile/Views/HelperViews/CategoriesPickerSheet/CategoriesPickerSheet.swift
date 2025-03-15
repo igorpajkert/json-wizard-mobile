@@ -23,7 +23,10 @@ struct CategoriesPickerSheet: View {
             List {
                 ForEach(viewModel.categories) { category in
                     HStack {
-                        CategoryBadge(category: category)
+                        ScrollView(.horizontal) {
+                            CategoryBadge(category: category)
+                        }
+                        .scrollIndicators(.never)
                         Spacer()
                         Button(action: {
                             viewModel.onCategorySelected(category)

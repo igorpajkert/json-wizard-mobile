@@ -14,10 +14,10 @@ extension DataStore {
     }
     
     func migrate(category id: Int, to collection: CollectionType) async throws {
-        guard let category = getCategory(of: id) else {
+        guard let category = getCategory(with: id) else {
             throw MigrationError.categoryNotFound
         }
-        let questions = getQuestions(of: category.questionIDs)
+        let questions = getQuestions(with: category.questionIDs)
         try await copy(data: (category: category, questions: questions), to: collection)
         if collection == .production {
             category.setProductionTransferDate(to: .now)

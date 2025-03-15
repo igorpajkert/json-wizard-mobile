@@ -93,6 +93,20 @@ extension DataStore {
     }
     
     // MARK: Categories
+    /// Returns categories matching the given IDs.
+    /// - Parameter ids: IDs to filter by.
+    /// - Returns: Categories with matching IDs.
+    func getCategories(with ids: [Int]) -> [Category] {
+        categories.filter { ids.contains($0.id) }
+    }
+    
+    /// Returns the category with the specified ID.
+    /// - Parameter id: The category's ID.
+    /// - Returns: A matching category, or nil.
+    func getCategory(with id: Int) -> Category? {
+        categories.first { $0.id == id }
+    }
+    
     func update(category: Category, shouldUpdateDate: Bool = true) throws {
         if shouldUpdateDate {
             category.dateModified = .now
@@ -109,7 +123,7 @@ extension DataStore {
     }
     
     func delete(categories ids: [Int]) throws {
-        let categoriesToDelete = getCategories(of: ids)
+        let categoriesToDelete = getCategories(with: ids)
         
         for category in categoriesToDelete {
             try unbindAll(from: category)
@@ -123,6 +137,20 @@ extension DataStore {
     }
     
     // MARK: Questions
+    /// Returns questions matching the given IDs.
+    /// - Parameter ids: IDs to filter by.
+    /// - Returns: Questions with matching IDs.
+    func getQuestions(with ids: [Int]) -> [Question] {
+        questions.filter { ids.contains($0.id) }
+    }
+    
+    /// Returns the question with the specified ID.
+    /// - Parameter id: The question's ID.
+    /// - Returns: A matching question, or nil.
+    func getQuestion(with id: Int) -> Question? {
+        questions.first { $0.id == id }
+    }
+    
     func update(question: Question) throws {
         question.dateModified = .now
         try updateCategoriesModificationDate(for: question)
@@ -138,7 +166,7 @@ extension DataStore {
     }
     
     func delete(questions ids: [Int]) throws {
-        let questionsToDelete = getQuestions(of: ids)
+        let questionsToDelete = getQuestions(with: ids)
         
         for question in questionsToDelete {
             try unbindAll(from: question)
@@ -152,7 +180,7 @@ extension DataStore {
     }
     
     func updateCategoriesModificationDate(for question: Question) throws {
-        let categories = getCategories(of: question.categoryIDs)
+        let categories = getCategories(with: question.categoryIDs)
         for category in categories {
             try update(category: category, shouldUpdateDate: true)
         }

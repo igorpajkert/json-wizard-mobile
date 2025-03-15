@@ -37,7 +37,6 @@ struct SignInSheet: View {
                 .sheet(isPresented: $isShowingPasswordResetSheet, onDismiss: dismissPasswordResetSheet) {
                     PasswordResetSheet()
                 }
-                
                 .padding()
             }
         }
