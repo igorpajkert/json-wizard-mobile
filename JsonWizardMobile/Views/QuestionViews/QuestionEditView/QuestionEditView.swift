@@ -38,7 +38,7 @@ struct QuestionEditView: View {
             onDismiss: viewModel.dismissCategoriesPickerSheet
         ) {
             CategoriesPickerSheet(
-                question: question,
+                question: viewModel.question,
                 parentCategory: parentCategory,
                 viewType: viewType
             )
@@ -108,9 +108,10 @@ struct QuestionEditView: View {
     private var answersContent: some View {
         Section("Answers") {
             HStack {
-                TextField("Add Answer...",
-                          text: $viewModel.newAnswerText,
-                          axis: .vertical
+                TextField(
+                    "Add Answer...",
+                    text: $viewModel.newAnswerText,
+                    axis: .vertical
                 )
                 .focused($isTextFieldFocused)
                 Button(action: viewModel.addAnswer) {

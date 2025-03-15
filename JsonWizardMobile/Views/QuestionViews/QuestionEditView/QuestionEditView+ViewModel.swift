@@ -13,15 +13,36 @@ extension QuestionEditView {
     class ViewModel {
         
         var isPresentingCategoriesPickerSheet = false
-        var question = Question()
         var newAnswerText = ""
         var errorWrapper: ErrorWrapper?
         
         private(set) var isSet = false
         
+        private var questionID = 0
+        private var newQuestion = Question()
         private var store = DataStore()
         private var parentCategory: Category? = nil
         private var viewType: QuestionViewType = .new
+        
+        var question: Question {
+            get {
+                if viewType == .new {
+                    return newQuestion
+                } else {
+                    return store.getQuestion(with: questionID) ?? Question()
+                }
+            }
+            set {
+                if viewType == .new {
+                    newQuestion = newValue
+                } else {
+                    let index = store.questions.firstIndex { $0.id == questionID }
+                    if let index = index {
+                        store.questions[index] = newValue
+                    }
+                }
+            }
+        }
         
         var categories: [Category] {
             var categories = store.getCategories(with: question.categoryIDs)
@@ -42,7 +63,8 @@ extension QuestionEditView {
             viewType: QuestionViewType
         ) {
             self.store = store
-            self.question = question
+            self.questionID = question.id
+            self.newQuestion = question
             self.parentCategory = parentCategory
             self.viewType = viewType
             isSet = true
@@ -95,18 +117,16 @@ extension QuestionEditView {
         
         func updateQuestion() {
             guard viewType == .edit else { return }
-            Task {
-                do {
-                    try store.update(question: question)
-                } catch {
-                    errorWrapper = .init(
-                        error: error,
-                        guidance: String(
-                            localized: "guidance_failed_to_update_question_generic"
-                        ),
-                        isDismissable: true
-                    )
-                }
+            do {
+                try store.update(question: question)
+            } catch {
+                errorWrapper = .init(
+                    error: error,
+                    guidance: String(
+                        localized: "guidance_failed_to_update_question_generic"
+                    ),
+                    isDismissable: true
+                )
             }
         }
     }
