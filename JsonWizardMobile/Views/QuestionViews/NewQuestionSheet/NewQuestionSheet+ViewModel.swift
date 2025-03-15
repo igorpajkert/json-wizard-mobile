@@ -34,8 +34,9 @@ extension NewQuestionSheet {
                         with: question,
                         shouldUpdate: true
                     )
+                } else {
+                    try store.update(question: question)
                 }
-                try store.update(question: question)
             } catch {
                 errorWrapper = .init(
                     error: error,
