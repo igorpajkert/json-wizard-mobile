@@ -14,10 +14,14 @@ extension CategoryDetailView {
         
         var isPresentingEditCategorySheet = false
         var isPresentingMigrationSheet = false
-        var category = Category()
+        var categoryID = 0
         
         private(set) var isSet = false
         private var store = DataStore()
+        
+        var category: Category {
+            store.getCategory(with: categoryID) ?? Category()
+        }
         
         var categoryQuestions: [Question] {
             store.getQuestions(with: category.questionIDs)
@@ -41,7 +45,7 @@ extension CategoryDetailView {
         
         func set(store: DataStore, category: Category) {
             self.store = store
-            self.category = category
+            self.categoryID = category.id
             isSet = true
         }
         
