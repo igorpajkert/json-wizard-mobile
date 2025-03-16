@@ -16,11 +16,22 @@ struct ChatView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     ForEach(chat.messages) { message in
-                        MessageBubble(message: message)
+                        MessageBubble(
+                            message: message,
+                            showSender: chat.showSender(for: message)
+                        )
+                    }
+                }
+                .onChange(of: chat.lastMessageId) { oldId, newId in
+                    withAnimation {
+                        proxy.scrollTo(newId, anchor: .bottom)
                     }
                 }
             }
         }
+        
+        MessageField()
+            .environment(chat)
     }
 }
 

@@ -69,4 +69,20 @@ class Chat {
             print("Error sending message: \(error)")
         }
     }
+    
+    func showSender(for message: Message) -> Bool {
+        guard let index = messages.firstIndex(of: message), index > messages.startIndex else {
+            return false
+        }
+        
+        guard let userId = Authentication.shared.user?.uid else {
+            return false
+        }
+        
+        guard userId != message.senderId else {
+            return false
+        }
+        
+        return messages[messages.index(before: index)].senderId != message.senderId
+    }
 }

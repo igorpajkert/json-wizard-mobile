@@ -12,6 +12,7 @@ struct MessageBubble: View {
     @State private var showTime = false
     
     var message: Message
+    var showSender: Bool = false
     
     var isSender: Bool {
         guard let userId = Authentication.shared.user?.uid else {
@@ -26,12 +27,18 @@ struct MessageBubble: View {
     
     var body: some View {
         VStack(alignment: isSender ? .trailing : .leading) {
+            
+            if showSender {
+                Label(message.senderName, systemImage: "person.fill")
+                    .font(.headline)
+            }
+            
             HStack {
                 Text(message.text)
                     .padding()
                     .background(backgroundColor)
                     .foregroundStyle(backgroundColor.adaptedTextColor())
-                    .clipShape(.capsule)
+                    .clipShape(.rect(cornerRadius: 32))
             }
             .frame(maxWidth: 300, alignment: isSender ? .trailing : .leading)
             .onTapGesture {
@@ -54,10 +61,11 @@ struct MessageBubble: View {
 #Preview {
     MessageBubble(
         message: .init(
-            text: "Hello! This is sample message text in my own chat view! How are you?",
+            text: "Hello! This is sample message text in my own chat view! How are you? I'm writing because I need longer sample text to see how it looks in my chat view. I hope it will be enough!",
             senderId: "DyVx5OHoR7eYTttZS5STsy2tn1D2",
             senderName: "Igor",
             timestamp: .distantPast
-        )
+        ),
+        showSender: true
     )
 }

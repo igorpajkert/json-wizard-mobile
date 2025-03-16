@@ -14,28 +14,42 @@ struct AccountView: View {
     var body: some View {
         ZStack {
             backgroundGradient
-            ScrollView {
-                mainVStack
-                    .sheet(
-                        isPresented: $viewModel.isPresentingSignInSheet,
-                        onDismiss: viewModel.dismissSignInSheet
-                    ) {
-                        SignInSheet()
+            VStack {
+                ScrollView {
+                    mainVStack
+                        .sheet(
+                            isPresented: $viewModel.isPresentingSignInSheet,
+                            onDismiss: viewModel.dismissSignInSheet
+                        ) {
+                            SignInSheet()
+                        }
+                        .sheet(
+                            isPresented: $viewModel.isPresentingPasswordChangeSheet,
+                            onDismiss: viewModel.dismissPasswordChangeSheet
+                        ) {
+                            PasswordChangeSheet()
+                        }
+                        .sheet(item: $viewModel.errorWrapper) { wrapper in
+                            ErrorSheet(errorWrapper: wrapper)
+                        }
+                        .padding()
+                        .task {
+                            await viewModel.fetchUserData()
+                        }
+                }
+                HStack {
+                    Spacer()
+                    Button(action: viewModel.presentChatView) {
+                        ChatButtonLabel()
+                            .padding(.horizontal)
                     }
-                    .sheet(
-                        isPresented: $viewModel.isPresentingPasswordChangeSheet,
-                        onDismiss: viewModel.dismissPasswordChangeSheet
-                    ) {
-                        PasswordChangeSheet()
-                    }
-                    .sheet(item: $viewModel.errorWrapper) { wrapper in
-                        ErrorSheet(errorWrapper: wrapper)
-                    }
-                    .padding()
-                    .task {
-                        await viewModel.fetchUserData()
-                    }
+                }
             }
+        }
+        .navigationDestination(
+            isPresented: $viewModel.isPresentingChatView
+        ) {
+            ChatView()
         }
     }
     
@@ -128,5 +142,21 @@ struct AccountView: View {
     NavigationStack {
         AccountView()
             .navigationTitle("Account")
+    }
+}
+
+struct ChatButtonLabel: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .foregroundStyle(.accent)
+            Image(systemName: "message")
+                .foregroundStyle(.white)
+                .font(.largeTitle)
+                .imageScale(.large)
+                .padding()
+        }
+        .fixedSize()
+        .padding()
     }
 }
