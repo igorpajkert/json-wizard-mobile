@@ -27,6 +27,9 @@ struct ChatView: View {
                         proxy.scrollTo(newId, anchor: .bottom)
                     }
                 }
+                .refreshable {
+                    chat.onRefresh()
+                }
             }
         }
         
