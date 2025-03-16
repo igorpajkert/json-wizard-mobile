@@ -14,6 +14,7 @@ extension AccountView {
         
         var isPresentingSignInSheet = false
         var isPresentingPasswordChangeSheet = false
+        var isPresentingChatView = false
         var errorWrapper: ErrorWrapper?
         
         private let auth = Authentication.shared
@@ -61,6 +62,10 @@ extension AccountView {
         
         func dismissPasswordChangeSheet() {
             isPresentingPasswordChangeSheet = false
+        }
+        
+        func presentChatView() {
+            isPresentingChatView = true
         }
         
         func signOut() {
