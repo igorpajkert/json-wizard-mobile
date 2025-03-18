@@ -1692,6 +1692,22 @@
         }
       }
     },
+    "picker_all_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie Pytania"
+          }
+        }
+      }
+    },
     "picker_categories" : {
       "localizations" : {
         "en" : {
@@ -1800,22 +1816,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Przenieś do:"
-          }
-        }
-      }
-    },
-    "picker_questions" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Questions"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pytania"
           }
         }
       }
@@ -1976,6 +1976,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Szczegóły Migracji"
+          }
+        }
+      }
+    },
+    "section_modes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryby"
           }
         }
       }

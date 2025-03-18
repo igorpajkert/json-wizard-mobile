@@ -15,14 +15,16 @@ struct MainView: View {
     
     var body: some View {
         TabView {
-            Tab("tab_main_mode", systemImage: "square.stack.3d.up") {
-                NavigationStack {
-                    MainModeView()
+            TabSection("section_modes") {
+                Tab("tab_main_mode", systemImage: "square.stack.3d.up") {
+                    NavigationStack {
+                        MainModeView()
+                    }
                 }
-            }
-            Tab("tab_swipe_mode", systemImage: "square.stack") {
-                NavigationStack {
-                    SwipeModeView()
+                Tab("tab_swipe_mode", systemImage: "square.stack") {
+                    NavigationStack {
+                        SwipeModeView()
+                    }
                 }
             }
             Tab("tab_account", systemImage: "person.crop.circle") {

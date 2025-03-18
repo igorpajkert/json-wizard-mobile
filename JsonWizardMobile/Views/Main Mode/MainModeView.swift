@@ -27,7 +27,7 @@ struct MainModeView: View {
         }
         Picker("picker_main_mode", selection: $selection) {
             Text("picker_categories").tag(MainModeSelection.categories)
-            Text("picker_questions").tag(MainModeSelection.questions)
+            Text("picker_all_questions").tag(MainModeSelection.questions)
         }
         .pickerStyle(.segmented)
         .padding(.horizontal)
