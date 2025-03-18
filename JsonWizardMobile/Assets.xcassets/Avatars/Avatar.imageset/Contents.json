@@ -3,16 +3,6 @@
     {
       "filename" : "Avatar_W.png",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Avatar_B.png",
-      "idiom" : "universal"
     }
   ],
   "info" : {

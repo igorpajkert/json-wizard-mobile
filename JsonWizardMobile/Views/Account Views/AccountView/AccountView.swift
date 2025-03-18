@@ -12,54 +12,42 @@ struct AccountView: View {
     @State private var viewModel = AccountView.ViewModel()
     
     var body: some View {
-        ZStack {
-            backgroundGradient
-            VStack {
-                ScrollView {
-                    mainVStack
-                        .sheet(
-                            isPresented: $viewModel.isPresentingSignInSheet,
-                            onDismiss: viewModel.dismissSignInSheet
-                        ) {
-                            SignInSheet()
-                        }
-                        .sheet(
-                            isPresented: $viewModel.isPresentingPasswordChangeSheet,
-                            onDismiss: viewModel.dismissPasswordChangeSheet
-                        ) {
-                            PasswordChangeSheet()
-                        }
-                        .sheet(item: $viewModel.errorWrapper) { wrapper in
-                            ErrorSheet(errorWrapper: wrapper)
-                        }
-                        .padding()
-                        .task {
-                            await viewModel.fetchUserData()
-                        }
-                }
-                HStack {
-                    Spacer()
-                    Button(action: viewModel.presentChatView) {
-                        ChatButtonLabel()
-                            .padding(.horizontal)
+        VStack {
+            ScrollView {
+                mainVStack
+                    .sheet(
+                        isPresented: $viewModel.isPresentingSignInSheet,
+                        onDismiss: viewModel.dismissSignInSheet
+                    ) {
+                        SignInSheet()
                     }
+                    .sheet(
+                        isPresented: $viewModel.isPresentingPasswordChangeSheet,
+                        onDismiss: viewModel.dismissPasswordChangeSheet
+                    ) {
+                        PasswordChangeSheet()
+                    }
+                    .sheet(item: $viewModel.errorWrapper) { wrapper in
+                        ErrorSheet(errorWrapper: wrapper)
+                    }
+                    .padding()
+                    .task {
+                        await viewModel.fetchUserData()
+                    }
+            }
+            HStack {
+                Spacer()
+                Button(action: viewModel.presentChatView) {
+                    ChatButtonLabel()
                 }
             }
         }
+        .navigationTitle("title_account")
         .navigationDestination(
             isPresented: $viewModel.isPresentingChatView
         ) {
             ChatView()
         }
-    }
-    
-    private var backgroundGradient: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [.lightLavender, .lavender]),
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .ignoresSafeArea(.all)
     }
     
     private var mainVStack: some View {
@@ -108,7 +96,6 @@ struct AccountView: View {
                     .padding()
             }
         }
-        .padding(.horizontal)
     }
     
     private var changePasswordButton: some View {
@@ -121,7 +108,6 @@ struct AccountView: View {
             }
         }
         .isHidden(!viewModel.isUserSignedIn)
-        .padding(.horizontal)
     }
     
     private var signOutButton: some View {
@@ -134,14 +120,12 @@ struct AccountView: View {
             }
         }
         .isHidden(!viewModel.isUserSignedIn)
-        .padding(.horizontal)
     }
 }
 
 #Preview {
     NavigationStack {
         AccountView()
-            .navigationTitle("Account")
     }
 }
 

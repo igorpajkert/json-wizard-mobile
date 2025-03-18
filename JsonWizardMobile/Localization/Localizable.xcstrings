@@ -691,7 +691,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informacje o Kategori"
+            "value" : "Informacje o Kategorii"
           }
         }
       }
@@ -1465,6 +1465,9 @@
         }
       }
     },
+    "Hello, Swipe Mode!" : {
+      "shouldTranslate" : false
+    },
     "label_categories_count" : {
       "localizations" : {
         "en" : {
@@ -1689,6 +1692,38 @@
         }
       }
     },
+    "picker_all_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie Pytania"
+          }
+        }
+      }
+    },
+    "picker_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
+    },
     "picker_collection" : {
       "localizations" : {
         "en" : {
@@ -1749,6 +1784,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Status"
+          }
+        }
+      }
+    },
+    "picker_main_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select collection"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz kolekcję"
           }
         }
       }
@@ -1925,6 +1976,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Szczegóły Migracji"
+          }
+        }
+      }
+    },
+    "section_modes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryby"
           }
         }
       }
@@ -2169,34 +2236,34 @@
         }
       }
     },
-    "tab_all_questions" : {
+    "tab_main_mode" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All Questions"
+            "value" : "Main Mode"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wszystkie Pytania"
+            "value" : "Tryb Główny"
           }
         }
       }
     },
-    "tab_categories" : {
+    "tab_swipe_mode" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Categories"
+            "value" : "Swipe Mode"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kategorie"
+            "value" : "Tryb Swipe"
           }
         }
       }
