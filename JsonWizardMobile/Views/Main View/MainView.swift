@@ -32,6 +32,7 @@ struct MainView: View {
                 }
             }
         }
+        .tabViewStyle(.sidebarAdaptable)
         .sheet(item: $viewModel.errorWrapper) { wrapper in
             ErrorSheet(errorWrapper: wrapper)
         }
