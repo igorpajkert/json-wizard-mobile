@@ -11,24 +11,23 @@ struct MainView: View {
     
     @State private var viewModel = MainView.ViewModel()
     
+    var isTesting = false
+    
     var body: some View {
         TabView {
-            Tab("tab_categories", systemImage: "square.stack.3d.up") {
+            Tab("tab_main_mode", systemImage: "square.stack.3d.up") {
                 NavigationStack {
-                    CategoriesView()
-                        .navigationTitle("title_categories")
+                    MainModeView()
                 }
             }
-            Tab("tab_all_questions", systemImage: "rectangle.stack") {
+            Tab("tab_swipe_mode", systemImage: "square.stack") {
                 NavigationStack {
-                    QuestionsView(parentCategory: nil)
-                        .navigationTitle("title_all_questions")
+                    SwipeModeView()
                 }
             }
             Tab("tab_account", systemImage: "person.crop.circle") {
                 NavigationStack {
                     AccountView()
-                        .navigationTitle("title_account")
                 }
             }
         }
@@ -43,7 +42,7 @@ struct MainView: View {
             SignInSheet()
         }
         .task {
-            if !viewModel.isUserSignedIn {
+            if !viewModel.isUserSignedIn && !isTesting {
                 viewModel.presentSignInSheet()
             }
         }
@@ -51,5 +50,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainView(isTesting: true)
 }

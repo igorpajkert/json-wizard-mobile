@@ -1465,6 +1465,9 @@
         }
       }
     },
+    "Hello, Swipe Mode!" : {
+      "shouldTranslate" : false
+    },
     "label_categories_count" : {
       "localizations" : {
         "en" : {
@@ -1689,6 +1692,22 @@
         }
       }
     },
+    "picker_categories" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
+    },
     "picker_collection" : {
       "localizations" : {
         "en" : {
@@ -1753,6 +1772,22 @@
         }
       }
     },
+    "picker_main_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select collection"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz kolekcję"
+          }
+        }
+      }
+    },
     "picker_migrate_to" : {
       "localizations" : {
         "en" : {
@@ -1765,6 +1800,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Przenieś do:"
+          }
+        }
+      }
+    },
+    "picker_questions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pytania"
           }
         }
       }
@@ -2169,34 +2220,34 @@
         }
       }
     },
-    "tab_all_questions" : {
+    "tab_main_mode" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All Questions"
+            "value" : "Main Mode"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wszystkie Pytania"
+            "value" : "Tryb Główny"
           }
         }
       }
     },
-    "tab_categories" : {
+    "tab_swipe_mode" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Categories"
+            "value" : "Swipe Mode"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kategorie"
+            "value" : "Tryb Swipe"
           }
         }
       }

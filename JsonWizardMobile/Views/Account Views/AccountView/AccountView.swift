@@ -46,6 +46,7 @@ struct AccountView: View {
                 }
             }
         }
+        .navigationTitle("title_account")
         .navigationDestination(
             isPresented: $viewModel.isPresentingChatView
         ) {
@@ -141,7 +142,6 @@ struct AccountView: View {
 #Preview {
     NavigationStack {
         AccountView()
-            .navigationTitle("Account")
     }
 }
 
