@@ -142,5 +142,6 @@ struct ChatButtonLabel: View {
         }
         .fixedSize()
         .padding()
+        .shadow(radius: 4)
     }
 }
