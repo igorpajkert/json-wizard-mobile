@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct SwipeModeView: View {
+    
+    @State private var swipeMode = SwipeMode()
+    
     var body: some View {
-        Text("Hello, Swipe Mode!")
+        SwipeQuestionsView(swipeMode: $swipeMode)
+            .swipeMode(swipeMode)
     }
 }
 

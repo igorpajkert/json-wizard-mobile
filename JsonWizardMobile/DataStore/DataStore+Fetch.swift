@@ -9,7 +9,7 @@ import Foundation
 
 extension DataStore {
     
-    func fetchData(for collection: CollectionType) {
+    func fetchData(from collection: CollectionType) {
         switch collection {
         case .development:
             fetchDevelopmentData()

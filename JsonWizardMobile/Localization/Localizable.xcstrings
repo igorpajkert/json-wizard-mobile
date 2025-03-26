@@ -440,6 +440,9 @@
         }
       }
     },
+    "alert_title_swipe_question_delete" : {
+
+    },
     "Answer Text" : {
       "localizations" : {
         "en" : {
@@ -484,6 +487,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uwierzytelnij"
+          }
+        }
+      }
+    },
+    "button_add" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj"
           }
         }
       }
@@ -1465,9 +1484,6 @@
         }
       }
     },
-    "Hello, Swipe Mode!" : {
-      "shouldTranslate" : false
-    },
     "label_categories_count" : {
       "localizations" : {
         "en" : {
@@ -1484,6 +1500,22 @@
         }
       }
     },
+    "label_correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "True"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawda"
+          }
+        }
+      }
+    },
     "label_edit_questions" : {
       "localizations" : {
         "en" : {
@@ -1496,6 +1528,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edytuj Pytania"
+          }
+        }
+      }
+    },
+    "label_incorrect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "False"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fałsz"
           }
         }
       }
@@ -1579,6 +1627,9 @@
           }
         }
       }
+    },
+    "message_delete_swipe_question_confirmation" : {
+
     },
     "message_migration_declined" : {
       "localizations" : {
@@ -2332,6 +2383,38 @@
         }
       }
     },
+    "text_false" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "False"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fałsz"
+          }
+        }
+      }
+    },
+    "text_field_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pytanie"
+          }
+        }
+      }
+    },
     "text_incorrect" : {
       "localizations" : {
         "en" : {
@@ -2540,6 +2623,22 @@
         }
       }
     },
+    "text_true" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "True"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawda"
+          }
+        }
+      }
+    },
     "text_user" : {
       "localizations" : {
         "en" : {
@@ -2584,6 +2683,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dodaj Kategorię"
+          }
+        }
+      }
+    },
+    "title_add_swipe_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe Pytanie"
           }
         }
       }
@@ -2664,6 +2779,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Migracja"
+          }
+        }
+      }
+    },
+    "title_swipe_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe Mode"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb Swipe"
           }
         }
       }

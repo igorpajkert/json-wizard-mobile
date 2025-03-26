@@ -7,8 +7,7 @@
 
 import Foundation
 
-@Observable
-final class SwipeQuestion: Identifiable, Codable {
+struct SwipeQuestion: Identifiable, Equatable, Hashable, Codable {
     
     let id: Int
     var text: String {
@@ -37,27 +36,8 @@ final class SwipeQuestion: Identifiable, Codable {
         self.dateCreated = dateCreated
         self.dateModified = dateModified
     }
-    
-    // MARK: - Codable conformance | Custom encoding & decoding
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int.self, forKey: .id)
-        self.text = try container.decode(String.self, forKey: .text)
-        self.isCorrect = try container.decode(Bool.self, forKey: .isCorrect)
-        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
-        self.dateModified = try container.decode(String.self, forKey: .dateModified).toDate()
-    }
-    
-    func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(text, forKey: .text)
-        try container.encode(isCorrect, forKey: .isCorrect)
-        try container.encode(dateCreated, forKey: .dateCreated)
-        try container.encode(dateModified.toString(), forKey: .dateModified)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case id, text, isCorrect, dateCreated, dateModified
-    }
+}
+
+extension SwipeQuestion: Nameable {
+    var name: String { text }
 }
