@@ -9,8 +9,8 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-/// A class responsible for managing interactions with the Firestore database.
-final class DatabaseController {
+/// A struct responsible for managing interactions with the Firestore database.
+struct DatabaseController {
     
     /// Loads data of a specified type from a document within a collection in Firestore.
     func getData<T>(from document: String, within collection: String) async throws -> T where T: Codable {
@@ -19,6 +19,7 @@ final class DatabaseController {
         return try await docRef.getDocument(as: T.self)
     }
     
+    /// Retrieves all documents from the specified Firestore collection and decodes them into an array of a specified `Codable` type.
     func getAllDocuments<T>(from collection: String) async throws -> [T] where T: Codable {
         let database = Firestore.firestore()
         let querySnaphot = try await database.collection(collection).getDocuments()
@@ -47,6 +48,7 @@ final class DatabaseController {
         }
     }
     
+    /// Sets data of a specified type into a document within a collection in Firestore synchronously.
     func set<T: Codable>(_ data: T, in document: String, within collection: String, merge: Bool = true) throws {
         let db = Firestore.firestore()
         try db.collection(collection).document(document).setData(from: data, merge: merge)
