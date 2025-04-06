@@ -9,6 +9,15 @@ import Foundation
 
 extension SwipeMode {
     
+    var selectedCollection: CollectionType {
+        get {
+            currentCollection ?? .test
+        }
+        set {
+            switchCollection(to: newValue)
+        }
+    }
+    
     enum CollectionType : String, CaseIterable, Identifiable, Nameable {
         case development = "development_swipe_questions"
         case test = "test_swipe_questions"
@@ -43,5 +52,22 @@ extension SwipeMode {
         default:
             return nil
         }
+    }
+    
+    func setCollection() {
+        if currentCollection == nil {
+            currentCollection = getCollection()
+        }
+    }
+    
+    func switchCollection(to collection: CollectionType) {
+        currentCollection = collection
+        questions = []
+        
+        Task {
+            await fetchData()
+        }
+        
+        attachListener(to: collection)
     }
 }

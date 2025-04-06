@@ -75,15 +75,7 @@ struct SwipeQuestionsView: View {
             }
         }
         .task {
-            do {
-                try await swipeMode.fetchData()
-            } catch {
-                swipeMode.errorWrapper = .init(
-                    error: error,
-                    guidance: "guidance_swipe_mode_fetch_error",
-                    isDismissable: true
-                )
-            }
+            await swipeMode.fetchData()
         }
     }
     
