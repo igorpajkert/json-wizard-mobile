@@ -25,12 +25,18 @@ struct SwipeQuestionsView: View {
             if isAdmin {
                 SwipeModeCollectionPicker(selection: $swipeMode.selectedCollection)
             }
+            
             questions
-            questionsCount
+            
+            if !swipeMode.questions.isEmpty {
+                questionsCount
+            }
         }
         .navigationTitle("title_swipe_mode")
         .listRowSpacing(10)
         .toolbar {
+            toolbarButtonSort
+            toolbarButtonFilter
             toolbarButtonAdd
         }
         .navigationDestination(item: $swipeMode.selectedQuestion) { question in
@@ -57,7 +63,9 @@ struct SwipeQuestionsView: View {
                 }
             }, message: {
                 Text("message_delete_swipe_question_confirmation")
-            })
+            }
+        )
+        .searchable(text: $swipeMode.searchText)
         .overlay(alignment: .center) {
             if swipeMode.questions.isEmpty {
                 ContentUnavailableView(
@@ -80,7 +88,7 @@ struct SwipeQuestionsView: View {
     }
     
     private var questions: some View {
-        ForEach(swipeMode.questions) { question in
+        ForEach(swipeMode.filteredQuestions) { question in
             Button {
                 swipeMode.selectedQuestion = question
             } label: {
@@ -110,6 +118,40 @@ struct SwipeQuestionsView: View {
                 isPresentingNewQuestionSheet = true
             } label: {
                 Image(systemName: "plus")
+            }
+        }
+    }
+    
+    private var toolbarButtonSort: some ToolbarContent {
+        @Bindable var swipeMode = swipeMode
+        
+        return ToolbarItem(placement: .topBarTrailing) {
+            Menu("menu_sort", systemImage: "arrow.up.arrow.down") {
+                Picker("picker_sort_by", selection: $swipeMode.sortOption) {
+                    ForEach(SwipeQuestion.SortOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as SwipeQuestion.SortOptions)
+                    }
+                }
+                Picker("picker_sort_order", selection: $swipeMode.sortOrder) {
+                    Text("text_sort_ascending").tag(SortOrder.forward)
+                    Text("text_sort_descending").tag(SortOrder.reverse)
+                }
+            }
+        }
+    }
+    
+    private var toolbarButtonFilter: some ToolbarContent {
+        @Bindable var swipeMode = swipeMode
+        
+        return ToolbarItem(placement: .topBarTrailing) {
+            Menu("menu_filter", systemImage: "line.3.horizontal.decrease") {
+                Picker("picker_filter_by", selection: $swipeMode.filterOption) {
+                    ForEach(SwipeQuestion.FilterOptions.allCases) { option in
+                        Text(option.name)
+                            .tag(option as SwipeQuestion.FilterOptions)
+                    }
+                }
             }
         }
     }

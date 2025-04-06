@@ -2233,38 +2233,6 @@
         }
       }
     },
-    "sort_options_correct" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correct"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poprawne"
-          }
-        }
-      }
-    },
-    "sort_options_incorrect" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incorrect"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niepoprawne"
-          }
-        }
-      }
-    },
     "sort_options_questions_count" : {
       "localizations" : {
         "en" : {

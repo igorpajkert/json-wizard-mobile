@@ -15,10 +15,47 @@ class SwipeMode {
     var questionToDelete: SwipeQuestion?
     var errorWrapper: ErrorWrapper?
     
+    var searchText = ""
+    var sortOrder = SortOrder.forward
+    var sortOption = SwipeQuestion.SortOptions.recent
+    var filterOption = SwipeQuestion.FilterOptions.none
+    
     private(set) var questions = [SwipeQuestion]()
     
     private var currentCollection: CollectionType?
     private var listener: ListenerRegistration?
+    
+    var filteredQuestions: [SwipeQuestion] {
+        var result = questions
+        
+        if !searchText.isEmpty {
+            result = result.filter {
+                $0.text.localizedStandardContains(searchText)
+            }
+        }
+        
+        switch filterOption {
+        case .none:
+            break
+        case .correct:
+            result = result.filter { $0.isCorrect }
+        case .incorrect:
+            result = result.filter { !$0.isCorrect }
+        }
+        
+        switch sortOption {
+        case .recent:
+            result.sort { $0.dateCreated > $1.dateCreated }
+        case .alphabetical:
+            result.sort { $0.text < $1.text }
+        }
+        
+        if sortOrder == .reverse {
+            result.reverse()
+        }
+        
+        return result
+    }
     
     var selectedCollection: CollectionType {
         get {

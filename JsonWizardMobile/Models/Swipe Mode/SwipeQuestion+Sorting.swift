@@ -13,8 +13,6 @@ extension SwipeQuestion {
     enum SortOptions: String, CaseIterable, Identifiable, Nameable {
         case recent
         case alphabetical
-        case correct
-        case incorrect
         
         var id: String { rawValue }
         
@@ -25,10 +23,6 @@ extension SwipeQuestion {
                 return String(localized: "sort_options_recent")
             case .alphabetical:
                 return String(localized: "sort_options_alphabetical")
-            case .correct:
-                return String(localized: "sort_options_correct")
-            case .incorrect:
-                return String(localized: "sort_options_incorrect")
             }
         }
     }
