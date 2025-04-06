@@ -11,6 +11,7 @@ struct SwipeQuestionEditView: View {
     
     @State private var text = ""
     @State private var isCorrect = false
+    @State private var isPresentingDeletionAlert = false
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.swipeMode) private var swipeMode
@@ -48,6 +49,20 @@ struct SwipeQuestionEditView: View {
                 isTextFieldFocused = false
             }
         }
+        .alert(
+            "alert_title_swipe_question_delete",
+            isPresented: $isPresentingDeletionAlert,
+            actions: {
+                Button("button_delete", role: .destructive) {
+                    swipeMode.deleteQuestion()
+                    dismiss()
+                }
+                Button("button_cancel", role: .cancel) {
+                    swipeMode.questionToDelete = nil
+                }
+            }, message: {
+                Text("message_delete_swipe_question_confirmation")
+            })
         .onAppear {
             text = question.text
             isCorrect = question.isCorrect
@@ -106,11 +121,17 @@ struct SwipeQuestionEditView: View {
     private var toolbarButtonDelete: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                
+                onDelete(of: question)
             } label: {
                 Image(systemName: "trash")
             }
         }
+    }
+    
+    // MARK: Actions
+    private func onDelete(of question: SwipeQuestion) {
+        swipeMode.questionToDelete = question
+        isPresentingDeletionAlert = true
     }
 }
 
