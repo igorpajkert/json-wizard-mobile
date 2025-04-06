@@ -12,6 +12,7 @@ import FirebaseCore
 struct JsonWizardMobileApp: App {
     
     @State private var store: DataStore
+    @State private var swipeMode = SwipeMode()
     
     init() {
         FirebaseApp.configure()
@@ -22,6 +23,7 @@ struct JsonWizardMobileApp: App {
         WindowGroup {
             MainView()
                 .dataStore(store)
+                .swipeMode(swipeMode)
         }
     }
 }

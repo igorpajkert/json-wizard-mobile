@@ -87,7 +87,7 @@ extension DataStore {
     
     private func changeData(to collection: CollectionType) {
         clearData()
-        fetchData(for: collection)
+        fetchData(from: collection)
         attachListeners(to: collection)
     }
     

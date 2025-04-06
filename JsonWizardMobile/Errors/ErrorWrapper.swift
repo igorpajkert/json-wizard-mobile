@@ -27,7 +27,7 @@ struct ErrorWrapper: Identifiable {
     init(id: UUID = UUID(),
          error: Error,
          guidance: String,
-         isDismissable: Bool,
+         isDismissable: Bool = true,
          dismissAction: ErrorAction? = nil) {
         self.id = id
         self.error = error

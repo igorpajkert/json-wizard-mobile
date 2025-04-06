@@ -440,6 +440,22 @@
         }
       }
     },
+    "alert_title_swipe_question_delete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń Pytanie"
+          }
+        }
+      }
+    },
     "Answer Text" : {
       "localizations" : {
         "en" : {
@@ -484,6 +500,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uwierzytelnij"
+          }
+        }
+      }
+    },
+    "button_add" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj"
           }
         }
       }
@@ -1465,9 +1497,6 @@
         }
       }
     },
-    "Hello, Swipe Mode!" : {
-      "shouldTranslate" : false
-    },
     "label_categories_count" : {
       "localizations" : {
         "en" : {
@@ -1484,6 +1513,22 @@
         }
       }
     },
+    "label_correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "True"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawda"
+          }
+        }
+      }
+    },
     "label_edit_questions" : {
       "localizations" : {
         "en" : {
@@ -1496,6 +1541,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edytuj Pytania"
+          }
+        }
+      }
+    },
+    "label_incorrect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "False"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fałsz"
           }
         }
       }
@@ -1565,6 +1626,22 @@
       }
     },
     "message_delete_question_confirmation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete the selected question?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy na pewno chcesz usunąć wybrane pytanie?"
+          }
+        }
+      }
+    },
+    "message_delete_swipe_question_confirmation" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2156,38 +2233,6 @@
         }
       }
     },
-    "sort_options_correct" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correct"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poprawne"
-          }
-        }
-      }
-    },
-    "sort_options_incorrect" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incorrect"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niepoprawne"
-          }
-        }
-      }
-    },
     "sort_options_questions_count" : {
       "localizations" : {
         "en" : {
@@ -2284,6 +2329,22 @@
         }
       }
     },
+    "text_created" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utworzono"
+          }
+        }
+      }
+    },
     "text_date_created %@" : {
       "localizations" : {
         "en" : {
@@ -2328,6 +2389,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Napisz wiadomość…"
+          }
+        }
+      }
+    },
+    "text_false" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "False"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fałsz"
+          }
+        }
+      }
+    },
+    "text_field_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pytanie"
           }
         }
       }
@@ -2392,6 +2485,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Przenieś z:"
+          }
+        }
+      }
+    },
+    "text_modified" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modified"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modyfikowano"
           }
         }
       }
@@ -2540,6 +2649,22 @@
         }
       }
     },
+    "text_true" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "True"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawda"
+          }
+        }
+      }
+    },
     "text_user" : {
       "localizations" : {
         "en" : {
@@ -2584,6 +2709,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dodaj Kategorię"
+          }
+        }
+      }
+    },
+    "title_add_swipe_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe Pytanie"
           }
         }
       }
@@ -2636,6 +2777,22 @@
         }
       }
     },
+    "title_edit_question" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Question"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj Pytanie"
+          }
+        }
+      }
+    },
     "title_error" : {
       "localizations" : {
         "en" : {
@@ -2664,6 +2821,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Migracja"
+          }
+        }
+      }
+    },
+    "title_swipe_mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe Mode"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb Swipe"
           }
         }
       }

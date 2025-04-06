@@ -33,7 +33,7 @@ final class DataStore {
         self.categories = categories
         self.questions = questions
         
-        fetchData(for: currentCollectionType)
+        fetchData(from: currentCollectionType)
         attachListeners(to: currentCollectionType)
     }
     
