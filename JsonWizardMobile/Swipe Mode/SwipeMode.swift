@@ -12,8 +12,8 @@ import FirebaseFirestore
 class SwipeMode {
     
     var selectedQuestion: SwipeQuestion?
-    var errorWrapper: ErrorWrapper?
     var questionToDelete: SwipeQuestion?
+    var errorWrapper: ErrorWrapper?
     
     private(set) var questions = [SwipeQuestion]()
     
@@ -139,6 +139,20 @@ class SwipeMode {
     }
     
     // MARK: - Intents
+    func getQuestion(with id: Int) -> SwipeQuestion? {
+        questions.first { $0.id == id }
+    }
+    
+    func setQuestion(with id: Int, to value: SwipeQuestion) {
+        if let index = questions.firstIndex(where: { $0.id == id }) {
+            questions[index] = value
+        }
+    }
+    
+    func updateQuestion(_ question: SwipeQuestion) {
+        update(question)
+    }
+    
     func addQuestion(_ question: SwipeQuestion) {
         update(question)
     }

@@ -55,9 +55,12 @@ struct NewSwipeQuestionSheet: View {
     }
     
     private var buttonAdd: some View {
-        Button("button_add") {
+        Button {
             addQuestion()
             dismiss()
+        } label: {
+            Text("button_add")
+                .padding(8)
         }
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.capsule)

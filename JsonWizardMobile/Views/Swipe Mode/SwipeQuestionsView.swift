@@ -12,13 +12,15 @@ struct SwipeQuestionsView: View {
     @State private var isPresentingNewQuestionSheet = false
     @State private var isPresentingDeletionAlert = false
     
-    @Binding var swipeMode: SwipeMode
+    @Environment(\.swipeMode) private var swipeMode
     
     var isAdmin: Bool {
         Authentication.shared.userData?.role == .admin
     }
     
     var body: some View {
+        @Bindable var swipeMode = swipeMode
+        
         List {
             if isAdmin {
                 SwipeModeCollectionPicker(selection: $swipeMode.selectedCollection)
@@ -121,10 +123,6 @@ struct SwipeQuestionsView: View {
 
 #Preview {
     NavigationStack {
-        SwipeQuestionsView(swipeMode: .constant(.init(questions: [
-            .init(text: "Test 1", isCorrect: true),
-            .init(text: "Test 2", isCorrect: true),
-            .init(text: "Test 3", isCorrect: false)
-        ])))
+        SwipeQuestionsView()
     }
 }
