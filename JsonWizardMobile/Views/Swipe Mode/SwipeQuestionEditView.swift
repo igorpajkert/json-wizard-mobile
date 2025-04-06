@@ -32,14 +32,6 @@ struct SwipeQuestionEditView: View {
                 textDateCreated
                 textDateModified
             }
-            Section {
-                HStack {
-                    Spacer()
-                    buttonNewQuestion
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
-            }
         }
         .navigationTitle("title_edit_question")
         .navigationBarTitleDisplayMode(.inline)
@@ -104,17 +96,6 @@ struct SwipeQuestionEditView: View {
             )
             .foregroundStyle(.secondary)
         }
-    }
-    
-    private var buttonNewQuestion: some View {
-        Button {
-            //TODO: new question
-        } label: {
-            Text("button_add_new_question")
-                .padding(8)
-        }
-        .buttonStyle(.borderedProminent)
-        .buttonBorderShape(.capsule)
     }
     
     // MARK: Toolbar

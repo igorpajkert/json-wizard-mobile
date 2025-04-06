@@ -520,22 +520,6 @@
         }
       }
     },
-    "button_add_new_question" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add new question"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dodaj nowe pytanie"
-          }
-        }
-      }
-    },
     "button_cancel" : {
       "localizations" : {
         "en" : {
