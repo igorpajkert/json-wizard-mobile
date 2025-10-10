@@ -38,7 +38,7 @@ struct SwipeQuestionCard: View {
     
     var label: some View {
         Label(text, systemImage: image)
-            .padding(.trailing)
+            .padding(8)
             .foregroundStyle(color.adaptedTextColor())
             .background {
                 RoundedRectangle(cornerRadius: 32)

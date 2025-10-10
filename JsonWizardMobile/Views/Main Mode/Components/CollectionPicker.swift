@@ -27,11 +27,12 @@ struct CollectionPicker: View {
                 Spacer()
                 Text(String(store.categories.count))
             }
+            .padding(.vertical)
             HStack {
                 Label("label_questions_count", systemImage: "rectangle.stack")
                 Spacer()
                 Text(String(store.questions.count))
-            }
+            }            
         }
     }
 }

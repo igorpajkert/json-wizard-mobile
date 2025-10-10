@@ -27,6 +27,7 @@ struct SwipeModeCollectionPicker: View {
                 Spacer()
                 Text(swipeMode.questions.count, format: .number)
             }
+            .padding(.vertical)
         }
     }
 }
